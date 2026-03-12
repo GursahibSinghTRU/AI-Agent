@@ -1,0 +1,51 @@
+RAW HTML SIZE: 56471 characters
+============================================================
+
+CLEAN TEXT SIZE: 2491 characters
+============================================================
+
+EXTRACTED CONTENT:
+I build scalable, agentic AI tools for learning and innovation.
+I’m a Computer Science student @ Thompson Rivers University blending AI with education, building impactful tools — from voice assistants to LLM-powered web systems.
+About Me
+Education
+Bachelor of Computing Science
+Thompson Rivers University
+Sep 2022 – Present
+Achievements
+- Dean’s List recognition each semester
+- Secured UReap funding of $6,000 to address real student challenges with LLM solutions
+- Presented MicroLearn simulations at TRU CS showcase
+Research
+Conducting UReap-funded research ($6,000 grant) to deploy and fine-tune open-source LLMs locally, solving actual campus student problems via RAG pipelines for enhanced performance and privacy.
+Work Experience
+Full-Stack Developer
+x360 Digital
+Sep 2024 – Present
+Develop comprehensive web solutions implementing Next.js, React, Django, and AI integration pipelines.
+- Successfully completed 5+ client projects featuring custom AI capabilities
+- Architected LLM-based AI systems for multiple enterprise projects
+Teaching Assistant - Data Structures & Algorithms
+Thompson Rivers University
+Jan 2025 – April 2025
+Support students with Data Structures coursework and develop educational resources.
+- Mentored over 40 students in mastering algorithmic concepts
+- Created supplementary learning materials to enhance practical understanding
+- Evaluated assignments and provided detailed feedback to improve student performance
+Teaching Assistant - Mobile App Development
+Thompson Rivers University
+Jan 2025 – April 2025
+Facilitate mobile development learning through lab instruction and curriculum creation.
+- Supported more than 30 students in acquiring mobile development skills
+- Invigilated tests and exams to ensure academic integrity
+- Reviewed assignments and project submissions and offered constructive feedback
+Data Annotator & LLM Trainer
+Outlier.ai
+Aug 2024 – Present
+Optimize large language models through reinforcement learning techniques for enterprise deployment.
+- Successfully completed 40+ high-precision annotation assignments
+- Assisted in training language models across multiple disciplines including computer science, linguistics, and physics
+Recent Projects
+Explore my latest work in AI and web development, showcasing innovative solutions and creative implementations.
+Verbi: AI-Powered Study Bot
+An AI-powered study companion built in a 3-day hackathon, featuring adaptive quizzes generated from PDFs, progress tracking, and AI note assistance.
