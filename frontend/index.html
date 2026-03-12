@@ -1,53 +1,45 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Policy &amp; Governance | Thompson Rivers University</title>
+  <title>Thompson Rivers University Policy Assistant</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Slab:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/chatbot.css" />
   <!-- Markdown rendering for chatbot responses -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
-  <link rel="stylesheet" href="/static/chatbot.css" />
 
   <style>
-    /* ── Reset & Root ────────────────────────────────────────── */
+    /* â”€â”€ Reset & Root â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --tru-blue:        #003e51;
-      --tru-blue-dark:   #002b38;
-      --tru-blue-light:  #005570;
-      --tru-teal:        #00b0b9;
-      --tru-teal-light:  #e6f7f8;
-      --tru-sage:        #bad1ba;
-      --tru-grey:        #9ab7c1;
-      --tru-yellow:      #ffcd00;
-      --tru-white:       #ffffff;
-      --tru-bg:          #f4f7f8;
-      --tru-border:      #d6e5e9;
-      --text-body:       #1e3540;
-      --text-muted:      #5a7585;
-      --font-body:       'Roboto', sans-serif;
-      --font-heading:    'Roboto Slab', serif;
-      --max-w:           1220px;
+      --tru-blue:   #003e51;
+      --tru-teal:   #00b0b9;
+      --tru-sage:   #bad1ba;
+      --tru-grey:   #9ab7c1;
+      --tru-yellow: #ffcd00;
+      --tru-white:  #ffffff;
+      --tru-blue-light: #005570;
+      --font-body:  'Roboto', sans-serif;
+      --font-heading: 'Roboto Slab', serif;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
       font-family: var(--font-body);
-      color: var(--text-body);
-      background: var(--tru-white);
+      color: #1e3540;
+      background: #fff;
       line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
     }
 
     a { text-decoration: none; color: inherit; }
     img { max-width: 100%; display: block; }
 
-    /* ── Skip Link ────────────────────────────────────────────── */
+    /* â”€â”€ Skip Link (Accessibility) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .skip-link {
       position: absolute;
       top: -40px;
@@ -62,577 +54,758 @@
     }
     .skip-link:focus { top: 8px; }
 
-    /* ── Top header bar ──────────────────────────────────────── */
-    .tru-topbar {
-      background: var(--tru-blue-dark);
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 0 24px;
-      height: 34px;
-    }
-
-    .tru-topbar-links {
-      display: flex;
-      list-style: none;
-      gap: 0;
-    }
-
-    .tru-topbar-links a {
-      color: rgba(255,255,255,0.75);
-      font-size: 12px;
-      padding: 0 12px;
-      border-right: 1px solid rgba(255,255,255,0.15);
-      line-height: 34px;
-      display: block;
-      transition: color 0.15s;
-    }
-
-    .tru-topbar-links li:last-child a { border-right: none; }
-    .tru-topbar-links a:hover { color: var(--tru-white); }
-
-    /* ── Main Nav ────────────────────────────────────────────── */
+    /* â”€â”€ NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .tru-nav {
-      background: var(--tru-white);
-      border-bottom: 3px solid var(--tru-teal);
+      background: var(--tru-blue);
       position: sticky;
       top: 0;
       z-index: 900;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.18);
     }
 
     .tru-nav-inner {
-      max-width: var(--max-w);
+      max-width: 1180px;
       margin: 0 auto;
       padding: 0 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 70px;
+      height: 66px;
     }
 
-    /* TRU Logo — shield + full wordmark */
     .tru-logo {
       display: flex;
       align-items: center;
-      gap: 10px;
-      color: var(--tru-blue);
+      gap: 12px;
+      color: var(--tru-white);
+    }
+
+    .tru-logo-badge {
+      background: var(--tru-teal);
+      color: var(--tru-white);
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 700;
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: -0.5px;
       flex-shrink: 0;
     }
 
-    .tru-logo-shield {
-      width: 48px;
-      height: 52px;
-      flex-shrink: 0;
-    }
-
-    .tru-logo-wordmark {
+    .tru-logo-text {
       display: flex;
       flex-direction: column;
-      line-height: 1.1;
+      line-height: 1.15;
     }
 
-    .tru-logo-wordmark .wm-tru {
+    .tru-logo-text strong {
       font-family: var(--font-heading);
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--tru-blue);
-      letter-spacing: 0.12em;
+      font-size: 14.5px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
     }
 
-    .tru-logo-wordmark .wm-full {
-      font-family: var(--font-heading);
+    .tru-logo-text span {
       font-size: 10.5px;
-      font-weight: 400;
-      color: var(--tru-blue);
-      letter-spacing: 0.06em;
-      white-space: nowrap;
+      opacity: 0.72;
+      letter-spacing: 0.04em;
     }
 
     .tru-nav-links {
       display: flex;
       align-items: center;
-      gap: 0;
+      gap: 4px;
       list-style: none;
     }
 
-    .tru-nav-links > li > a {
-      display: block;
-      color: var(--tru-blue);
-      font-size: 13.5px;
-      font-weight: 500;
-      padding: 0 14px;
-      line-height: 70px;
-      border-bottom: 3px solid transparent;
-      margin-bottom: -3px;
-      transition: color 0.15s, border-color 0.15s;
-    }
-
-    .tru-nav-links > li > a:hover,
-    .tru-nav-links > li > a.active {
-      color: var(--tru-teal);
-      border-bottom-color: var(--tru-teal);
-    }
-
-    .tru-nav-search {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-      color: var(--tru-blue);
+    .tru-nav-links a {
+      color: rgba(255,255,255,0.82);
+      font-size: 14px;
+      font-weight: 400;
+      padding: 8px 14px;
       border-radius: 6px;
-      display: flex;
-      align-items: center;
-      transition: background 0.15s;
+      transition: background 0.18s, color 0.18s;
     }
-    .tru-nav-search:hover { background: var(--tru-bg); }
 
-    /* ── Hero Banner ─────────────────────────────────────────── */
-    .tru-hero-banner {
-      position: relative;
-      height: 280px;
-      overflow: hidden;
+    .tru-nav-links a:hover,
+    .tru-nav-links a.active {
+      background: rgba(255,255,255,0.1);
+      color: var(--tru-white);
+    }
+
+    .tru-nav-apply {
+      background: var(--tru-yellow) !important;
+      color: var(--tru-blue) !important;
+      font-weight: 700 !important;
+      padding: 8px 16px !important;
+      border-radius: 6px;
+    }
+
+    .tru-nav-apply:hover {
+      background: #ffe033 !important;
+    }
+
+    /* â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .tru-hero {
       background: var(--tru-blue);
+      color: var(--tru-white);
+      padding: 90px 24px 80px;
+      position: relative;
+      overflow: hidden;
     }
 
-    /* Simulated campus photo with gradient overlay */
-    .tru-hero-banner::before {
+    .tru-hero::before {
       content: '';
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(135deg,
-          rgba(0,62,81,0.92) 0%,
-          rgba(0,176,185,0.25) 55%,
-          rgba(0,62,81,0.7) 100%),
-        repeating-linear-gradient(
-          45deg,
-          rgba(255,255,255,0.02) 0px,
-          rgba(255,255,255,0.02) 2px,
-          transparent 2px,
-          transparent 20px
-        );
+        radial-gradient(ellipse 60% 70% at 80% 40%, rgba(0,176,185,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 10% 80%, rgba(255,205,0,0.08) 0%, transparent 60%);
+      pointer-events: none;
     }
 
-    /* Campus silhouette decorative element */
-    .tru-hero-banner::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
-      background: linear-gradient(to top, rgba(0,62,81,0.4), transparent);
-    }
-
-    .tru-hero-banner-content {
+    .tru-hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
       position: relative;
       z-index: 1;
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 24px;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
     }
 
-    .tru-hero-banner h1 {
+    .tru-hero-eyebrow {
+      display: inline-block;
+      background: var(--tru-yellow);
+      color: var(--tru-blue);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 4px;
+      margin-bottom: 18px;
+    }
+
+    .tru-hero h1 {
       font-family: var(--font-heading);
-      font-size: clamp(28px, 4vw, 44px);
+      font-size: clamp(30px, 4vw, 50px);
       font-weight: 400;
-      color: var(--tru-white);
-      line-height: 1.2;
-      margin-bottom: 12px;
+      line-height: 1.18;
+      margin-bottom: 22px;
       letter-spacing: -0.01em;
     }
 
-    .tru-hero-banner p {
-      font-size: 15.5px;
-      color: rgba(255,255,255,0.82);
-      max-width: 560px;
-      line-height: 1.6;
-    }
-
-    /* Teal accent bar at bottom of hero */
-    .tru-hero-accent {
-      height: 5px;
-      background: linear-gradient(90deg, var(--tru-yellow) 0%, var(--tru-teal) 100%);
-    }
-
-    /* ── Breadcrumb ──────────────────────────────────────────── */
-    .tru-breadcrumb {
-      background: var(--tru-bg);
-      border-bottom: 1px solid var(--tru-border);
-      padding: 10px 0;
-    }
-
-    .tru-breadcrumb-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12.5px;
-    }
-
-    .tru-breadcrumb a {
-      color: var(--tru-teal);
-      transition: color 0.15s;
-    }
-    .tru-breadcrumb a:hover { color: var(--tru-blue); text-decoration: underline; }
-
-    .tru-breadcrumb-sep {
-      color: var(--tru-grey);
-      font-size: 11px;
-    }
-
-    .tru-breadcrumb-current {
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    /* ── Main Content Area ───────────────────────────────────── */
-    .tru-content-wrap {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 36px 24px 60px;
-      display: grid;
-      grid-template-columns: 220px 1fr 260px;
-      gap: 36px;
-      align-items: start;
-    }
-
-    /* ── Left Sidebar ────────────────────────────────────────── */
-    .tru-sidebar-left {
-      position: sticky;
-      top: 86px;
-    }
-
-    .tru-sidenav {
-      background: var(--tru-white);
-      border: 1px solid var(--tru-border);
-      border-radius: 6px;
-      overflow: hidden;
-    }
-
-    .tru-sidenav-title {
-      background: var(--tru-blue);
-      color: var(--tru-white);
-      font-family: var(--font-heading);
-      font-size: 13px;
-      font-weight: 500;
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .tru-sidenav-title svg { flex-shrink: 0; }
-
-    .tru-sidenav ul {
-      list-style: none;
-    }
-
-    .tru-sidenav ul li a {
-      display: block;
-      font-size: 13px;
-      color: var(--text-body);
-      padding: 10px 16px;
-      border-bottom: 1px solid var(--tru-bg);
-      border-left: 3px solid transparent;
-      transition: background 0.15s, border-color 0.15s, color 0.15s;
-    }
-
-    .tru-sidenav ul li a:hover,
-    .tru-sidenav ul li a.active {
-      background: var(--tru-teal-light);
-      border-left-color: var(--tru-teal);
-      color: var(--tru-blue);
-    }
-
-    .tru-sidenav ul li a.active {
-      font-weight: 600;
-    }
-
-    .tru-sidenav ul li:last-child a {
-      border-bottom: none;
-    }
-
-    /* ── Main Column ─────────────────────────────────────────── */
-    .tru-main-col h2 {
-      font-family: var(--font-heading);
-      font-size: 28px;
-      font-weight: 400;
-      color: var(--tru-blue);
-      margin-bottom: 12px;
-      line-height: 1.25;
-    }
-
-    .tru-main-col .intro {
-      font-size: 15.5px;
-      color: var(--text-muted);
-      line-height: 1.7;
-      margin-bottom: 36px;
-      max-width: 640px;
-    }
-
-    /* Service cards grid */
-    .tru-service-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .tru-service-card {
-      display: flex;
-      flex-direction: column;
-      border: 1px solid var(--tru-border);
-      border-radius: 8px;
-      overflow: hidden;
-      transition: box-shadow 0.2s, transform 0.2s;
-      background: var(--tru-white);
-    }
-
-    .tru-service-card:hover {
-      box-shadow: 0 4px 20px rgba(0,62,81,0.1);
-      transform: translateY(-2px);
-    }
-
-    .tru-service-card-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 16px 18px 14px;
-      border-bottom: none;
-    }
-
-    .tru-service-card-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: var(--tru-teal-light);
-      border: 2px solid rgba(0,176,185,0.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+    .tru-hero h1 em {
+      font-style: normal;
       color: var(--tru-teal);
     }
 
-    .tru-service-card-title {
-      font-family: var(--font-heading);
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--tru-blue);
+    .tru-hero p {
+      font-size: 16.5px;
+      opacity: 0.88;
+      margin-bottom: 34px;
+      max-width: 480px;
+      line-height: 1.65;
     }
 
-    .tru-service-card-body {
-      padding: 0 18px 14px;
-      font-size: 13.5px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .tru-service-card-footer {
-      padding: 0 18px 14px;
-    }
-
-    .tru-learn-more {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--tru-teal);
-      background: none;
-      border: 1.5px solid var(--tru-teal);
-      padding: 6px 14px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.15s, color 0.15s;
-    }
-
-    .tru-learn-more:hover {
-      background: var(--tru-teal);
-      color: var(--tru-white);
-    }
-
-    /* ── Right Sidebar ───────────────────────────────────────── */
-    .tru-sidebar-right {
-      position: sticky;
-      top: 86px;
+    .tru-hero-btns {
       display: flex;
-      flex-direction: column;
-      gap: 16px;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
-    .tru-cta-box {
-      border-radius: 6px;
-      overflow: hidden;
-    }
-
-    .tru-cta-box--primary {
+    .btn-primary {
       background: var(--tru-yellow);
+      color: var(--tru-blue);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 13px 26px;
+      border-radius: 7px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.18s;
+      display: inline-block;
     }
 
-    .tru-cta-box--secondary {
-      background: var(--tru-teal-light);
-      border: 1px solid rgba(0,176,185,0.22);
+    .btn-primary:hover { background: #ffe033; transform: translateY(-1px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--tru-white);
+      font-weight: 500;
+      font-size: 15px;
+      padding: 12px 24px;
+      border-radius: 7px;
+      border: 2px solid rgba(255,255,255,0.38);
+      cursor: pointer;
+      transition: border-color 0.18s, background 0.18s;
+      display: inline-block;
     }
 
-    .tru-cta-box--muted {
-      background: var(--tru-bg);
-      border: 1px solid var(--tru-border);
+    .btn-outline:hover { border-color: var(--tru-white); background: rgba(255,255,255,0.07); }
+
+    .tru-hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 50px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.15);
     }
 
-    .tru-cta-label {
+    .tru-stat strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--tru-teal);
+    }
+
+    .tru-stat span {
+      font-size: 13px;
+      opacity: 0.72;
+    }
+
+    /* Hero visual */
+    .tru-hero-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .tru-campus-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 14px;
+      padding: 24px;
+      backdrop-filter: blur(8px);
+    }
+
+    .tru-campus-card-label {
       font-size: 10.5px;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      padding: 10px 14px 4px;
+      color: var(--tru-teal);
+      margin-bottom: 8px;
     }
 
-    .tru-cta-box--primary .tru-cta-label    { color: var(--tru-blue); }
-    .tru-cta-box--secondary .tru-cta-label  { color: var(--tru-teal); }
-    .tru-cta-box--muted .tru-cta-label      { color: var(--text-muted); }
-
-    .tru-cta-body {
-      padding: 0 14px 14px;
+    .tru-campus-card-title {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 6px;
     }
 
-    .tru-cta-body p {
-      font-size: 12.5px;
+    .tru-campus-card-desc {
+      font-size: 13px;
+      opacity: 0.72;
       line-height: 1.5;
+    }
+
+    .tru-campus-tag {
+      display: inline-block;
+      background: rgba(0,176,185,0.18);
+      color: var(--tru-teal);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 20px;
+      margin-top: 10px;
+    }
+
+    /* â”€â”€ Yellow accent bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .tru-accent-bar {
+      height: 5px;
+      background: linear-gradient(90deg, var(--tru-yellow) 0%, var(--tru-teal) 100%);
+    }
+
+    /* â”€â”€ Section Base â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    section { padding: 80px 24px; }
+
+    .section-inner { max-width: 1180px; margin: 0 auto; }
+
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--tru-teal);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       margin-bottom: 10px;
     }
 
-    .tru-cta-box--primary .tru-cta-body p   { color: var(--tru-blue); }
-    .tru-cta-box--secondary .tru-cta-body p { color: #2e5560; }
-    .tru-cta-box--muted .tru-cta-body p     { color: var(--text-muted); }
-
-    .tru-cta-btn {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      padding: 9px 12px;
-      border-radius: 4px;
-      border: none;
-      font-family: var(--font-body);
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.15s, transform 0.1s;
-      text-align: left;
-    }
-
-    .tru-cta-btn:hover { transform: translateX(2px); }
-
-    .tru-cta-btn--blue {
-      background: var(--tru-blue);
-      color: var(--tru-white);
-    }
-    .tru-cta-btn--blue:hover { background: var(--tru-blue-light); }
-
-    .tru-cta-btn--teal {
-      background: var(--tru-teal);
-      color: var(--tru-white);
-    }
-    .tru-cta-btn--teal:hover { background: #009aa3; }
-
-    .tru-cta-btn--outline {
-      background: var(--tru-white);
-      color: var(--tru-blue);
-      border: 1px solid var(--tru-border);
-    }
-    .tru-cta-btn--outline:hover { background: var(--tru-bg); }
-
-    /* Staff intranet box */
-    .tru-staff-box {
-      background: var(--tru-bg);
-      border: 1px solid var(--tru-border);
-      border-radius: 6px;
-      padding: 14px;
-    }
-
-    .tru-staff-box h4 {
+    .section-title {
       font-family: var(--font-heading);
-      font-size: 13.5px;
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 400;
+      color: var(--tru-blue);
+      margin-bottom: 14px;
+      line-height: 1.25;
+    }
+
+    .section-desc {
+      font-size: 16px;
+      color: #4a6472;
+      max-width: 560px;
+      margin-bottom: 48px;
+      line-height: 1.65;
+    }
+
+    /* â”€â”€ Programs Grid â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .tru-programs { background: #f5f8f9; }
+
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .program-card {
+      background: var(--tru-white);
+      border-radius: 12px;
+      padding: 28px 24px;
+      border: 1px solid #e2edf0;
+      transition: box-shadow 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    .program-card:hover {
+      box-shadow: 0 8px 28px rgba(0,62,81,0.12);
+      transform: translateY(-3px);
+    }
+
+    .program-card-icon {
+      font-size: 32px;
+      margin-bottom: 14px;
+    }
+
+    .program-card h3 {
+      font-family: var(--font-heading);
+      font-size: 17px;
       font-weight: 500;
       color: var(--tru-blue);
       margin-bottom: 8px;
     }
 
-    .tru-staff-box p {
-      font-size: 12px;
-      color: var(--text-muted);
+    .program-card p {
+      font-size: 13.5px;
+      color: #5a7585;
       line-height: 1.5;
-      margin-bottom: 10px;
     }
 
-    /* ── Footer ──────────────────────────────────────────────── */
-    .tru-footer {
-      background: var(--tru-blue);
-      color: rgba(255,255,255,0.8);
-      padding: 48px 24px 24px;
+    .program-card-link {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--tru-teal);
+      margin-top: 16px;
     }
 
-    .tru-footer-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-    }
-
-    .tru-footer-top {
+    /* â”€â”€ Campus Life â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .campus-grid {
       display: grid;
-      grid-template-columns: 1.6fr 1fr 1fr 1fr;
-      gap: 36px;
-      padding-bottom: 36px;
-      border-bottom: 1px solid rgba(255,255,255,0.12);
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .campus-tile {
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .campus-tile-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.4s;
+    }
+
+    .campus-tile:hover .campus-tile-bg { transform: scale(1.04); }
+
+    .campus-tile-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,62,81,0.82) 0%, rgba(0,62,81,0.1) 55%, transparent 100%);
+    }
+
+    .campus-tile-content {
+      position: relative;
+      padding: 20px;
+      color: var(--tru-white);
+    }
+
+    .campus-tile-content h3 {
+      font-family: var(--font-heading);
+      font-size: 17px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .campus-tile-content p {
+      font-size: 12.5px;
+      opacity: 0.78;
+    }
+
+    /* Campus tile colours (placeholder gradients instead of images) */
+    .campus-tile--housing   .campus-tile-bg { background: linear-gradient(135deg,#005570,#00b0b9); }
+    .campus-tile--recreation .campus-tile-bg { background: linear-gradient(135deg,#003e51,#bad1ba); }
+    .campus-tile--culture   .campus-tile-bg { background: linear-gradient(135deg,#00868e,#003e51); }
+    .campus-tile--dining    .campus-tile-bg { background: linear-gradient(135deg,#ffcd00,#f5a623); }
+    .campus-tile--wellness  .campus-tile-bg { background: linear-gradient(135deg,#bad1ba,#9ab7c1); }
+    .campus-tile--clubs     .campus-tile-bg { background: linear-gradient(135deg,#003e51,#ffcd00 160%); }
+
+    /* Merge first tile to span 2 rows */
+    .campus-tile--housing { grid-row: span 2; }
+
+
+    /* â”€â”€ Admissions Banner â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .tru-admissions {
+      background: var(--tru-blue);
+      color: var(--tru-white);
+      padding: 70px 24px;
+    }
+
+    .admissions-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .admissions-inner h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(22px, 3vw, 34px);
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+
+    .admissions-inner p {
+      opacity: 0.82;
+      font-size: 15.5px;
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+
+    .admissions-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .adm-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .adm-step-num {
+      background: var(--tru-yellow);
+      color: var(--tru-blue);
+      font-weight: 700;
+      font-size: 13px;
+      min-width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .adm-step-text strong {
+      display: block;
+      font-size: 14.5px;
+      margin-bottom: 3px;
+    }
+
+    .adm-step-text span {
+      font-size: 13px;
+      opacity: 0.72;
+    }
+
+    /* â”€â”€ Open Learning â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .tru-open-learning { background: #f5f8f9; }
+
+    .ol-feature-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .ol-feature-visual {
+      background: var(--tru-blue);
+      border-radius: 16px;
+      padding: 40px 36px;
+      color: var(--tru-white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ol-feature-visual::after {
+      content: 'ðŸŒ';
+      position: absolute;
+      bottom: -10px;
+      right: 10px;
+      font-size: 100px;
+      opacity: 0.07;
+    }
+
+    .ol-feature-visual h3 {
+      font-family: var(--font-heading);
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+
+    .ol-feature-visual p {
+      opacity: 0.8;
+      font-size: 14.5px;
+      line-height: 1.6;
       margin-bottom: 24px;
     }
 
-    .tru-footer-brand .tru-logo-wordmark .wm-tru,
-    .tru-footer-brand .tru-logo-wordmark .wm-full {
-      color: var(--tru-white);
+    .ol-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
-    .tru-footer-tagline {
-      font-family: var(--font-heading);
-      font-size: 13px;
-      font-weight: 300;
-      font-style: italic;
-      color: rgba(255,255,255,0.55);
-      margin: 12px 0 16px;
-    }
-
-    .tru-footer-land {
-      font-size: 11.5px;
-      color: rgba(255,255,255,0.42);
-      line-height: 1.6;
-    }
-
-    .tru-footer-col h4 {
-      color: var(--tru-white);
+    .ol-badge {
+      background: rgba(0,176,185,0.25);
+      border: 1px solid rgba(0,176,185,0.4);
+      color: #7af0f6;
       font-size: 12px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    .ol-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .ol-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .ol-item-icon {
+      font-size: 26px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .ol-item-body h4 {
+      font-family: var(--font-heading);
+      font-size: 15.5px;
+      font-weight: 500;
+      color: var(--tru-blue);
+      margin-bottom: 5px;
+    }
+
+    .ol-item-body p {
+      font-size: 13.5px;
+      color: #5a7585;
+      line-height: 1.5;
+    }
+
+    /* â”€â”€ Testimonials â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .tru-testimonials { background: var(--tru-white); }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+    }
+
+    .testimonial-card {
+      background: #f5f8f9;
+      border-radius: 12px;
+      padding: 28px 24px;
+      border-left: 4px solid var(--tru-teal);
+    }
+
+    .testimonial-card blockquote {
+      font-size: 14.5px;
+      line-height: 1.65;
+      color: #2e4a58;
+      margin-bottom: 18px;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .testimonial-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--tru-sage);
+      flex-shrink: 0;
+    }
+
+    .testimonial-author-info strong {
+      display: block;
+      font-size: 13.5px;
+      color: var(--tru-blue);
+      font-weight: 600;
+    }
+
+    .testimonial-author-info span {
+      font-size: 12px;
+      color: #7a9aa8;
+    }
+
+    /* â”€â”€ News strip â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .tru-news { background: var(--tru-blue); padding: 50px 24px; }
+
+    .news-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .news-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .news-header h2 {
+      font-family: var(--font-heading);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--tru-white);
+    }
+
+    .news-header a {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--tru-teal);
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .news-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 20px;
+      transition: background 0.2s;
+    }
+
+    .news-card:hover { background: rgba(255,255,255,0.12); }
+
+    .news-card-date {
+      font-size: 11px;
       font-weight: 700;
+      color: var(--tru-yellow);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .news-card h3 {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--tru-white);
+      line-height: 1.4;
+    }
+
+    /* â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    footer {
+      background: #002634;
+      color: rgba(255,255,255,0.7);
+      padding: 60px 24px 30px;
+    }
+
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand-tagline {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      margin: 12px 0 18px;
+      font-style: italic;
+    }
+
+    .footer-brand-tku {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.5;
+    }
+
+    .footer-col h4 {
+      color: var(--tru-white);
+      font-size: 13px;
+      font-weight: 600;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       margin-bottom: 14px;
     }
 
-    .tru-footer-col ul { list-style: none; }
-    .tru-footer-col ul li { margin-bottom: 8px; }
-    .tru-footer-col ul li a {
-      font-size: 13px;
-      color: rgba(255,255,255,0.62);
+    .footer-col ul { list-style: none; }
+
+    .footer-col ul li {
+      margin-bottom: 9px;
+    }
+
+    .footer-col ul li a {
+      font-size: 13.5px;
+      color: rgba(255,255,255,0.6);
       transition: color 0.15s;
     }
-    .tru-footer-col ul li a:hover { color: var(--tru-teal); }
 
-    .tru-footer-bottom {
+    .footer-col ul li a:hover { color: var(--tru-teal); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 22px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -640,402 +813,512 @@
       gap: 12px;
     }
 
-    .tru-footer-bottom p { font-size: 11.5px; color: rgba(255,255,255,0.45); }
+    .footer-bottom p { font-size: 12px; }
 
-    .tru-footer-socials {
+    .social-links {
       display: flex;
-      gap: 8px;
+      gap: 12px;
     }
 
-    .tru-footer-socials a {
-      width: 30px;
-      height: 30px;
+    .social-links a {
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.09);
+      background: rgba(255,255,255,0.08);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.15s;
-    }
-    .tru-footer-socials a:hover { background: var(--tru-teal); }
-
-    /* ── Responsive ──────────────────────────────────────────── */
-    @media (max-width: 1024px) {
-      .tru-content-wrap {
-        grid-template-columns: 200px 1fr 240px;
-        gap: 24px;
-      }
+      font-size: 15px;
+      transition: background 0.18s;
     }
 
-    @media (max-width: 860px) {
-      .tru-content-wrap {
-        grid-template-columns: 1fr;
-      }
-      .tru-sidebar-left,
-      .tru-sidebar-right {
-        position: static;
-      }
-      .tru-topbar { display: none; }
-      .tru-footer-top { grid-template-columns: 1fr 1fr; }
+    .social-links a:hover { background: var(--tru-teal); }
+
+    /* â”€â”€ Responsive â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    @media (max-width: 900px) {
+      .tru-hero-inner,
+      .admissions-inner,
+      .ol-feature-row { grid-template-columns: 1fr; }
+
+      .tru-hero-visual { display: none; }
+      .tru-hero-stats { grid-template-columns: repeat(2, 1fr); }
+
+      .campus-grid { grid-template-columns: 1fr 1fr; }
+      .campus-tile--housing { grid-row: span 1; }
+
+      .footer-top { grid-template-columns: 1fr 1fr; }
     }
 
-    @media (max-width: 560px) {
+    @media (max-width: 600px) {
       .tru-nav-links { display: none; }
-      .tru-hero-banner { height: 200px; }
-      .tru-footer-top { grid-template-columns: 1fr; }
+      .campus-grid { grid-template-columns: 1fr; }
+      .tru-hero-stats { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
 
-  <!-- ── Top bar ─────────────────────────────────────────────── -->
-  <div class="tru-topbar" role="navigation" aria-label="Top utility links">
-    <ul class="tru-topbar-links">
-      <li><a href="#">myTRU</a></li>
-      <li><a href="#">Moodle</a></li>
-      <li><a href="#">Library</a></li>
-      <li><a href="#">News &amp; Events</a></li>
-      <li><a href="#">Athletics</a></li>
-      <li><a href="#">Giving</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Contact</a></li>
-      <li><a href="#">Policy</a></li>
-    </ul>
-  </div>
-
-  <!-- ── Main Nav ────────────────────────────────────────────── -->
+  <!-- â”€â”€ Navigation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
   <nav class="tru-nav" aria-label="Main navigation">
     <div class="tru-nav-inner">
-
-      <!-- TRU Shield + Wordmark -->
       <a href="/" class="tru-logo" aria-label="Thompson Rivers University homepage">
-        <svg class="tru-logo-shield" viewBox="0 0 48 54" fill="none" aria-hidden="true">
-          <path d="M24 2L4 10v20c0 11 8.5 19.5 20 22 11.5-2.5 20-11 20-22V10L24 2z" fill="#003e51" stroke="#003e51"/>
-          <path d="M24 2L4 10v20c0 11 8.5 19.5 20 22 11.5-2.5 20-11 20-22V10L24 2z" fill="none" stroke="#00b0b9" stroke-width="1.5"/>
-          <text x="24" y="30" text-anchor="middle" dominant-baseline="middle" font-family="'Roboto Slab',serif" font-size="13" font-weight="700" fill="#ffffff" letter-spacing="1">TRU</text>
-        </svg>
-        <div class="tru-logo-wordmark">
-          <span class="wm-tru">THOMPSON RIVERS</span>
-          <span class="wm-full">UNIVERSITY</span>
+        <div class="tru-logo-badge" aria-hidden="true">TRU</div>
+        <div class="tru-logo-text">
+          <strong>Thompson Rivers University</strong>
+          <span>Kamloops, British Columbia</span>
         </div>
       </a>
 
       <ul class="tru-nav-links" role="list">
-        <li><a href="#">Programs</a></li>
-        <li><a href="#">Future Students</a></li>
-        <li><a href="#">Current Students</a></li>
-        <li><a href="#">Online Learning</a></li>
-        <li><a href="#">Indigenous</a></li>
-        <li><a href="#">International</a></li>
-        <li><a href="#">Research</a></li>
+        <li><a href="#programs">Programs</a></li>
+        <li><a href="#campus">Campus Life</a></li>
+        <li><a href="#admissions">Admissions</a></li>
+        <li><a href="#open-learning">Open Learning</a></li>
+        <li><a href="#" class="tru-nav-apply">Apply Now</a></li>
       </ul>
-
-      <button class="tru-nav-search" aria-label="Search TRU website">
-        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35"/>
-        </svg>
-      </button>
     </div>
   </nav>
 
-  <!-- ── Hero Banner ──────────────────────────────────────────── -->
-  <div class="tru-hero-banner" role="banner">
-    <div class="tru-hero-banner-content">
-      <h1>Policy &amp; Governance Resources</h1>
-      <p>We maintain and facilitate sound governance practices and support the development of a transparent, accountable, and well-governed institution.</p>
-    </div>
-  </div>
-  <div class="tru-hero-accent"></div>
+  <main id="main">
 
-  <!-- ── Breadcrumb ───────────────────────────────────────────── -->
-  <nav class="tru-breadcrumb" aria-label="Breadcrumb">
-    <div class="tru-breadcrumb-inner">
-      <a href="#">Home</a>
-      <span class="tru-breadcrumb-sep" aria-hidden="true">&#8250;</span>
-      <span class="tru-breadcrumb-current" aria-current="page">Policy &amp; Governance</span>
-    </div>
-  </nav>
+    <!-- â”€â”€ Hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <section class="tru-hero" aria-label="Welcome to TRU">
+      <div class="tru-hero-inner">
+        <div>
+          <div class="tru-hero-eyebrow">Thompson Rivers University</div>
+          <h1>
+            Diverse pathways to<br/>
+            <em>living your potential</em>
+          </h1>
+          <p>
+            TRU is a comprehensive university in Kamloops, BC, offering undergraduate
+            and graduate programs, trades, and open learning for students across Canada
+            and the world.
+          </p>
+          <div class="tru-hero-btns">
+            <a href="#admissions" class="btn-primary">Apply Now</a>
+            <a href="#programs" class="btn-outline">Explore Programs</a>
+          </div>
 
-  <!-- ── Main Content ──────────────────────────────────────────── -->
-  <div class="tru-content-wrap" id="main">
-
-    <!-- Left Sidebar -->
-    <aside class="tru-sidebar-left" aria-label="Policy navigation">
-      <nav class="tru-sidenav">
-        <div class="tru-sidenav-title">
-          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 7h18M3 12h18M3 17h18"/>
-          </svg>
-          Policy &amp; Governance
-        </div>
-        <ul>
-          <li><a href="#records" class="active">Records Management</a></li>
-          <li><a href="#hr">HR &amp; Employment</a></li>
-          <li><a href="#finance">Finance &amp; Procurement</a></li>
-          <li><a href="#academic">Academic Integrity</a></li>
-          <li><a href="#health">Health &amp; Safety</a></li>
-          <li><a href="#privacy">Privacy &amp; IT</a></li>
-          <li><a href="#governance">Board Governance</a></li>
-          <li><a href="#">About / Contact</a></li>
-        </ul>
-      </nav>
-    </aside>
-
-    <!-- Main Column -->
-    <main class="tru-main-col" id="policy-main">
-      <h2>Policy &amp; Governance Resources</h2>
-      <p class="intro">
-        TRU's governance framework supports transparency, accountability, and ethical decision-making across all university operations. Browse the policy categories below or ask the AI Policy Assistant for an instant, sourced answer.
-      </p>
-
-      <div class="tru-service-cards">
-
-        <!-- Records Management -->
-        <article class="tru-service-card" id="records">
-          <div class="tru-service-card-header">
-            <div class="tru-service-card-icon" aria-hidden="true">
-              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
-              </svg>
+          <div class="tru-hero-stats" role="list" aria-label="TRU key facts">
+            <div class="tru-stat" role="listitem">
+              <strong>25,000+</strong>
+              <span>Students enrolled</span>
             </div>
-            <div class="tru-service-card-title">Records Management &amp; Destruction</div>
-          </div>
-          <div class="tru-service-card-body">
-            Governing the creation, retention, and secure destruction of university records. Covers physical and electronic records, retention schedules, and approved destruction methods including shredding, burning, and secure digital deletion.
-          </div>
-          <div class="tru-service-card-footer">
-            <button class="tru-learn-more" onclick="document.getElementById('tru-chat-fab').click(); setTimeout(()=>{ document.getElementById('tru-input').value='What is the records destruction policy?'; document.getElementById('tru-send-btn').disabled=false; }, 400)">
-              Learn More
-              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </button>
-          </div>
-        </article>
-
-        <!-- HR & Employment -->
-        <article class="tru-service-card" id="hr">
-          <div class="tru-service-card-header">
-            <div class="tru-service-card-icon" aria-hidden="true">
-              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-              </svg>
+            <div class="tru-stat" role="listitem">
+              <strong>140+</strong>
+              <span>Programs offered</span>
             </div>
-            <div class="tru-service-card-title">Human Resources &amp; Employment</div>
-          </div>
-          <div class="tru-service-card-body">
-            Employment policies covering conflict of interest, conduct expectations, performance management, leave entitlements, and harassment-free workplace requirements for faculty and staff.
-          </div>
-          <div class="tru-service-card-footer">
-            <button class="tru-learn-more" onclick="document.getElementById('tru-chat-fab').click(); setTimeout(()=>{ document.getElementById('tru-input').value='What are the conflict of interest rules for TRU employees?'; document.getElementById('tru-send-btn').disabled=false; }, 400)">
-              Learn More
-              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </button>
-          </div>
-        </article>
-
-        <!-- Finance & Procurement -->
-        <article class="tru-service-card" id="finance">
-          <div class="tru-service-card-header">
-            <div class="tru-service-card-icon" aria-hidden="true">
-              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"/>
-              </svg>
-            </div>
-            <div class="tru-service-card-title">Finance &amp; Procurement</div>
-          </div>
-          <div class="tru-service-card-body">
-            Policies on travel expense reimbursement, purchasing goods and services, spending authority levels, supplier contracts, and financial controls applicable to all university departments.
-          </div>
-          <div class="tru-service-card-footer">
-            <button class="tru-learn-more" onclick="document.getElementById('tru-chat-fab').click(); setTimeout(()=>{ document.getElementById('tru-input').value='What is the travel expense reimbursement policy?'; document.getElementById('tru-send-btn').disabled=false; }, 400)">
-              Learn More
-              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </button>
-          </div>
-        </article>
-
-        <!-- Academic Integrity -->
-        <article class="tru-service-card" id="academic">
-          <div class="tru-service-card-header">
-            <div class="tru-service-card-icon" aria-hidden="true">
-              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
-              </svg>
-            </div>
-            <div class="tru-service-card-title">Academic Integrity &amp; Student Conduct</div>
-          </div>
-          <div class="tru-service-card-body">
-            Standards of academic honesty, plagiarism definitions, consequences of misconduct, and the formal process for addressing academic integrity violations for students and instructors.
-          </div>
-          <div class="tru-service-card-footer">
-            <button class="tru-learn-more" onclick="document.getElementById('tru-chat-fab').click(); setTimeout(()=>{ document.getElementById('tru-input').value='What is the academic integrity policy?'; document.getElementById('tru-send-btn').disabled=false; }, 400)">
-              Learn More
-              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </button>
-          </div>
-        </article>
-
-        <!-- Health & Safety -->
-        <article class="tru-service-card" id="health">
-          <div class="tru-service-card-header">
-            <div class="tru-service-card-icon" aria-hidden="true">
-              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-              </svg>
-            </div>
-            <div class="tru-service-card-title">Health, Safety &amp; Environment</div>
-          </div>
-          <div class="tru-service-card-body">
-            Occupational health and safety obligations, incident reporting procedures, safe work practices, environmental compliance, and the university's Joint Occupational Health &amp; Safety Committee mandate.
-          </div>
-          <div class="tru-service-card-footer">
-            <button class="tru-learn-more" onclick="document.getElementById('tru-chat-fab').click(); setTimeout(()=>{ document.getElementById('tru-input').value='What are TRU health and safety obligations?'; document.getElementById('tru-send-btn').disabled=false; }, 400)">
-              Learn More
-              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </button>
-          </div>
-        </article>
-
-        <!-- Privacy & IT -->
-        <article class="tru-service-card" id="privacy">
-          <div class="tru-service-card-header">
-            <div class="tru-service-card-icon" aria-hidden="true">
-              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-              </svg>
-            </div>
-            <div class="tru-service-card-title">Privacy, IT &amp; Acceptable Use</div>
-          </div>
-          <div class="tru-service-card-body">
-            Responsible use of university IT resources, data privacy obligations under FIPPA, password and system access requirements, and acceptable use guidelines for university networks and software.
-          </div>
-          <div class="tru-service-card-footer">
-            <button class="tru-learn-more" onclick="document.getElementById('tru-chat-fab').click(); setTimeout(()=>{ document.getElementById('tru-input').value='What is the acceptable use policy for IT resources?'; document.getElementById('tru-send-btn').disabled=false; }, 400)">
-              Learn More
-              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </button>
-          </div>
-        </article>
-
-      </div>
-    </main>
-
-    <!-- Right Sidebar -->
-    <aside class="tru-sidebar-right" aria-label="Quick actions">
-
-      <!-- AI CTA -->
-      <div class="tru-cta-box tru-cta-box--primary">
-        <div class="tru-cta-label">AI Policy Assistant</div>
-        <div class="tru-cta-body">
-          <p>Get instant, sourced answers from TRU policy documents. Powered by local AI.</p>
-          <button class="tru-cta-btn tru-cta-btn--blue" onclick="document.getElementById('tru-chat-fab').click()">
-            Ask AI Assistant
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Report an Incident -->
-      <div class="tru-cta-box tru-cta-box--secondary">
-        <div class="tru-cta-label">Policies Online</div>
-        <div class="tru-cta-body">
-          <p>View the full register of current TRU policies via myTRU.</p>
-          <button class="tru-cta-btn tru-cta-btn--teal">
-            Browse All Policies
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Staff Intranet -->
-      <div class="tru-staff-box">
-        <h4>Staff Intranet</h4>
-        <p>Policy templates, forms, and governance documentation are available on the TRU staff intranet.</p>
-        <button class="tru-cta-btn tru-cta-btn--outline">
-          Go to myTRU
-          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-
-    </aside>
-  </div>
-
-  <!-- ── Footer ───────────────────────────────────────────────── -->
-  <footer class="tru-footer">
-    <div class="tru-footer-inner">
-      <div class="tru-footer-top">
-        <div class="tru-footer-brand">
-          <div class="tru-logo" style="margin-bottom:4px;">
-            <div class="tru-logo-wordmark">
-              <span class="wm-tru" style="color:white;">THOMPSON RIVERS</span>
-              <span class="wm-full" style="color:rgba(255,255,255,0.7);">UNIVERSITY</span>
+            <div class="tru-stat" role="listitem">
+              <strong>1 of 1</strong>
+              <span>Open university in BC</span>
             </div>
           </div>
-          <p class="tru-footer-tagline">"Diverse pathways to living your potential."</p>
-          <p class="tru-footer-land">TRU is located on the traditional, ancestral, and unceded territory of the Tk'emlups te Secwepemc, within the Secwepemc homeland.</p>
         </div>
 
-        <div class="tru-footer-col">
-          <h4>Information</h4>
+        <div class="tru-hero-visual" aria-hidden="true">
+          <div class="tru-campus-card">
+            <div class="tru-campus-card-label">Main Campus</div>
+            <div class="tru-campus-card-title">Kamloops, BC</div>
+            <div class="tru-campus-card-desc">
+              Nestled between two rivers and surrounded by dramatic hills,
+              TRU's main campus sits on the traditional territory of the
+              Tk'emlÃºps te SecwÃ©pemc.
+            </div>
+            <span class="tru-campus-tag">ðŸŒ¿ SecwÃ©pemc Territory</span>
+          </div>
+
+          <div class="tru-campus-card">
+            <div class="tru-campus-card-label">Open Learning</div>
+            <div class="tru-campus-card-title">Study from anywhere</div>
+            <div class="tru-campus-card-desc">
+              TRU Open Learning offers hundreds of online courses and programs,
+              giving you the flexibility to learn on your schedule.
+            </div>
+            <span class="tru-campus-tag">ðŸ’» 100% Online available</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="tru-accent-bar"></div>
+
+    <!-- â”€â”€ Programs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <section class="tru-programs" id="programs" aria-labelledby="programs-heading">
+      <div class="section-inner">
+        <p class="section-eyebrow">Academics</p>
+        <h2 class="section-title" id="programs-heading">Find your program</h2>
+        <p class="section-desc">
+          From arts and sciences to trades and technology, TRU offers 140+
+          programs designed to launch your career and ignite your curiosity.
+        </p>
+
+        <div class="programs-grid" role="list">
+          <article class="program-card" role="listitem">
+            <div class="program-card-icon">âš•ï¸</div>
+            <h3>Health Sciences &amp; Nursing</h3>
+            <p>Train for rewarding careers in healthcare with TRU's hands-on nursing and health science programs.</p>
+            <span class="program-card-link">Explore â†’ </span>
+          </article>
+
+          <article class="program-card" role="listitem">
+            <div class="program-card-icon">ðŸ’¼</div>
+            <h3>Business &amp; Economics</h3>
+            <p>Build real-world skills in management, finance, marketing, and entrepreneurship.</p>
+            <span class="program-card-link">Explore â†’ </span>
+          </article>
+
+          <article class="program-card" role="listitem">
+            <div class="program-card-icon">ðŸ’»</div>
+            <h3>Computing &amp; Technology</h3>
+            <p>Master computer science, software engineering, and IT programs taught by industry practitioners.</p>
+            <span class="program-card-link">Explore â†’ </span>
+          </article>
+
+          <article class="program-card" role="listitem">
+            <div class="program-card-icon">ðŸŽ¨</div>
+            <h3>Arts, Social Sciences &amp; Humanities</h3>
+            <p>Explore human experience through arts, history, psychology, English, and social work.</p>
+            <span class="program-card-link">Explore â†’ </span>
+          </article>
+
+          <article class="program-card" role="listitem">
+            <div class="program-card-icon">ðŸ”¬</div>
+            <h3>Science</h3>
+            <p>Dive into biology, chemistry, physics, and environmental science with excellent lab facilities.</p>
+            <span class="program-card-link">Explore â†’ </span>
+          </article>
+
+          <article class="program-card" role="listitem">
+            <div class="program-card-icon">ðŸ—ï¸</div>
+            <h3>Trades &amp; Technology</h3>
+            <p>Get your ticket in electrical, plumbing, welding, carpentry, and more at TRU's trades school.</p>
+            <span class="program-card-link">Explore â†’ </span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- â”€â”€ Campus Life â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <section id="campus" aria-labelledby="campus-heading">
+      <div class="section-inner">
+        <p class="section-eyebrow">Student Experience</p>
+        <h2 class="section-title" id="campus-heading">Life at TRU</h2>
+        <p class="section-desc">
+          TRU is more than a classroom â€” it's a vibrant community where you live,
+          explore, and grow. Discover what makes our campus experience unique.
+        </p>
+
+        <div class="campus-grid">
+          <div class="campus-tile campus-tile--housing">
+            <div class="campus-tile-bg"></div>
+            <div class="campus-tile-overlay"></div>
+            <div class="campus-tile-content">
+              <h3>ðŸ  On-Campus Housing</h3>
+              <p>Modern residence halls and suites steps from your classes.</p>
+            </div>
+          </div>
+
+          <div class="campus-tile campus-tile--recreation">
+            <div class="campus-tile-bg"></div>
+            <div class="campus-tile-overlay"></div>
+            <div class="campus-tile-content">
+              <h3>ðŸ‹ï¸ Recreation Centre</h3>
+              <p>World-class gym, pool, climbing wall, and fitness classes.</p>
+            </div>
+          </div>
+
+          <div class="campus-tile campus-tile--culture">
+            <div class="campus-tile-bg"></div>
+            <div class="campus-tile-overlay"></div>
+            <div class="campus-tile-content">
+              <h3>ðŸŒ Multicultural Community</h3>
+              <p>A welcoming, diverse community of 100+ countries represented.</p>
+            </div>
+          </div>
+
+          <div class="campus-tile campus-tile--dining">
+            <div class="campus-tile-bg"></div>
+            <div class="campus-tile-overlay"></div>
+            <div class="campus-tile-content">
+              <h3>ðŸ½ï¸ Dining &amp; CafÃ©s</h3>
+              <p>Fresh, diverse food options across campus.</p>
+            </div>
+          </div>
+
+          <div class="campus-tile campus-tile--wellness">
+            <div class="campus-tile-bg"></div>
+            <div class="campus-tile-overlay"></div>
+            <div class="campus-tile-content">
+              <h3>ðŸ§  Health &amp; Wellness</h3>
+              <p>Mental health counselling, medical clinic, and support services.</p>
+            </div>
+          </div>
+
+          <div class="campus-tile campus-tile--clubs">
+            <div class="campus-tile-bg"></div>
+            <div class="campus-tile-overlay"></div>
+            <div class="campus-tile-content">
+              <h3>ðŸŽ­ Clubs &amp; Events</h3>
+              <p>80+ student clubs, sports teams, and campus events year-round.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- â”€â”€ Admissions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <section class="tru-admissions" id="admissions" aria-labelledby="admissions-heading">
+      <div class="admissions-inner">
+        <div>
+          <h2 id="admissions-heading">Your journey starts here</h2>
+          <p>
+            Applying to TRU is straightforward. Whether you're a domestic or
+            international student, our admissions team is here to guide you every
+            step of the way.
+          </p>
+          <a href="#" class="btn-primary">Start your application</a>
+        </div>
+
+        <div class="admissions-steps" role="list" aria-label="Admissions steps">
+          <div class="adm-step" role="listitem">
+            <div class="adm-step-num" aria-hidden="true">1</div>
+            <div class="adm-step-text">
+              <strong>Choose your program</strong>
+              <span>Browse 140+ programs and find the one that fits your goals.</span>
+            </div>
+          </div>
+          <div class="adm-step" role="listitem">
+            <div class="adm-step-num" aria-hidden="true">2</div>
+            <div class="adm-step-text">
+              <strong>Check admission requirements</strong>
+              <span>Review the prerequisites and transcripts needed for your program.</span>
+            </div>
+          </div>
+          <div class="adm-step" role="listitem">
+            <div class="adm-step-num" aria-hidden="true">3</div>
+            <div class="adm-step-text">
+              <strong>Submit your application</strong>
+              <span>Apply online through the TRU application portal.</span>
+            </div>
+          </div>
+          <div class="adm-step" role="listitem">
+            <div class="adm-step-num" aria-hidden="true">4</div>
+            <div class="adm-step-text">
+              <strong>Receive your offer</strong>
+              <span>Accept your offer, arrange funding, and get ready for TRU!</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- â”€â”€ Open Learning â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <section class="tru-open-learning" id="open-learning" aria-labelledby="ol-heading">
+      <div class="section-inner">
+        <div class="ol-feature-row">
+          <div class="ol-feature-visual">
+            <h3>TRU Open Learning â€” Study anywhere, any time</h3>
+            <p>
+              TRU is BC's only open university. Open Learning offers accredited degrees,
+              diplomas, certificates, and individual courses fully online with flexible
+              self-paced or scheduled options.
+            </p>
+            <div class="ol-badges">
+              <span class="ol-badge">100% Online</span>
+              <span class="ol-badge">Self-Paced</span>
+              <span class="ol-badge">Fully Accredited</span>
+              <span class="ol-badge">Credit Transfer</span>
+            </div>
+          </div>
+
+          <div class="ol-list">
+            <p class="section-eyebrow">Open Learning</p>
+            <h2 class="section-title" id="ol-heading">Flexible learning for every life stage</h2>
+
+            <div class="ol-item">
+              <div class="ol-item-icon">ðŸŽ¯</div>
+              <div class="ol-item-body">
+                <h4>Flexible scheduling</h4>
+                <p>Study at your own pace alongside work, family, and life commitments.</p>
+              </div>
+            </div>
+            <div class="ol-item">
+              <div class="ol-item-icon">ðŸŒ</div>
+              <div class="ol-item-body">
+                <h4>Study from anywhere</h4>
+                <p>Access world-class TRU education from anywhere in Canada or internationally.</p>
+              </div>
+            </div>
+            <div class="ol-item">
+              <div class="ol-item-icon">ðŸ”„</div>
+              <div class="ol-item-body">
+                <h4>Transfer your credits</h4>
+                <p>Transfer credits from other institutions and get recognized for prior learning.</p>
+              </div>
+            </div>
+            <div class="ol-item">
+              <div class="ol-item-icon">ðŸ¤</div>
+              <div class="ol-item-body">
+                <h4>Full support services</h4>
+                <p>Academic advisors, library access, tutoring, and student success coaches â€” all online.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- â”€â”€ Testimonials â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <section class="tru-testimonials" aria-labelledby="testimonials-heading">
+      <div class="section-inner">
+        <p class="section-eyebrow">Student Stories</p>
+        <h2 class="section-title" id="testimonials-heading">Hear from our community</h2>
+
+        <div class="testimonials-grid" role="list">
+          <div class="testimonial-card" role="listitem">
+            <blockquote>
+              "TRU gave me the flexibility I needed. As a mature student working part-time,
+              Open Learning made my Bachelor of Business degree possible without giving up my job."
+            </blockquote>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar" aria-hidden="true">ðŸ‘©</div>
+              <div class="testimonial-author-info">
+                <strong>Priya S.</strong>
+                <span>BBA Graduate, 2025 Â· Open Learning</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card" role="listitem">
+            <blockquote>
+              "The nursing program at TRU was incredible. The hands-on clinical placements
+              and supportive instructors prepared me for the real world like nothing else could."
+            </blockquote>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar" aria-hidden="true">ðŸ‘¨</div>
+              <div class="testimonial-author-info">
+                <strong>Marcus T.</strong>
+                <span>BSN Graduate, 2024 Â· Nursing</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card" role="listitem">
+            <blockquote>
+              "Coming from the Philippines, TRU welcomed me with open arms. The international
+              student support team helped me settle in and I made lifelong friends here."
+            </blockquote>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar" aria-hidden="true">ðŸ§‘</div>
+              <div class="testimonial-author-info">
+                <strong>Anika R.</strong>
+                <span>Computer Science, Year 3 Â· International Student</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- â”€â”€ News â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <section class="tru-news" aria-labelledby="news-heading">
+      <div class="news-inner">
+        <div class="news-header">
+          <h2 id="news-heading">Latest News &amp; Events</h2>
+          <a href="#">See all â†’</a>
+        </div>
+        <div class="news-grid" role="list">
+          <article class="news-card" role="listitem">
+            <div class="news-card-date">Mar 10, 2026</div>
+            <h3>TRU ranked among top 5 undergraduate universities in BC for student satisfaction</h3>
+          </article>
+          <article class="news-card" role="listitem">
+            <div class="news-card-date">Mar 7, 2026</div>
+            <h3>New partnership with Tk'emlÃºps te SecwÃ©pemc deepens Indigenous education commitments</h3>
+          </article>
+          <article class="news-card" role="listitem">
+            <div class="news-card-date">Feb 28, 2026</div>
+            <h3>TRU Open Learning surpasses 12,000 online course registrations this semester</h3>
+          </article>
+          <article class="news-card" role="listitem">
+            <div class="news-card-date">Feb 20, 2026</div>
+            <h3>Spring Convocation 2026 dates announced â€” over 2,400 graduates to be celebrated</h3>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="tru-logo">
+            <div class="tru-logo-badge" style="background:var(--tru-teal);" aria-hidden="true">TRU</div>
+            <div class="tru-logo-text" style="color:white;">
+              <strong>Thompson Rivers University</strong>
+            </div>
+          </div>
+          <p class="footer-brand-tagline">"Diverse pathways to living your potential."</p>
+          <p class="footer-brand-tku">
+            TRU is located on the traditional, ancestral, and unceded territory of<br/>
+            the Tk'emlÃºps te SecwÃ©pemc, within the SecwÃ©pemc homeland.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Academics</h4>
           <ul>
-            <li><a href="#">Current Students</a></li>
-            <li><a href="#">Prospective Students</a></li>
-            <li><a href="#">Open Learning Students</a></li>
-            <li><a href="#">Faculty &amp; Staff</a></li>
-            <li><a href="#">Alumni</a></li>
-            <li><a href="#">Donors</a></li>
-            <li><a href="#">Media</a></li>
+            <li><a href="#">All Programs</a></li>
+            <li><a href="#">Course Calendar</a></li>
+            <li><a href="#">Graduate Studies</a></li>
+            <li><a href="#">Open Learning</a></li>
+            <li><a href="#">Trades &amp; Tech</a></li>
           </ul>
         </div>
 
-        <div class="tru-footer-col">
+        <div class="footer-col">
           <h4>Students</h4>
           <ul>
-            <li><a href="#">Financial Aid</a></li>
+            <li><a href="#">myTRU Portal</a></li>
             <li><a href="#">Library</a></li>
-            <li><a href="#">myTRU Campus Store</a></li>
-            <li><a href="#">Student Aid</a></li>
-            <li><a href="#">Moodle</a></li>
-            <li><a href="#">IT Support</a></li>
-            <li><a href="#">All Student Services</a></li>
+            <li><a href="#">Financial Aid</a></li>
+            <li><a href="#">Housing</a></li>
+            <li><a href="#">Student Services</a></li>
           </ul>
         </div>
 
-        <div class="tru-footer-col">
-          <h4>Community</h4>
+        <div class="footer-col">
+          <h4>Contact</h4>
           <ul>
-            <li><a href="#">Careers at TRU</a></li>
-            <li><a href="#">Privacy &amp; Cookies</a></li>
-            <li><a href="#">Policies</a></li>
-            <li><a href="#">Continuing Studies</a></li>
-            <li><a href="#">Tours</a></li>
-            <li><a href="#">Campus Map</a></li>
+            <li><a href="#">805 TRU Way, Kamloops BC</a></li>
+            <li><a href="tel:+12503717444">250Â·371Â·7444</a></li>
+            <li><a href="mailto:info@tru.ca">info@tru.ca</a></li>
+            <li><a href="https://www.tru.ca">tru.ca</a></li>
           </ul>
         </div>
       </div>
 
-      <div class="tru-footer-bottom">
-        <p>&#169; 2026 Thompson Rivers University. All rights reserved. 805 TRU Way, Kamloops BC V2C 0C8</p>
-        <div class="tru-footer-socials" aria-label="TRU social media">
-          <a href="#" aria-label="Instagram">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="white"/></svg>
-          </a>
-          <a href="#" aria-label="TikTok">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.16 8.16 0 004.77 1.52V6.82a4.85 4.85 0 01-1-.13z"/></svg>
-          </a>
-          <a href="#" aria-label="YouTube">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
-          </a>
-          <a href="#" aria-label="LinkedIn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-          </a>
+      <div class="footer-bottom">
+        <p>Â© 2026 Thompson Rivers University. All rights reserved.</p>
+        <div class="social-links" aria-label="TRU social media">
+          <a href="#" aria-label="TRU on Facebook">ðŸ“˜</a>
+          <a href="#" aria-label="TRU on Instagram">ðŸ“¸</a>
+          <a href="#" aria-label="TRU on LinkedIn">ðŸ’¼</a>
+          <a href="#" aria-label="TRU on X">ðŸ¦</a>
+          <a href="#" aria-label="TRU on YouTube">â–¶ï¸</a>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- ── TRU Policy Chatbot Widget ────────────────────────────── -->
-  <!-- The widget injects itself automatically — FAB (bottom-right) + chat window -->
+  <!-- â”€â”€ TRU AI Chatbot (Floating Widget) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
   <script src="/static/chatbot.js"></script>
 </body>
 </html>
+
