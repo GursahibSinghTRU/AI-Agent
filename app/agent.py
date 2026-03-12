@@ -1,11 +1,9 @@
 """
-agent.py — The Policy Agent: retrieval + LLM answering + streaming.
+agent.py — The Policy Agent: retrieval + LLM answering + streaming via TOOL CALLING.
 
 Improvements:
-  • Streaming token generation via Ollama
-  • Conversation-aware prompts
-  • Query expansion for vague inputs
-  • Structured timing and source metadata
+  • Uses Ollama's native tool calling (`tools` array) to let the LLM decide when to search.
+  • Prevents blind vector searches for conversational greetings.
 """
 
 import json
@@ -14,88 +12,28 @@ import time
 from typing import Any, Dict, Generator, List, Optional
 
 import httpx
-from langchain_ollama import ChatOllama
 
 from app.config import settings
 from app.rag_core import (
-    build_qa_prompt,
-    format_context,
     load_vector_db,
     retrieve_with_threshold,
+    format_context,
+    extract_sources_from_context,
+    SYSTEM_PROMPT
 )
 
 log = logging.getLogger("agent")
 
 
-# ── Heuristics ───────────────────────────────────────────────────────────────
-
-_QUESTION_STARTERS = frozenset(
-    "what how when where who which why is are does do can could should would"
-    " tell explain describe list summarize".split()
-)
-
-
-def is_vague_query(text: str) -> bool:
-    """Treat very short keyword-style inputs as vague."""
-    t = (text or "").strip()
-    if not t:
-        return True
-    if "?" in t:
-        return False
-    words = t.split()
-    if len(words) <= 2:
-        first = words[0].lower().rstrip("?.,")
-        return first not in _QUESTION_STARTERS
-    if words[0].lower() in _QUESTION_STARTERS:
-        return False
-    return len(words) <= 3 and "?" not in t
-
-
-def _expand_query(question: str) -> str:
-    """
-    Lightly expand a query so the embedding search matches better.
-    Adds 'TRU policy' context when absent.
-    """
-    q = question.strip()
-    low = q.lower()
-    if "tru" not in low and "policy" not in low and "thompson rivers" not in low:
-        q = f"TRU policy: {q}"
-    return q
-
-
-def _stream_from_ollama(prompt: str, model: str) -> Generator[str, None, None]:
-    """
-    Stream tokens directly from Ollama API /chat endpoint with think=false for qwen3.5.
-    The /chat endpoint properly supports the think parameter.
-    """
-    try:
-        with httpx.Client(timeout=120.0) as client:
-            response = client.post(
-                f"{settings.OLLAMA_BASE_URL}/api/chat",
-                json={
-                    "model": model,
-                    "messages": [{"role": "user", "content": prompt}],
-                    "stream": True,
-                    "temperature": settings.TEMPERATURE,
-                    "think": False,  # Disable thinking for qwen3.5 - /api/chat supports this!
-                },
-            )
-            response.raise_for_status()
+def _build_messages(question: str, chat_history: Optional[List[Dict[str, str]]]) -> List[Dict[str, str]]:
+    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+    
+    if chat_history:
+        for msg in chat_history[-4:]:
+            messages.append({"role": msg.get("role", "user"), "content": msg.get("content", "")})
             
-            for line in response.iter_lines():
-                if not line:
-                    continue
-                try:
-                    chunk = json.loads(line)
-                    # /api/chat returns message.content, not response field
-                    if "message" in chunk and chunk["message"].get("content"):
-                        yield chunk["message"]["content"]
-                except json.JSONDecodeError:
-                    continue
-    except Exception as e:
-        log.error("Ollama streaming error: %s", e)
-        yield f"Error generating response: {str(e)}"
-
+    messages.append({"role": "user", "content": question})
+    return messages
 
 
 # ── Agent ────────────────────────────────────────────────────────────────────
@@ -103,35 +41,41 @@ def _stream_from_ollama(prompt: str, model: str) -> Generator[str, None, None]:
 class PolicyAgent:
     """
     RAG agent that retrieves from TRU policy documents and generates
-    answers via a local Ollama model.  Supports both blocking and
-    streaming response modes.
+    answers via a local Ollama model. Supports streaming tool calls.
     """
 
     def __init__(self):
         log.info("Loading vector DB from %s …", settings.persist_path)
         self.vectordb = load_vector_db()
-        self._llm = None
         log.info("PolicyAgent ready.")
 
-    @property
-    def llm(self) -> ChatOllama:
-        if self._llm is None:
-            self._llm = ChatOllama(
-                model=settings.CHAT_MODEL,
-                base_url=settings.OLLAMA_BASE_URL,
-                temperature=settings.TEMPERATURE,
-                num_predict=settings.NUM_PREDICT,
-                keep_alive=settings.KEEP_ALIVE,
-            )
-        return self._llm
+        # Define the tool that Qwen can call to query the RAG database
+        self.tools = [
+            {
+                "type": "function",
+                "function": {
+                    "name": "search_knowledge_base",
+                    "description": "Search the TRU policy vector database for information relevant to a query.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "query": {
+                                "type": "string",
+                                "description": "The specific query string to search for in the vector database (e.g. 'expense reimbursement rules', 'animal control policy')"
+                            }
+                        },
+                        "required": ["query"]
+                    }
+                }
+            }
+        ]
 
-    # ── Core retrieval (shared by both modes) ────────────────────
+    # ── Core retrieval ────────────────────
 
-    def _retrieve(self, question: str):
-        expanded = _expand_query(question)
+    def _retrieve(self, query: str):
         t0 = time.perf_counter()
         retrieved = retrieve_with_threshold(
-            self.vectordb, expanded,
+            self.vectordb, query,
             k=settings.K,
             score_threshold=settings.SCORE_THRESHOLD,
         )
@@ -150,33 +94,23 @@ class PolicyAgent:
         question: str,
         chat_history: Optional[List[Dict[str, str]]] = None,
     ) -> Dict[str, Any]:
-        """Return a complete answer dict (non-streaming)."""
-        t_start = time.perf_counter()
-
-        context, sources, _raw, retrieve_ms = self._retrieve(question)
-
-        if context is None:
-            return self._no_result(retrieve_ms, t_start)
-
-        if not context.strip():
-            return self._no_result(retrieve_ms, t_start)
-
-        if is_vague_query(question):
-            return self._vague_result(sources, retrieve_ms, t_start)
-
-        prompt = build_qa_prompt(question, context, chat_history)
-        t_llm = time.perf_counter()
-        raw_answer = (self.llm.invoke(prompt).content or "").strip()
-        llm_ms = (time.perf_counter() - t_llm) * 1000
-
-        answer_text = self._sanitize(raw_answer)
-        if answer_text == "Not found in the provided documents.":
-            sources = []
-
+        """Return a complete answer dict (non-streaming legacy fallback)."""
+        # We will wrap the streaming logic and just collect it
+        answer_text = ""
+        sources = []
+        timing = {}
+        for event in self.stream(question, chat_history):
+            if event["type"] == "token":
+                answer_text += event["token"]
+            elif event["type"] == "sources":
+                sources = event["sources"]
+            elif event["type"] == "done":
+                timing = event["timing"]
+        
         return {
             "answer": answer_text,
-            "sources": sources[:6],
-            "timing": self._timing(retrieve_ms, llm_ms, t_start),
+            "sources": sources,
+            "timing": timing
         }
 
     # ── Streaming answer (SSE-friendly generator) ────────────────
@@ -193,56 +127,112 @@ class PolicyAgent:
           {"type": "done",    "timing": {...}}
         """
         t_start = time.perf_counter()
+        messages = _build_messages(question, chat_history)
 
-        context, sources, _raw, retrieve_ms = self._retrieve(question)
+        try:
+            with httpx.Client(timeout=120.0) as client:
+                log.info("Sending initial request with tools...")
+                response = client.post(
+                    f"{settings.OLLAMA_BASE_URL}/api/chat",
+                    json={
+                        "model": settings.CHAT_MODEL,
+                        "messages": messages,
+                        "tools": self.tools,
+                        "stream": False,
+                        "temperature": settings.TEMPERATURE,
+                        "think": False
+                    },
+                )
+                response.raise_for_status()
+                data = response.json()
+                reply = data["message"]
+                messages.append(reply)
 
-        if context is None or not context.strip():
-            yield {"type": "token", "token": "Not found in the provided documents."}
-            yield {"type": "done", "timing": self._timing(retrieve_ms, 0, t_start)}
-            return
+                # Variables to hold timing if we retrieve
+                retrieve_ms = 0
+                sources_to_emit = []
 
-        if is_vague_query(question):
-            vague_msg = (
-                "I found relevant policies for that topic, but your input is too broad.\n\n"
-                "Try asking a specific question, for example:\n"
-                "• What are the approval requirements?\n"
-                "• What are the limits or thresholds?\n"
-                "• What is the required process?\n"
-                "• Are there exceptions?"
-            )
-            yield {"type": "sources", "sources": sources[:6]}
-            yield {"type": "token", "token": vague_msg}
-            yield {"type": "done", "timing": self._timing(retrieve_ms, 0, t_start)}
-            return
+                # Did the model call a tool?
+                if reply.get("tool_calls"):
+                    log.info(f"Model chose to use {len(reply['tool_calls'])} tools.")
+                    for tool_call in reply["tool_calls"]:
+                        fn_name = tool_call["function"]["name"]
+                        args = tool_call["function"]["arguments"]
+                        
+                        if fn_name == "search_knowledge_base":
+                            search_query = args.get("query", question)
+                            log.info(f"Executing search_knowledge_base for query: '{search_query}'")
+                            
+                            context, sources, _, r_ms = self._retrieve(search_query)
+                            retrieve_ms += r_ms
+                            
+                            if context:
+                                tool_result = f"Documents retrieved:\n{context}"
+                                sources_to_emit.extend(sources)
+                            else:
+                                tool_result = "No documents found matching the query."
 
-        # Emit sources first so the UI can display them while tokens stream
-        yield {"type": "sources", "sources": sources[:6]}
+                            # Append tool result to messages
+                            messages.append({
+                                "role": "tool",
+                                "content": tool_result,
+                                "name": fn_name
+                            })
+                    
+                    # Emit matching sources to the UI immediately
+                    if sources_to_emit:
+                         yield {"type": "sources", "sources": sources_to_emit[:6]}
+                    
+                    # Make the follow-up request to get the final generated answer (streaming this time)
+                    log.info("Streaming follow-up answer...")
+                    follow_response = client.post(
+                        f"{settings.OLLAMA_BASE_URL}/api/chat",
+                        json={
+                            "model": settings.CHAT_MODEL,
+                            "messages": messages,
+                            "stream": True,
+                            "temperature": settings.TEMPERATURE,
+                            "think": False
+                        },
+                    )
+                    follow_response.raise_for_status()
+                    
+                    t_llm_start = time.perf_counter()
+                    collected = []
+                    for line in follow_response.iter_lines():
+                        if not line: continue
+                        chunk = json.loads(line)
+                        if "message" in chunk and chunk["message"].get("content"):
+                            token = chunk["message"]["content"]
+                            collected.append(token)
+                            yield {"type": "token", "token": token}
+                    
+                    llm_ms = (time.perf_counter() - t_llm_start) * 1000
+                    
+                    full_text = "".join(collected)
+                    if "Not found in the provided documents." in full_text:
+                         yield {"type": "clear_sources"}
 
-        prompt = build_qa_prompt(question, context, chat_history)
-        t_llm = time.perf_counter()
-        collected = []
+                    yield {"type": "done", "timing": self._timing(retrieve_ms, llm_ms, t_start)}
+                    return
+                
+                else:
+                    # Model answered directly without querying the DB (e.g. conversational)
+                    log.info("Model answered directly without tools.")
+                    t_llm_start = time.perf_counter()
+                    token = reply.get("content", "")
+                    if token:
+                        yield {"type": "token", "token": token}
+                    
+                    llm_ms = (time.perf_counter() - t_llm_start) * 1000
+                    yield {"type": "done", "timing": self._timing(0, llm_ms, t_start)}
+                    return
 
-        # Use direct Ollama streaming with think=false instead of LangChain
-        for token in _stream_from_ollama(prompt, settings.CHAT_MODEL):
-            if token:
-                collected.append(token)
-                yield {"type": "token", "token": token}
+        except Exception as e:
+            log.error("Ollama Tool/Streaming error: %s", e)
+            yield {"type": "token", "token": f"Error communicating with agent: {str(e)}"}
+            yield {"type": "done", "timing": self._timing(0, 0, t_start)}
 
-        llm_ms = (time.perf_counter() - t_llm) * 1000
-
-        full_text = "".join(collected).strip()
-        if "Not found in the provided documents." in full_text:
-            yield {"type": "clear_sources"}
-
-        yield {"type": "done", "timing": self._timing(retrieve_ms, llm_ms, t_start)}
-
-    # ── Helpers ──────────────────────────────────────────────────
-
-    @staticmethod
-    def _sanitize(answer: str) -> str:
-        if "Not found in the provided documents." in answer:
-            return "Not found in the provided documents."
-        return answer
 
     @staticmethod
     def _timing(retrieve_ms: float, llm_ms: float, t_start: float) -> Dict:
@@ -252,27 +242,4 @@ class PolicyAgent:
             "llm_ms": round(llm_ms),
             "total_ms": round(total_ms),
             "total_s": round(total_ms / 1000, 2),
-        }
-
-    @staticmethod
-    def _no_result(retrieve_ms: float, t_start: float) -> Dict[str, Any]:
-        return {
-            "answer": "Not found in the provided documents.",
-            "sources": [],
-            "timing": PolicyAgent._timing(retrieve_ms, 0, t_start),
-        }
-
-    @staticmethod
-    def _vague_result(sources, retrieve_ms, t_start) -> Dict[str, Any]:
-        return {
-            "answer": (
-                "I found relevant policies for that topic, but your input is too broad.\n\n"
-                "Try asking a specific question, for example:\n"
-                "• What are the approval requirements?\n"
-                "• What are the limits or thresholds?\n"
-                "• What is the required process?\n"
-                "• Are there exceptions?"
-            ),
-            "sources": sources[:6],
-            "timing": PolicyAgent._timing(retrieve_ms, 0, t_start),
         }

@@ -236,49 +236,36 @@ def format_context(
 # ─── Prompts ─────────────────────────────────────────────────────────────────
 
 SYSTEM_PROMPT = """\
-You are the TRU Policy Assistant — an expert on Thompson Rivers University policies.
+You are an intelligent AI assistant Risk And Safety Services for Thompson Rivers University (TRU). You are part of a RAG (Retrieval-Augmented Generation) pipeline.
+You can converse naturally with the user.
 
-RULES:
-1. Answer **only** from the Context below. Never use outside knowledge.
-2. If the Context does not contain the answer, reply with exactly:
-   Not found in the provided documents.
-3. Be precise. Cite the policy name and page when possible (e.g., "ADM 04-2 – Conflict of Interest, p. 3").
-4. Use clear, professional language. Use bullet points for lists; keep answers concise (≤ 6 bullets or 2 short paragraphs).
-5. If a question is ambiguous, answer the most likely interpretation and note any assumptions.
+CRITICAL INSTRUCTIONS:
+1. If the user asks a question about Risk and Safety policies, procedures, or specific information, you MUST use the `search_knowledge_base` tool with suitable string as per context to retrieve relevant policy chunks.
+2. If the user is just saying "hello", "thanks", or making general conversation, you DO NOT need to use the tool. Just reply directly in a friendly manner.
+3. When you DO use the tool to retrieve context, base your final answer strictly on the retrieved chunks. If the retrieved context does not contain the answer, reply with exactly: "Not found in the provided documents."
+4. Be precise and cite the policy name and page when possible (e.g., "ADM 04-2 – Conflict of Interest, p. 3").
+5. Use clear, professional language. Use bullet points for lists; keep answers concise (\u2264 6 bullets or 2 short paragraphs).
+6. If the user asks a question that is not related to Risk and Safety, you should politely decline to answer and suggest they contact the appropriate department.
+7. Make sure you remain neutral and objective. Do not express personal opinions or beliefs. And state facts.
+8. Feel free to make tool calls to get the most relevant information.
 """
 
-QA_TEMPLATE = """\
-{system}
-
-{history_block}
-Context:
-{context}
-
-Question:
-{question}
-
-Answer:
-"""
-
-
-def build_qa_prompt(
-    question: str,
-    context: str,
-    chat_history: Optional[List[Dict[str, str]]] = None,
-) -> str:
-    history_block = ""
-    if chat_history:
-        turns = []
-        for msg in chat_history[-4:]:
-            role = msg.get("role", "user")
-            text = msg.get("content", "")
-            turns.append(f"{'User' if role == 'user' else 'Assistant'}: {text}")
-        if turns:
-            history_block = "Recent conversation:\n" + "\n".join(turns) + "\n"
-
-    return QA_TEMPLATE.format(
-        system=SYSTEM_PROMPT,
-        history_block=history_block,
-        context=context,
-        question=question,
-    )
+def extract_sources_from_context(context: str, retrieved_docs) -> List[Dict[str, Any]]:
+    """Helper to just reconstruct sources info for the frontend"""
+    # This just reformats the retrieved docs into the sources dict format expected by the frontend
+    sources = []
+    seen = set()
+    for doc, score in retrieved_docs:
+        policy = doc.metadata.get("policy_title", "Unknown Policy")
+        fname = doc.metadata.get("filename", "unknown")
+        page = doc.metadata.get("page")
+        src_key = f"{fname}:{page}"
+        if src_key not in seen:
+            seen.add(src_key)
+            sources.append({
+                "policy": policy,
+                "file": fname,
+                "page": int(page) + 1 if page is not None else None,
+                "relevance": round(1.0 - score, 3),
+            })
+    return sources
