@@ -26,7 +26,7 @@ FRONTEND_DIR = settings.frontend_path
 
 # ── App ──────────────────────────────────────────────────────────────────────
 app = FastAPI(
-    title="TRU Policy Assistant",
+    title="TRU Risk & Safety Assistant",
     version="2.0.0",
     docs_url="/docs",
 )

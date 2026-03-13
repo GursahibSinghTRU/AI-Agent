@@ -1,5 +1,5 @@
 /**
- * TRU Policy Assistant Chatbot Widget — chatbot.js
+ * TRU Risk & Safety Assistant Chatbot Widget — chatbot.js
  * Connects to the local FastAPI RAG backend (port 8000).
  * Streams answers via SSE and renders document citations.
  */
@@ -30,11 +30,11 @@
   };
 
   const QUICK_REPLIES = [
-    { label: '📋 Records destruction', text: 'What is the records destruction policy?' },
-    { label: '✈️ Travel expenses',     text: 'What is the travel expense reimbursement policy?' },
-    { label: '⚖️ Conflict of interest', text: 'What are the rules around conflict of interest?' },
-    { label: '🎓 Academic integrity',  text: 'What is the academic integrity policy?' },
-    { label: '🛒 Purchasing process',  text: 'What is the process for purchasing goods and services?' },
+    { label: '� Emergency procedures', text: 'What should I do if I witness an emergency on campus?' },
+    { label: '📝 Incident reporting', text: 'How do I report a workplace incident to Risk and Safety Services?' },
+    { label: '👷 Safety training', text: 'What training courses are required for TRU staff?' },
+    { label: '🚨 Safety alerts', text: 'How can I stay informed about campus safety alerts?' },
+    { label: '💼 Workplace ergonomics', text: 'What are best practices for desk safety and ergonomics?' },
   ];
 
   // ── State ───────────────────────────────────────────────
@@ -64,7 +64,7 @@
     const wrapper = document.createElement('div');
     wrapper.innerHTML = `
 <!-- TRU Policy Chatbot FAB -->
-<button id="tru-chat-fab" aria-label="Open TRU Policy Assistant" title="Ask about TRU Policies">
+<button id="tru-chat-fab" aria-label="Open TRU Risk & Safety Assistant" title="Ask about TRU Safety & Risk">
   <span class="fab-badge" id="tru-fab-badge"></span>
   <svg class="fab-icon-chat" width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="1.8">
     <path stroke-linecap="round" stroke-linejoin="round"
@@ -76,13 +76,13 @@
 </button>
 
 <!-- TRU Policy Chat Window -->
-<div id="tru-chat-window" role="dialog" aria-label="TRU Policy Assistant" aria-modal="false">
+<div id="tru-chat-window" role="dialog" aria-label="TRU Risk & Safety Assistant" aria-modal="false">
 
   <!-- Header -->
   <div class="tru-chat-header">
     <div class="tru-chat-header-avatar" aria-hidden="true">📋</div>
     <div class="tru-chat-header-info">
-      <div class="tru-chat-header-name">TRU Policy Assistant</div>
+      <div class="tru-chat-header-name">TRU Risk & Safety Assistant</div>
       <div class="tru-chat-header-status">
         <span class="tru-status-dot connecting" id="tru-status-dot"></span>
         <span id="tru-status-label">Connecting…</span>
@@ -150,7 +150,7 @@
 <div class="tru-welcome" id="tru-welcome-block">
   <div class="tru-welcome-logo">📋</div>
   <h3>Policy Assistant</h3>
-  <p>Ask me anything about TRU's official policies. Every answer is grounded in the policy documents — I'll show you the sources.</p>
+  <p>Ask me anything about Risk & Safety at TRU. I will try to provide you with accurate information based on our policy documents.</p>
   <div class="tru-quick-replies">${chips}</div>
 </div>`;
   }
@@ -216,7 +216,7 @@
     fab.classList.add('is-open');
     chatWindow.classList.add('is-open');
     chatWindow.setAttribute('aria-modal', 'true');
-    fab.setAttribute('aria-label', 'Close TRU Policy Assistant');
+    fab.setAttribute('aria-label', 'Close TRU Risk & Safety Assistant');
     clearBadge();
     setTimeout(() => textareaEl.focus(), 320);
   }
@@ -226,7 +226,7 @@
     fab.classList.remove('is-open');
     chatWindow.classList.remove('is-open');
     chatWindow.setAttribute('aria-modal', 'false');
-    fab.setAttribute('aria-label', 'Open TRU Policy Assistant');
+    fab.setAttribute('aria-label', 'Open TRU Risk & Safety Assistant');
   }
 
   // ── Connection Check ────────────────────────────────────

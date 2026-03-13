@@ -1,1 +1,1 @@
-"""TRU Policy Assistant — application package."""
+"""TRU Risk & Safety Assistant — application package."""

@@ -64,6 +64,9 @@ python run.py
 
 Open **http://localhost:8000** in your browser — the TRU-branded page loads. Click the chat button (bottom-right FAB) to start asking policy questions.
 
+
+---
+.\venv\Scripts\activate; python run.py
 ---
 
 ## Project Structure

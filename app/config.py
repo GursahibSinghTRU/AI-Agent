@@ -44,7 +44,7 @@ class Settings:
 
     # ── Models (100 % local via Ollama) ──────────────────────────
     EMBEDDING_MODEL: str   = "nomic-embed-text"
-    CHAT_MODEL: str        = "qwen3.5:0.8b"
+    CHAT_MODEL: str        = "qwen3.5:9b"
 
     # ── LLM behaviour ───────────────────────────────────────────
     TEMPERATURE: float     = 0.1
