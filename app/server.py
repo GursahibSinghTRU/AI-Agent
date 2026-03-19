@@ -72,6 +72,15 @@ def home():
     return FileResponse(str(index))
 
 
+@app.get("/general")
+def general_tru():
+    """Serve the general TRU landing page."""
+    page = FRONTEND_DIR / "general-tru.html"
+    if not page.exists():
+        raise HTTPException(404, "General TRU page not found.")
+    return FileResponse(str(page))
+
+
 @app.get("/api/health")
 async def health():
     """Deep health check — pings Ollama to confirm models are available."""
