@@ -394,6 +394,42 @@
   box-shadow: 0 1px 4px rgba(0,62,81,0.09);
 }
 
+/* ── Hyperlinks in Messages ────────────────────────────── */
+
+.tru-msg-bubble a {
+  color: var(--tru-teal);
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  border-bottom: 2px solid var(--tru-yellow);
+  padding-bottom: 2px;
+  transition: all 0.2s ease;
+  border-radius: 3px;
+  padding: 2px 6px;
+  margin: 0 1px;
+}
+
+.tru-msg-bubble a:hover {
+  background: rgba(0, 176, 185, 0.08);
+  color: var(--tru-blue-light);
+  border-bottom-color: var(--tru-blue);
+}
+
+.tru-msg-bubble a:active {
+  transform: scale(0.98);
+  background: rgba(0, 176, 185, 0.12);
+}
+
+.tru-message.user .tru-msg-bubble a {
+  color: var(--tru-yellow);
+  border-bottom-color: rgba(255, 205, 0, 0.5);
+}
+
+.tru-message.user .tru-msg-bubble a:hover {
+  background: rgba(255, 205, 0, 0.12);
+  border-bottom-color: var(--tru-white);
+}
+
 /* ── Typing Indicator ───────────────────────────────────── */
 
 .tru-typing-indicator {

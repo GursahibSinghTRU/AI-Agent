@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -12,7 +12,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 
   <style>
-    /* â”€â”€ Reset & Root â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /*  Reset & Root  */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
@@ -39,7 +39,7 @@
     a { text-decoration: none; color: inherit; }
     img { max-width: 100%; display: block; }
 
-    /* â”€â”€ Skip Link (Accessibility) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /*  Skip Link (Accessibility)  */
     .skip-link {
       position: absolute;
       top: -40px;
@@ -54,7 +54,7 @@
     }
     .skip-link:focus { top: 8px; }
 
-    /* â”€â”€ NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /*  NAV  */
     .tru-nav {
       background: var(--tru-blue);
       position: sticky;
@@ -149,7 +149,7 @@
       background: #ffe033 !important;
     }
 
-    /* â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /*  HERO  */
     .tru-hero {
       background: var(--tru-blue);
       color: var(--tru-white);
@@ -320,13 +320,13 @@
       margin-top: 10px;
     }
 
-    /* â”€â”€ Yellow accent bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /*  Yellow accent bar  */
     .tru-accent-bar {
       height: 5px;
       background: linear-gradient(90deg, var(--tru-yellow) 0%, var(--tru-teal) 100%);
     }
 
-    /* â”€â”€ Section Base â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /*  Section Base  */
     section { padding: 80px 24px; }
 
     .section-inner { max-width: 1180px; margin: 0 auto; }
@@ -357,7 +357,7 @@
       line-height: 1.65;
     }
 
-    /* â”€â”€ Programs Grid â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /*  Programs Grid  */
     .tru-programs { background: #f5f8f9; }
 
     .programs-grid {
@@ -409,7 +409,7 @@
       margin-top: 16px;
     }
 
-    /* â”€â”€ Campus Life â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /*  Campus Life  */
     .campus-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -472,7 +472,7 @@
     .campus-tile--housing { grid-row: span 2; }
 
 
-    /* â”€â”€ Admissions Banner â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /*  Admissions Banner  */
     .tru-admissions {
       background: var(--tru-blue);
       color: var(--tru-white);
@@ -540,7 +540,7 @@
       opacity: 0.72;
     }
 
-    /* â”€â”€ Open Learning â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /*  Open Learning  */
     .tru-open-learning { background: #f5f8f9; }
 
     .ol-feature-row {
@@ -560,7 +560,7 @@
     }
 
     .ol-feature-visual::after {
-      content: 'ðŸŒ';
+      content: '';
       position: absolute;
       bottom: -10px;
       right: 10px;
@@ -631,7 +631,7 @@
       line-height: 1.5;
     }
 
-    /* â”€â”€ Testimonials â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /*  Testimonials  */
     .tru-testimonials { background: var(--tru-white); }
 
     .testimonials-grid {
@@ -685,7 +685,7 @@
       color: #7a9aa8;
     }
 
-    /* â”€â”€ News strip â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /*  News strip  */
     .tru-news { background: var(--tru-blue); padding: 50px 24px; }
 
     .news-inner {
@@ -746,7 +746,7 @@
       line-height: 1.4;
     }
 
-    /* â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /*  Footer  */
     footer {
       background: #002634;
       color: rgba(255,255,255,0.7);
@@ -834,7 +834,7 @@
 
     .social-links a:hover { background: var(--tru-teal); }
 
-    /* â”€â”€ Responsive â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /*  Responsive  */
     @media (max-width: 900px) {
       .tru-hero-inner,
       .admissions-inner,
@@ -860,7 +860,7 @@
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
 
-  <!-- â”€â”€ Navigation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+  <!--  Navigation  -->
   <nav class="tru-nav" aria-label="Main navigation">
     <div class="tru-nav-inner">
       <a href="/" class="tru-logo" aria-label="Thompson Rivers University homepage">
@@ -883,7 +883,7 @@
 
   <main id="main">
 
-    <!-- â”€â”€ Hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!--  Hero  -->
     <section class="tru-hero" aria-label="Welcome to TRU">
       <div class="tru-hero-inner">
         <div>
@@ -925,9 +925,9 @@
             <div class="tru-campus-card-desc">
               Nestled between two rivers and surrounded by dramatic hills,
               TRU's main campus sits on the traditional territory of the
-              Tk'emlÃºps te SecwÃ©pemc.
+              Tk'emlps te Secwpemc.
             </div>
-            <span class="tru-campus-tag">ðŸŒ¿ SecwÃ©pemc Territory</span>
+            <span class="tru-campus-tag"> Secwpemc Territory</span>
           </div>
 
           <div class="tru-campus-card">
@@ -937,7 +937,7 @@
               TRU Open Learning offers hundreds of online courses and programs,
               giving you the flexibility to learn on your schedule.
             </div>
-            <span class="tru-campus-tag">ðŸ’» 100% Online available</span>
+            <span class="tru-campus-tag"> 100% Online available</span>
           </div>
         </div>
       </div>
@@ -945,7 +945,7 @@
 
     <div class="tru-accent-bar"></div>
 
-    <!-- â”€â”€ Programs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!--  Programs  -->
     <section class="tru-programs" id="programs" aria-labelledby="programs-heading">
       <div class="section-inner">
         <p class="section-eyebrow">Academics</p>
@@ -957,57 +957,57 @@
 
         <div class="programs-grid" role="list">
           <article class="program-card" role="listitem">
-            <div class="program-card-icon">âš•ï¸</div>
+            <div class="program-card-icon"></div>
             <h3>Health Sciences &amp; Nursing</h3>
             <p>Train for rewarding careers in healthcare with TRU's hands-on nursing and health science programs.</p>
-            <span class="program-card-link">Explore â†’ </span>
+            <span class="program-card-link">Explore  </span>
           </article>
 
           <article class="program-card" role="listitem">
-            <div class="program-card-icon">ðŸ’¼</div>
+            <div class="program-card-icon"></div>
             <h3>Business &amp; Economics</h3>
             <p>Build real-world skills in management, finance, marketing, and entrepreneurship.</p>
-            <span class="program-card-link">Explore â†’ </span>
+            <span class="program-card-link">Explore  </span>
           </article>
 
           <article class="program-card" role="listitem">
-            <div class="program-card-icon">ðŸ’»</div>
+            <div class="program-card-icon"></div>
             <h3>Computing &amp; Technology</h3>
             <p>Master computer science, software engineering, and IT programs taught by industry practitioners.</p>
-            <span class="program-card-link">Explore â†’ </span>
+            <span class="program-card-link">Explore  </span>
           </article>
 
           <article class="program-card" role="listitem">
-            <div class="program-card-icon">ðŸŽ¨</div>
+            <div class="program-card-icon"></div>
             <h3>Arts, Social Sciences &amp; Humanities</h3>
             <p>Explore human experience through arts, history, psychology, English, and social work.</p>
-            <span class="program-card-link">Explore â†’ </span>
+            <span class="program-card-link">Explore  </span>
           </article>
 
           <article class="program-card" role="listitem">
-            <div class="program-card-icon">ðŸ”¬</div>
+            <div class="program-card-icon"></div>
             <h3>Science</h3>
             <p>Dive into biology, chemistry, physics, and environmental science with excellent lab facilities.</p>
-            <span class="program-card-link">Explore â†’ </span>
+            <span class="program-card-link">Explore  </span>
           </article>
 
           <article class="program-card" role="listitem">
-            <div class="program-card-icon">ðŸ—ï¸</div>
+            <div class="program-card-icon"></div>
             <h3>Trades &amp; Technology</h3>
             <p>Get your ticket in electrical, plumbing, welding, carpentry, and more at TRU's trades school.</p>
-            <span class="program-card-link">Explore â†’ </span>
+            <span class="program-card-link">Explore  </span>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- â”€â”€ Campus Life â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!--  Campus Life  -->
     <section id="campus" aria-labelledby="campus-heading">
       <div class="section-inner">
         <p class="section-eyebrow">Student Experience</p>
         <h2 class="section-title" id="campus-heading">Life at TRU</h2>
         <p class="section-desc">
-          TRU is more than a classroom â€” it's a vibrant community where you live,
+          TRU is more than a classroom  it's a vibrant community where you live,
           explore, and grow. Discover what makes our campus experience unique.
         </p>
 
@@ -1016,7 +1016,7 @@
             <div class="campus-tile-bg"></div>
             <div class="campus-tile-overlay"></div>
             <div class="campus-tile-content">
-              <h3>ðŸ  On-Campus Housing</h3>
+              <h3> On-Campus Housing</h3>
               <p>Modern residence halls and suites steps from your classes.</p>
             </div>
           </div>
@@ -1025,7 +1025,7 @@
             <div class="campus-tile-bg"></div>
             <div class="campus-tile-overlay"></div>
             <div class="campus-tile-content">
-              <h3>ðŸ‹ï¸ Recreation Centre</h3>
+              <h3> Recreation Centre</h3>
               <p>World-class gym, pool, climbing wall, and fitness classes.</p>
             </div>
           </div>
@@ -1034,7 +1034,7 @@
             <div class="campus-tile-bg"></div>
             <div class="campus-tile-overlay"></div>
             <div class="campus-tile-content">
-              <h3>ðŸŒ Multicultural Community</h3>
+              <h3> Multicultural Community</h3>
               <p>A welcoming, diverse community of 100+ countries represented.</p>
             </div>
           </div>
@@ -1043,7 +1043,7 @@
             <div class="campus-tile-bg"></div>
             <div class="campus-tile-overlay"></div>
             <div class="campus-tile-content">
-              <h3>ðŸ½ï¸ Dining &amp; CafÃ©s</h3>
+              <h3> Dining &amp; Cafs</h3>
               <p>Fresh, diverse food options across campus.</p>
             </div>
           </div>
@@ -1052,7 +1052,7 @@
             <div class="campus-tile-bg"></div>
             <div class="campus-tile-overlay"></div>
             <div class="campus-tile-content">
-              <h3>ðŸ§  Health &amp; Wellness</h3>
+              <h3> Health &amp; Wellness</h3>
               <p>Mental health counselling, medical clinic, and support services.</p>
             </div>
           </div>
@@ -1061,7 +1061,7 @@
             <div class="campus-tile-bg"></div>
             <div class="campus-tile-overlay"></div>
             <div class="campus-tile-content">
-              <h3>ðŸŽ­ Clubs &amp; Events</h3>
+              <h3> Clubs &amp; Events</h3>
               <p>80+ student clubs, sports teams, and campus events year-round.</p>
             </div>
           </div>
@@ -1069,7 +1069,7 @@
       </div>
     </section>
 
-    <!-- â”€â”€ Admissions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!--  Admissions  -->
     <section class="tru-admissions" id="admissions" aria-labelledby="admissions-heading">
       <div class="admissions-inner">
         <div>
@@ -1115,12 +1115,12 @@
       </div>
     </section>
 
-    <!-- â”€â”€ Open Learning â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!--  Open Learning  -->
     <section class="tru-open-learning" id="open-learning" aria-labelledby="ol-heading">
       <div class="section-inner">
         <div class="ol-feature-row">
           <div class="ol-feature-visual">
-            <h3>TRU Open Learning â€” Study anywhere, any time</h3>
+            <h3>TRU Open Learning  Study anywhere, any time</h3>
             <p>
               TRU is BC's only open university. Open Learning offers accredited degrees,
               diplomas, certificates, and individual courses fully online with flexible
@@ -1139,31 +1139,31 @@
             <h2 class="section-title" id="ol-heading">Flexible learning for every life stage</h2>
 
             <div class="ol-item">
-              <div class="ol-item-icon">ðŸŽ¯</div>
+              <div class="ol-item-icon"></div>
               <div class="ol-item-body">
                 <h4>Flexible scheduling</h4>
                 <p>Study at your own pace alongside work, family, and life commitments.</p>
               </div>
             </div>
             <div class="ol-item">
-              <div class="ol-item-icon">ðŸŒ</div>
+              <div class="ol-item-icon"></div>
               <div class="ol-item-body">
                 <h4>Study from anywhere</h4>
                 <p>Access world-class TRU education from anywhere in Canada or internationally.</p>
               </div>
             </div>
             <div class="ol-item">
-              <div class="ol-item-icon">ðŸ”„</div>
+              <div class="ol-item-icon"></div>
               <div class="ol-item-body">
                 <h4>Transfer your credits</h4>
                 <p>Transfer credits from other institutions and get recognized for prior learning.</p>
               </div>
             </div>
             <div class="ol-item">
-              <div class="ol-item-icon">ðŸ¤</div>
+              <div class="ol-item-icon"></div>
               <div class="ol-item-body">
                 <h4>Full support services</h4>
-                <p>Academic advisors, library access, tutoring, and student success coaches â€” all online.</p>
+                <p>Academic advisors, library access, tutoring, and student success coaches  all online.</p>
               </div>
             </div>
           </div>
@@ -1171,7 +1171,7 @@
       </div>
     </section>
 
-    <!-- â”€â”€ Testimonials â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!--  Testimonials  -->
     <section class="tru-testimonials" aria-labelledby="testimonials-heading">
       <div class="section-inner">
         <p class="section-eyebrow">Student Stories</p>
@@ -1184,10 +1184,10 @@
               Open Learning made my Bachelor of Business degree possible without giving up my job."
             </blockquote>
             <div class="testimonial-author">
-              <div class="testimonial-avatar" aria-hidden="true">ðŸ‘©</div>
+              <div class="testimonial-avatar" aria-hidden="true"></div>
               <div class="testimonial-author-info">
                 <strong>Priya S.</strong>
-                <span>BBA Graduate, 2025 Â· Open Learning</span>
+                <span>BBA Graduate, 2025  Open Learning</span>
               </div>
             </div>
           </div>
@@ -1198,10 +1198,10 @@
               and supportive instructors prepared me for the real world like nothing else could."
             </blockquote>
             <div class="testimonial-author">
-              <div class="testimonial-avatar" aria-hidden="true">ðŸ‘¨</div>
+              <div class="testimonial-avatar" aria-hidden="true"></div>
               <div class="testimonial-author-info">
                 <strong>Marcus T.</strong>
-                <span>BSN Graduate, 2024 Â· Nursing</span>
+                <span>BSN Graduate, 2024  Nursing</span>
               </div>
             </div>
           </div>
@@ -1212,10 +1212,10 @@
               student support team helped me settle in and I made lifelong friends here."
             </blockquote>
             <div class="testimonial-author">
-              <div class="testimonial-avatar" aria-hidden="true">ðŸ§‘</div>
+              <div class="testimonial-avatar" aria-hidden="true"></div>
               <div class="testimonial-author-info">
                 <strong>Anika R.</strong>
-                <span>Computer Science, Year 3 Â· International Student</span>
+                <span>Computer Science, Year 3  International Student</span>
               </div>
             </div>
           </div>
@@ -1223,12 +1223,12 @@
       </div>
     </section>
 
-    <!-- â”€â”€ News â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!--  News  -->
     <section class="tru-news" aria-labelledby="news-heading">
       <div class="news-inner">
         <div class="news-header">
           <h2 id="news-heading">Latest News &amp; Events</h2>
-          <a href="#">See all â†’</a>
+          <a href="#">See all </a>
         </div>
         <div class="news-grid" role="list">
           <article class="news-card" role="listitem">
@@ -1237,7 +1237,7 @@
           </article>
           <article class="news-card" role="listitem">
             <div class="news-card-date">Mar 7, 2026</div>
-            <h3>New partnership with Tk'emlÃºps te SecwÃ©pemc deepens Indigenous education commitments</h3>
+            <h3>New partnership with Tk'emlps te Secwpemc deepens Indigenous education commitments</h3>
           </article>
           <article class="news-card" role="listitem">
             <div class="news-card-date">Feb 28, 2026</div>
@@ -1245,7 +1245,7 @@
           </article>
           <article class="news-card" role="listitem">
             <div class="news-card-date">Feb 20, 2026</div>
-            <h3>Spring Convocation 2026 dates announced â€” over 2,400 graduates to be celebrated</h3>
+            <h3>Spring Convocation 2026 dates announced  over 2,400 graduates to be celebrated</h3>
           </article>
         </div>
       </div>
@@ -1253,7 +1253,7 @@
 
   </main>
 
-  <!-- â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+  <!--  Footer  -->
   <footer>
     <div class="footer-inner">
       <div class="footer-top">
@@ -1267,7 +1267,7 @@
           <p class="footer-brand-tagline">"Diverse pathways to living your potential."</p>
           <p class="footer-brand-tku">
             TRU is located on the traditional, ancestral, and unceded territory of<br/>
-            the Tk'emlÃºps te SecwÃ©pemc, within the SecwÃ©pemc homeland.
+            the Tk'emlps te Secwpemc, within the Secwpemc homeland.
           </p>
         </div>
 
@@ -1297,7 +1297,7 @@
           <h4>Contact</h4>
           <ul>
             <li><a href="#">805 TRU Way, Kamloops BC</a></li>
-            <li><a href="tel:+12503717444">250Â·371Â·7444</a></li>
+            <li><a href="tel:+12503717444">2503717444</a></li>
             <li><a href="mailto:info@tru.ca">info@tru.ca</a></li>
             <li><a href="https://www.tru.ca">tru.ca</a></li>
           </ul>
@@ -1305,20 +1305,21 @@
       </div>
 
       <div class="footer-bottom">
-        <p>Â© 2026 Thompson Rivers University. All rights reserved.</p>
+        <p> 2026 Thompson Rivers University. All rights reserved.</p>
         <div class="social-links" aria-label="TRU social media">
-          <a href="#" aria-label="TRU on Facebook">ðŸ“˜</a>
-          <a href="#" aria-label="TRU on Instagram">ðŸ“¸</a>
-          <a href="#" aria-label="TRU on LinkedIn">ðŸ’¼</a>
-          <a href="#" aria-label="TRU on X">ðŸ¦</a>
-          <a href="#" aria-label="TRU on YouTube">â–¶ï¸</a>
+          <a href="#" aria-label="TRU on Facebook"></a>
+          <a href="#" aria-label="TRU on Instagram"></a>
+          <a href="#" aria-label="TRU on LinkedIn"></a>
+          <a href="#" aria-label="TRU on X"></a>
+          <a href="#" aria-label="TRU on YouTube"></a>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- â”€â”€ TRU AI Chatbot (Floating Widget) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+  <!--  TRU AI Chatbot (Floating Widget)  -->
   <script src="/static/chatbot.js?v=2"></script>
 </body>
 </html>
+
 

@@ -140,14 +140,16 @@ async def chat_stream(req: ChatRequest):
 @app.get("/api/stats")
 def stats():
     """Return basic stats about the loaded knowledge base."""
-    agent = get_agent()
-    try:
-        col = agent.vectordb._collection
-        count = col.count()
-    except Exception:
-        count = -1
-
+    count = 1  # We now use exactly 1 combined context file
     pdf_count = len(list(settings.data_path.glob("*.pdf"))) if settings.data_path.is_dir() else 0
+    txt_count = len(list(settings.data_path.glob("*.txt"))) if settings.data_path.is_dir() else 0
+
+    return {
+        "chunks_indexed": count,
+        "pdf_files_found": pdf_count,
+        "txt_files_found": txt_count,
+        "collection": "combined_context",
+    }
 
     return {
         "documents": pdf_count,

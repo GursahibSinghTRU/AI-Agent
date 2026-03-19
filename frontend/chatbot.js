@@ -12,7 +12,9 @@
   function renderMarkdown(text) {
     if (window.marked) {
       marked.setOptions({ breaks: true, gfm: true });
-      return marked.parse(text);
+      const html = marked.parse(text);
+      console.log('[TRU Chat] Rendered markdown HTML:', html);
+      return html;
     }
     // Fallback: escape HTML, preserve newlines
     return text
@@ -326,14 +328,22 @@
           try { event = JSON.parse(raw); } catch { continue; }
 
           if (event.type === 'sources') {
-            renderSources(sourcesEl, event.sources || []);
+            // Sources display hidden — citations are embedded in the response text
           } else if (event.type === 'token') {
             if (firstToken) {
               bubbleEl.innerHTML = '';
               firstToken = false;
             }
             fullText += event.token;
+            console.log('[TRU Chat] Received token:', event.token);
+            console.log('[TRU Chat] Full response so far:', fullText);
             bubbleEl.innerHTML = renderMarkdown(fullText);
+            // Make all links open in a new tab
+            const links = bubbleEl.querySelectorAll('a');
+            links.forEach(link => {
+              link.setAttribute('target', '_blank');
+              link.setAttribute('rel', 'noopener noreferrer');
+            });
             scrollToBottom();
           } else if (event.type === 'clear_sources') {
             sourcesEl.innerHTML = '';
