@@ -131,7 +131,7 @@
 
   <!-- Footer -->
   <div class="tru-chat-footer">
-    Answers sourced from TRU policy documents · <a href="https://www.tru.ca" target="_blank" rel="noopener">tru.ca</a>
+    Answers sourced from TRU policy documents · <a href="https://www.tru.ca/policy/all-policy.html" target="_blank" rel="noopener">TRU Policies</a>
   </div>
 </div>`;
 
