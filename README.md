@@ -81,6 +81,10 @@ Visit:
 - `http://localhost:8000/` — Risk & Safety homepage with chatbot
 - `http://localhost:8000/general` — General TRU page
 
+### 7. Quick Command
+
+.\venv\Scripts\Activate.ps1; python run.py
+
 ---
 
 ## Project Structure

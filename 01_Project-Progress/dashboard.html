@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Agent Platform — ITS Project Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ─── DESIGN TOKENS ─────────────────────────────────────── */
+  :root {
+    --cream:        #FAF8F4;
+    --parchment:    #F2EDE4;
+    --warm-white:   #FFFDF9;
+    --ink:          #1A1410;
+    --ink-mid:      #3D3530;
+    --ink-light:    #7A706A;
+    --ink-faint:    #B8AFA8;
+    --rule:         #E2D9D0;
+
+    --tru-blue:     #003A6B;
+    --tru-mid:      #1A5B99;
+    --tru-light:    #E8F0F8;
+    --tru-pale:     #F0F5FA;
+
+    --done:         #1A7A4A;
+    --done-bg:      #EBF7F1;
+    --done-border:  #A8DFC0;
+
+    --active:       #B05A00;
+    --active-bg:    #FEF3E8;
+    --active-border:#F0C090;
+
+    --planned:      #5A5A6E;
+    --planned-bg:   #F2F2F6;
+    --planned-border:#C8C8D8;
+
+    --requested:    #1A5B99;
+    --requested-bg: #EBF2FA;
+    --requested-border:#A8C8E8;
+
+    --shadow-sm:    0 1px 3px rgba(26,20,16,0.06), 0 1px 2px rgba(26,20,16,0.04);
+    --shadow-md:    0 4px 12px rgba(26,20,16,0.08), 0 2px 6px rgba(26,20,16,0.05);
+    --shadow-lg:    0 12px 32px rgba(26,20,16,0.10), 0 4px 12px rgba(26,20,16,0.06);
+    --shadow-card:  0 0 0 1px var(--rule), 0 4px 16px rgba(26,20,16,0.07);
+
+    --r-sm: 6px;
+    --r-md: 10px;
+    --r-lg: 16px;
+    --r-xl: 20px;
+  }
+
+  /* ─── RESET & BASE ──────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── GRAIN OVERLAY ─────────────────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px;
+  }
+
+  /* ─── NAV ───────────────────────────────────────────────── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,248,244,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+    animation: slideDown 0.5s ease both;
+  }
+
+  @keyframes slideDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to   { transform: translateY(0);     opacity: 1; }
+  }
+
+  .nav-brand {
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .nav-logo {
+    width: 32px; height: 32px;
+    background: var(--tru-blue);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .nav-logo svg { width: 18px; height: 18px; fill: white; }
+
+  .nav-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  .nav-dept {
+    font-size: 11px;
+    color: var(--ink-light);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .nav-right {
+    display: flex; align-items: center; gap: 20px;
+  }
+
+  .nav-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-light);
+    background: var(--parchment);
+    border: 1px solid var(--rule);
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .last-updated {
+    font-size: 11px;
+    color: var(--ink-faint);
+  }
+
+  /* ─── MAIN LAYOUT ───────────────────────────────────────── */
+  main {
+    position: relative; z-index: 1;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 48px 40px 80px;
+  }
+
+  /* ─── HERO HEADER ───────────────────────────────────────── */
+  .hero {
+    margin-bottom: 52px;
+    animation: fadeUp 0.6s ease 0.1s both;
+  }
+
+  @keyframes fadeUp {
+    from { transform: translateY(16px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--tru-mid);
+    background: var(--tru-pale);
+    border: 1px solid #C4D8EE;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--tru-mid);
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.1;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--tru-mid);
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    color: var(--ink-light);
+    font-weight: 300;
+    max-width: 560px;
+    line-height: 1.7;
+  }
+
+  /* ─── STAT STRIP ─────────────────────────────────────────── */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 52px;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+
+  .stat-card {
+    background: var(--warm-white);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-lg);
+    padding: 22px 24px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+
+  .stat-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .stat-sub {
+    font-size: 12px;
+    color: var(--ink-light);
+  }
+
+  .stat-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  /* ─── SECTION HEADER ────────────────────────────────────── */
+  .section-header {
+    display: flex; align-items: baseline; gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .section-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+  }
+
+  /* ─── KANBAN ─────────────────────────────────────────────── */
+  .kanban-wrapper {
+    margin-bottom: 64px;
+    animation: fadeUp 0.6s ease 0.3s both;
+  }
+
+  .kanban-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+
+  .kanban-col {
+    background: var(--parchment);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-xl);
+    padding: 16px;
+    min-height: 200px;
+  }
+
+  .kanban-col-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 4px 14px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 12px;
+  }
+
+  .kanban-col-title {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .kanban-col-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600;
+  }
+
+  .col-done  .kanban-col-title { color: var(--done); }
+  .col-done  .kanban-col-badge { background: var(--done-bg); color: var(--done); }
+  .col-active .kanban-col-title { color: var(--active); }
+  .col-active .kanban-col-badge { background: var(--active-bg); color: var(--active); }
+  .col-planned .kanban-col-title { color: var(--planned); }
+  .col-planned .kanban-col-badge { background: var(--planned-bg); color: var(--planned); }
+  .col-requested .kanban-col-title { color: var(--requested); }
+  .col-requested .kanban-col-badge { background: var(--requested-bg); color: var(--requested); }
+
+  /* ─── KANBAN CARDS ──────────────────────────────────────── */
+  .k-card {
+    background: var(--warm-white);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-md);
+    padding: 14px 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    position: relative;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .k-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--ink-faint);
+  }
+
+  .k-card:active { transform: scale(0.98); }
+
+  .k-card-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--tru-mid);
+    background: var(--tru-pale);
+    padding: 2px 7px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+
+  .k-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+
+  .k-card-note {
+    font-size: 11.5px;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+
+  .k-card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .k-card-owner {
+    font-size: 10.5px;
+    color: var(--ink-faint);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .k-card-arrow {
+    font-size: 10px;
+    color: var(--ink-faint);
+    transition: transform 0.15s;
+  }
+
+  .k-card:hover .k-card-arrow { transform: translateX(2px); color: var(--tru-mid); }
+
+  /* Status indicator stripe */
+  .k-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 14px; bottom: 14px;
+    width: 3px;
+    border-radius: 0 2px 2px 0;
+  }
+  .col-done .k-card::before      { background: var(--done); }
+  .col-active .k-card::before    { background: var(--active); }
+  .col-planned .k-card::before   { background: var(--planned); }
+  .col-requested .k-card::before { background: var(--requested); }
+
+  /* ─── DETAIL CARDS SECTION ──────────────────────────────── */
+  .detail-section {
+    animation: fadeUp 0.6s ease 0.4s both;
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .detail-card {
+    background: var(--warm-white);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-xl);
+    padding: 28px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex; flex-direction: column;
+  }
+
+  .detail-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .detail-card-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+  }
+
+  .detail-card-header {
+    margin-bottom: 12px;
+  }
+
+  .detail-card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+
+  .detail-card-subtitle {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 3px 9px;
+    border-radius: 12px;
+    margin-bottom: 14px;
+    border: 1px solid transparent;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 5px; height: 5px;
+    border-radius: 50%;
+  }
+
+  .pill-done      { background: var(--done-bg);      color: var(--done);      border-color: var(--done-border);      }
+  .pill-done::before      { background: var(--done); }
+  .pill-active    { background: var(--active-bg);    color: var(--active);    border-color: var(--active-border);    }
+  .pill-active::before    { background: var(--active); animation: blink 1.5s ease infinite; }
+  .pill-planned   { background: var(--planned-bg);   color: var(--planned);   border-color: var(--planned-border);   }
+  .pill-planned::before   { background: var(--planned); }
+  .pill-requested { background: var(--requested-bg); color: var(--requested); border-color: var(--requested-border); }
+  .pill-requested::before { background: var(--requested); }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+  }
+
+  .detail-card-body {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.75;
+    flex: 1;
+  }
+
+  .detail-card-bullets {
+    list-style: none;
+    margin-top: 10px;
+  }
+
+  .detail-card-bullets li {
+    display: flex; gap: 8px;
+    align-items: flex-start;
+    font-size: 12.5px;
+    color: var(--ink-mid);
+    line-height: 1.55;
+    padding: 3px 0;
+  }
+
+  .detail-card-bullets li::before {
+    content: '›';
+    color: var(--tru-mid);
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.4;
+    flex-shrink: 0;
+  }
+
+  .detail-card-divider {
+    height: 1px;
+    background: var(--rule);
+    margin: 16px 0;
+  }
+
+  .detail-card-tech {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 12px;
+  }
+
+  .tech-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--tru-mid);
+    background: var(--tru-pale);
+    border: 1px solid #C4D8EE;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  /* ─── MODAL OVERLAY ─────────────────────────────────────── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(26,20,16,0.4);
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    animation: fadeIn 0.2s ease;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .modal {
+    background: var(--warm-white);
+    border-radius: var(--r-xl);
+    border: 1px solid var(--rule);
+    max-width: 520px; width: 100%;
+    box-shadow: var(--shadow-lg);
+    padding: 32px;
+    animation: scaleIn 0.2s ease;
+    position: relative;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  @keyframes scaleIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to   { transform: scale(1);    opacity: 1; }
+  }
+
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--parchment);
+    border: 1px solid var(--rule);
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 14px; color: var(--ink-mid);
+    transition: background 0.15s;
+  }
+
+  .modal-close:hover { background: var(--rule); }
+
+  .modal-tag {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--tru-mid);
+    margin-bottom: 8px;
+  }
+
+  .modal-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+
+  .modal-body {
+    font-size: 13.5px;
+    color: var(--ink-mid);
+    line-height: 1.8;
+    margin-top: 16px;
+  }
+
+  .modal-list { list-style: none; margin-top: 12px; }
+  .modal-list li {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 13px;
+    color: var(--ink-mid);
+  }
+  .modal-list li:last-child { border: none; }
+  .modal-list li::before {
+    content: '→'; color: var(--tru-mid);
+    font-weight: 700; flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ─── FOOTER ─────────────────────────────────────────────── */
+  footer {
+    border-top: 1px solid var(--rule);
+    background: var(--parchment);
+    padding: 20px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: relative; z-index: 1;
+  }
+
+  .footer-left {
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .footer-logo {
+    width: 24px; height: 24px;
+    background: var(--tru-blue);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .footer-logo svg { width: 13px; height: 13px; fill: white; }
+
+  .footer-text {
+    font-size: 12px;
+    color: var(--ink-light);
+  }
+
+  .footer-right {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+  }
+
+  /* ─── RESPONSIVE ─────────────────────────────────────────── */
+  @media (max-width: 1100px) {
+    .kanban-board { grid-template-columns: repeat(2, 1fr); }
+    .detail-grid  { grid-template-columns: repeat(2, 1fr); }
+    .stats-strip  { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 700px) {
+    main { padding: 32px 20px 60px; }
+    nav  { padding: 0 20px; }
+    .kanban-board { grid-template-columns: 1fr; }
+    .detail-grid  { grid-template-columns: 1fr; }
+    .stats-strip  { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAVIGATION ─────────────────────────────────────────── -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    </div>
+    <div>
+      <div class="nav-title">AI Agent Platform</div>
+      <div class="nav-dept">Information Technology Services — TRU</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <span class="nav-badge">Risk &amp; Safety Prototype</span>
+    <span class="last-updated" id="lastUpdated">—</span>
+  </div>
+</nav>
+
+<!-- ─── MAIN ───────────────────────────────────────────────── -->
+<main>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-eyebrow">Active Development</div>
+    <h1>Project Status<br><em>Bird's Eye View</em></h1>
+    <p class="hero-sub">A living overview of the AI Agent Platform initiative — tracking workstreams from inception to delivery across the ITS team.</p>
+  </header>
+
+  <!-- STATS -->
+  <section class="stats-strip" id="statsStrip"></section>
+
+  <!-- KANBAN -->
+  <section class="kanban-wrapper">
+    <div class="section-header">
+      <h2 class="section-title">Kanban Board</h2>
+      <div class="section-rule"></div>
+      <span class="section-count" id="totalCards">— workstreams</span>
+    </div>
+    <div class="kanban-board" id="kanbanBoard"></div>
+  </section>
+
+  <!-- DETAIL CARDS -->
+  <section class="detail-section">
+    <div class="section-header">
+      <h2 class="section-title">Workstream Details</h2>
+      <div class="section-rule"></div>
+      <span class="section-count">Click any card for more ↑</span>
+    </div>
+    <div class="detail-grid" id="detailGrid"></div>
+  </section>
+
+</main>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <div class="footer-logo">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg>
+    </div>
+    <span class="footer-text">Thompson Rivers University &nbsp;·&nbsp; Information Technology Services &nbsp;·&nbsp; Confidential – Internal Use Only</span>
+  </div>
+  <div class="footer-right" id="footerDate"></div>
+</footer>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   DATA — UPDATE THIS JSON TO REFLECT CURRENT PROJECT STATE
+   ════════════════════════════════════════════════════════════ */
+const PROJECT = {
+  name: "AI Agent Platform",
+  lastUpdated: "2026-03-20",
+  team: "ITS – 3 Team Members",
+  prototype: "Risk & Safety Department",
+
+  workstreams: [
+    {
+      id: "scraper",
+      title: "Python Web Scraper",
+      category: "Data Ingestion",
+      status: "active",
+      owner: "ITS Dev Team",
+      icon: "🕸️",
+      iconBg: "#FEF3E8",
+      summary: "Recursive HTML scraper and PDF extractor undergoing refinement. Core functionality complete, now applying light iterations and modifications to improve robustness and performance. Begins at a root URL, follows all internal hyperlinks, and extracts full textual content from each page and document.",
+      bullets: [
+        "Crawls HTML pages recursively from a department root URL",
+        "Detects and follows internal hyperlinks automatically",
+        "Extracts text from PDF files linked on pages",
+        "Configurable depth limit to prevent runaway crawling",
+        "Outputs clean chunked text for embedding pipeline"
+      ],
+      tech: ["Python", "BeautifulSoup4", "PyPDF2", "requests"]
+    },
+    {
+      id: "rag",
+      title: "RAG Pipeline (Embedding + Retrieval)",
+      category: "Core AI",
+      status: "done",
+      owner: "ITS Dev Team",
+      icon: "🧠",
+      iconBg: "#EBF7F1",
+      summary: "The full Retrieval-Augmented Generation pipeline is operational. The embedding model is running, ChromaDB is storing vectors, and Ollama with Qwen 3.5 is returning grounded responses based on retrieved document chunks.",
+      bullets: [
+        "Embedding model up and running — converts chunks and queries to vectors",
+        "ChromaDB configured locally for vector storage and similarity search",
+        "Ollama hosting Qwen 3.5 model on TRU infrastructure — no external API",
+        "End-to-end RAG loop tested and producing accurate, grounded responses",
+        "Migration path to Oracle Vector DB planned for production"
+      ],
+      tech: ["Ollama", "Qwen 3.5", "ChromaDB", "Python", "LangChain"]
+    },
+    {
+      id: "ollama-endpoint",
+      title: "Ollama Endpoint Configuration",
+      category: "Infrastructure",
+      status: "active",
+      owner: "ITS Dev Team + Serhii",
+      icon: "🔗",
+      iconBg: "#FEF3E8",
+      summary: "Configuring and stabilizing Ollama endpoint access on TRU infrastructure. Working actively with Serhii to resolve endpoint connectivity and ensure reliable model serving for the RAG pipeline.",
+      bullets: [
+        "Identifying correct Ollama endpoint URL on TRU infrastructure",
+        "Working with Serhii to troubleshoot connectivity and configuration",
+        "Ensuring stable model serving for Qwen 3.5 inference",
+        "Testing latency and throughput from frontend to inference",
+        "Documenting endpoint configuration for team reference"
+      ],
+      tech: ["Ollama", "TRU Infrastructure", "API Configuration"]
+    },
+    {
+      id: "ui",
+      title: "Chat Widget (User Interface)",
+      category: "Frontend",
+      status: "done",
+      owner: "ITS Dev Team",
+      icon: "💬",
+      iconBg: "#EBF7F1",
+      summary: "Chat widget fully operational and deployed. Embeddable floating action button and chat panel with beautiful hyperlink display showing sources and data references. Ready for integration on any TRU department webpage with integrated feedback mechanism.",
+      bullets: [
+        "Floating action button (FAB) in bottom-right of webpage",
+        "Expands into a full chat panel with message history",
+        "Displays hyperlinks to sources and data references beautifully",
+        "Thumbs-up feedback for helpful responses",
+        "Embeddable via simple code snippet on any TRU page"
+      ],
+      tech: ["HTML/CSS/JS", "Embeddable Widget", "REST API"]
+    },
+    {
+      id: "auth",
+      title: "TRU SSO Authentication",
+      category: "Infrastructure",
+      status: "active",
+      owner: "ITS Dev Team + TRU Auth Team",
+      icon: "🔐",
+      iconBg: "#FEF3E8",
+      summary: "TRU SSO integration work underway. Received detailed instructions from Vera (TRU Auth Team) and actively implementing authentication flow. Will enable student and staff login using existing TRU credentials with seamless integration.",
+      bullets: [
+        "Received technical instructions from Vera at TRU Auth Team",
+        "Actively implementing authentication flow and integration points",
+        "Will allow students and staff to log in with their TRU IDs",
+        "Login flow designed for easy integration with TRU SSO endpoints"
+      ],
+      tech: ["TRU SSO", "Oracle Auth"]
+    },
+    {
+      id: "vectordb",
+      title: "Oracle Vector Database",
+      category: "Infrastructure",
+      status: "requested",
+      owner: "TRU Oracle Team",
+      icon: "🗄️",
+      iconBg: "#EBF2FA",
+      summary: "Production vector storage via Oracle's enterprise vector database solution. Will replace ChromaDB when moving from prototype to production. Request submitted to the TRU Oracle team.",
+      bullets: [
+        "Request submitted to TRU Oracle/database management team",
+        "Will replace ChromaDB for production vector storage",
+        "Oracle is TRU's existing enterprise database provider",
+        "Codebase is configuration-driven to make DB swap seamless",
+        "Timeline pending Oracle team response"
+      ],
+      tech: ["Oracle Vector DB", "Oracle Cloud"]
+    },
+    {
+      id: "sqldb",
+      title: "Oracle SQL Database",
+      category: "Infrastructure",
+      status: "requested",
+      owner: "TRU DB Team",
+      icon: "🗃️",
+      iconBg: "#EBF2FA",
+      summary: "SQL database for user profiles, conversation metadata, token usage analytics, and error logs. Schema is fully designed and DDL is ready. Awaiting server provisioning from TRU's DB team.",
+      bullets: [
+        "Table 1 — Users: id (PK), email",
+        "Table 2 — Conversations: id, user_id, date, token_usage, questions_asked",
+        "Table 3 — Error/Debug Logs: id, timestamp, error_type, detail (optional)",
+        "DDL SQL ready and submitted with provisioning request",
+        "Will power admin analytics dashboard once live"
+      ],
+      tech: ["Oracle SQL", "SQL DDL"]
+    },
+    {
+      id: "admin",
+      title: "Admin Analytics Dashboard",
+      category: "Admin Portal",
+      status: "active",
+      owner: "ITS Dev Team",
+      icon: "📊",
+      iconBg: "#FEF3E8",
+      summary: "Admin analytics dashboard under active development. Building comprehensive UI for department administrators to monitor platform usage and track performance. Data storage layer and analytics pipeline will be implemented alongside UI development once core metrics are finalized.",
+      bullets: [
+        "Building responsive UI for dashboard views and visualizations",
+        "Planning analytics data model and schema for metrics collection",
+        "Will track total questions, token usage, and performance metrics",
+        "Weekly, monthly, and semester-based usage breakdowns planned",
+        "Foundation for cost projection and ROI analysis"
+      ],
+      tech: ["Chart.js", "Python Flask", "Oracle SQL"]
+    },
+    {
+      id: "devportal",
+      title: "Developer Agent Portal",
+      category: "Dev Portal",
+      status: "planned",
+      owner: "ITS Dev Team",
+      icon: "🛠️",
+      iconBg: "#F2F2F6",
+      summary: "A portal for the ITS technical team to build and manage new agents for any TRU department without touching core codebase. Enables scalable, multi-department deployment.",
+      bullets: [
+        "Assign a unique name to each new agent",
+        "Write and assign a custom system prompt defining agent behaviour",
+        "Link agent to a specific ChromaDB collection (its knowledge base)",
+        "Generate an embed code snippet for deployment on the target webpage",
+        "Enables unlimited new agents across all TRU departments"
+      ],
+      tech: ["Python", "ChromaDB", "REST API", "Admin UI"]
+    }
+  ]
+};
+
+/* ════════════════════════════════════════════════════════════
+   STATUS CONFIG
+   ════════════════════════════════════════════════════════════ */
+const STATUS_CONFIG = {
+  done:      { label: "Operational",   col: "col-done",      pill: "pill-done",      colTitle: "✅  Operational"  },
+  active:    { label: "In Progress",   col: "col-active",    pill: "pill-active",    colTitle: "🔄  In Progress"  },
+  planned:   { label: "Planned",       col: "col-planned",   pill: "pill-planned",   colTitle: "🗓  Planned"      },
+  requested: { label: "Requested",     col: "col-requested", pill: "pill-requested", colTitle: "📬  Requested"    },
+};
+
+/* ════════════════════════════════════════════════════════════
+   RENDER
+   ════════════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  renderDates();
+  renderStats();
+  renderKanban();
+  renderDetailCards();
+});
+
+function renderDates() {
+  const d = new Date(PROJECT.lastUpdated);
+  const opts = { year: 'numeric', month: 'long', day: 'numeric' };
+  const str = d.toLocaleDateString('en-CA', opts);
+  document.getElementById('lastUpdated').textContent = 'Updated ' + str;
+  document.getElementById('footerDate').textContent = 'Last updated: ' + str;
+}
+
+function renderStats() {
+  const ws = PROJECT.workstreams;
+  const counts = {};
+  ws.forEach(w => { counts[w.status] = (counts[w.status] || 0) + 1; });
+
+  const stats = [
+    { label: "Total Workstreams", value: ws.length, sub: `${PROJECT.team}`, dot: null },
+    { label: "Operational",       value: counts.done || 0,      sub: "Live and running",     dot: "var(--done)" },
+    { label: "In Progress",       value: counts.active || 0,    sub: "Actively being built", dot: "var(--active)" },
+    { label: "Pending / Planned", value: (counts.planned||0) + (counts.requested||0), sub: "Awaiting start or access", dot: "var(--planned)" },
+  ];
+
+  document.getElementById('statsStrip').innerHTML = stats.map(s => `
+    <div class="stat-card">
+      <div class="stat-label">${s.label}</div>
+      <div class="stat-value">${s.value}</div>
+      <div class="stat-sub">${s.dot ? `<span class="stat-dot" style="background:${s.dot}"></span>` : ''}${s.sub}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('totalCards').textContent = ws.length + ' workstreams';
+}
+
+function renderKanban() {
+  const cols = ['done', 'active', 'planned', 'requested'];
+  const board = document.getElementById('kanbanBoard');
+
+  board.innerHTML = cols.map(status => {
+    const cfg = STATUS_CONFIG[status];
+    const cards = PROJECT.workstreams.filter(w => w.status === status);
+    return `
+      <div class="kanban-col ${cfg.col}">
+        <div class="kanban-col-header">
+          <span class="kanban-col-title">${cfg.colTitle}</span>
+          <span class="kanban-col-badge">${cards.length}</span>
+        </div>
+        ${cards.map(w => `
+          <div class="k-card" onclick="openModal('${w.id}')">
+            <div class="k-card-tag">${w.category}</div>
+            <div class="k-card-title">${w.title}</div>
+            <div class="k-card-note">${w.summary.substring(0, 80)}…</div>
+            <div class="k-card-footer">
+              <span class="k-card-owner">${w.owner}</span>
+              <span class="k-card-arrow">→</span>
+            </div>
+          </div>
+        `).join('')}
+        ${cards.length === 0 ? '<div style="text-align:center;padding:24px 0;color:var(--ink-faint);font-size:12px;">No items</div>' : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+function renderDetailCards() {
+  const grid = document.getElementById('detailGrid');
+  grid.innerHTML = PROJECT.workstreams.map(w => {
+    const cfg = STATUS_CONFIG[w.status];
+    return `
+      <div class="detail-card">
+        <div class="detail-card-icon" style="background:${w.iconBg}">${w.icon}</div>
+        <div class="detail-card-header">
+          <div class="detail-card-subtitle">${w.category}</div>
+          <div class="detail-card-title">${w.title}</div>
+        </div>
+        <span class="status-pill ${cfg.pill}">${cfg.label}</span>
+        <div class="detail-card-body">
+          ${w.summary}
+          <ul class="detail-card-bullets">
+            ${w.bullets.slice(0,3).map(b => `<li>${b}</li>`).join('')}
+          </ul>
+        </div>
+        ${w.tech ? `
+          <div class="detail-card-divider"></div>
+          <div class="detail-card-tech">
+            ${w.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+/* ════════════════════════════════════════════════════════════
+   MODAL
+   ════════════════════════════════════════════════════════════ */
+function openModal(id) {
+  const w = PROJECT.workstreams.find(x => x.id === id);
+  if (!w) return;
+  const cfg = STATUS_CONFIG[w.status];
+
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-tag">${w.category} &nbsp;·&nbsp; ${w.owner}</div>
+    <div style="font-size:28px;margin-bottom:4px">${w.icon}</div>
+    <div class="modal-title">${w.title}</div>
+    <span class="status-pill ${cfg.pill}" style="margin-top:6px">${cfg.label}</span>
+    <div class="modal-body">
+      <p>${w.summary}</p>
+      <ul class="modal-list">
+        ${w.bullets.map(b => `<li>${b}</li>`).join('')}
+      </ul>
+      ${w.tech ? `
+        <div style="margin-top:16px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px">Technologies</div>
+          <div class="detail-card-tech">${w.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>
+        </div>
+      ` : ''}
+    </div>
+  `;
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modalOverlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+</script>
+</body>
+</html>

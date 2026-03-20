@@ -283,7 +283,7 @@
     sendBtn.disabled = true;
     isLoading = true;
 
-    const { msgEl, bubbleEl, sourcesEl } = createAssistantContainer();
+    const { msgEl, bubbleEl, sourcesEl, actionsEl } = createAssistantContainer();
     bubbleEl.innerHTML = '<em style="opacity:0.55;font-style:normal">Thinking…</em>';
     scrollToBottom();
 
@@ -359,6 +359,11 @@
 
       chatHistory.push({ role: 'assistant', content: fullText });
 
+      // Show feedback actions after streaming is complete
+      if (actionsEl) {
+        actionsEl.classList.remove('tru-msg-actions--hidden');
+      }
+
       if (!isOpen) {
         unreadCount++;
         badge.textContent = unreadCount > 9 ? '9+' : unreadCount;
@@ -413,13 +418,46 @@
     const sourcesEl = document.createElement('div');
     sourcesEl.className = 'tru-sources tru-sources--hidden';
 
+    // Feedback actions
+    const actionsEl = document.createElement('div');
+    actionsEl.className = 'tru-msg-actions tru-msg-actions--hidden';
+    actionsEl.innerHTML = `
+      <button class="tru-feedback-btn tru-feedback-up" aria-label="Helpful" title="Helpful">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.514" />
+        </svg>
+      </button>
+      <button class="tru-feedback-btn tru-feedback-down" aria-label="Unhelpful" title="Unhelpful">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.714.211-1.412.608-2.006L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.514" />
+        </svg>
+      </button>
+    `;
+
+    // Bind feedback events
+    const upBtn = actionsEl.querySelector('.tru-feedback-up');
+    const downBtn = actionsEl.querySelector('.tru-feedback-down');
+    
+    upBtn.addEventListener('click', () => {
+      upBtn.classList.add('selected');
+      downBtn.classList.remove('selected');
+      console.log('[TRU Chat] User marked message as helpful');
+    });
+    
+    downBtn.addEventListener('click', () => {
+      downBtn.classList.add('selected');
+      upBtn.classList.remove('selected');
+      console.log('[TRU Chat] User marked message as unhelpful');
+    });
+
     msgEl.appendChild(meta);
     msgEl.appendChild(bubbleEl);
     msgEl.appendChild(sourcesEl);
+    msgEl.appendChild(actionsEl);
     messagesEl.appendChild(msgEl);
     scrollToBottom();
 
-    return { msgEl, bubbleEl, sourcesEl };
+    return { msgEl, bubbleEl, sourcesEl, actionsEl };
   }
 
   // ── Citations / Sources ───────────────────────────────
