@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRU Chatbot Analytics · Risk & Safety Services</title>
+  <meta name="description"
+    content="Internal analytics dashboard for the TRU Risk & Safety AI chatbot — usage patterns, performance metrics, and user satisfaction.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Slab:wght@500;700&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --tru-blue: #003e51;
+      --tru-blue-light: #00516b;
+      --tru-teal: #00919a;
+      --tru-teal-glow: rgba(0, 145, 154, 0.10);
+      --tru-yellow: #e6b800;
+      --tru-yellow-glow: rgba(230, 184, 0, 0.06);
+      --tru-sage: #5e8a66;
+      --tru-grey: #58595b;
+      --tru-grey-light: #e8eaed;
+      --bg-body: #f4f6f9;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f8fbff;
+      --border-glass: #dfe4ea;
+      --text-primary: #1a2b36;
+      --text-secondary: #556a77;
+      --text-dim: #8a9baa;
+      --positive: #16a085;
+      --negative: #e74c3c;
+      --neutral-badge: #94a3b8;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.06);
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', system-ui, sans-serif;
+      background: var(--bg-body);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Subtle background pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 0%, var(--tru-teal-glow) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 100%, var(--tru-yellow-glow) 0%, transparent 50%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Header */
+    .dash-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--tru-blue);
+      padding: 0 2rem;
+    }
+
+    .dash-header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+
+    .dash-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dash-logo-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--tru-teal), var(--tru-blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 2px 12px var(--tru-teal-glow);
+    }
+
+    .dash-logo h1 {
+      font-family: 'Roboto Slab', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.3px;
+    }
+
+    .dash-logo span {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-family: 'Roboto', sans-serif;
+      font-weight: 400;
+    }
+
+    .dash-header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .dash-refresh-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      padding: 8px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+
+    .dash-refresh-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+    }
+
+    .dash-refresh-btn svg {
+      transition: transform 0.5s ease;
+    }
+
+    .dash-refresh-btn:active svg {
+      transform: rotate(360deg);
+    }
+
+    .dash-live-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: #7df3d0;
+      font-weight: 500;
+    }
+
+    .dash-live-dot {
+      width: 7px;
+      height: 7px;
+      background: #7df3d0;
+      border-radius: 50%;
+      animation: pulse-live 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-live {
+
+      0%,
+      100% {
+        opacity: 1;
+        box-shadow: 0 0 0 0 rgba(125, 243, 208, 0.4);
+      }
+
+      50% {
+        opacity: 0.7;
+        box-shadow: 0 0 0 6px rgba(125, 243, 208, 0);
+      }
+    }
+
+    /* Yellow accent strip */
+    .dash-accent-strip {
+      height: 3px;
+      background: linear-gradient(90deg, var(--tru-yellow), var(--tru-teal), var(--tru-yellow));
+      background-size: 200% 100%;
+      animation: shimmer-strip 4s ease-in-out infinite;
+    }
+
+    @keyframes shimmer-strip {
+
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+    /* Main layout */
+    .dash-main {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.8rem 2rem 3rem;
+    }
+
+    /* KPI row */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.5rem;
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .kpi-card:nth-child(1)::before {
+      background: var(--tru-teal);
+    }
+
+    .kpi-card:nth-child(2)::before {
+      background: var(--tru-yellow);
+    }
+
+    .kpi-card:nth-child(3)::before {
+      background: var(--positive);
+    }
+
+    .kpi-card:nth-child(4)::before {
+      background: var(--tru-sage);
+    }
+
+    .kpi-card:hover {
+      background: var(--bg-card-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    .kpi-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .kpi-card:nth-child(1) .kpi-icon {
+      background: rgba(0, 176, 185, 0.15);
+    }
+
+    .kpi-card:nth-child(2) .kpi-icon {
+      background: rgba(255, 205, 0, 0.15);
+    }
+
+    .kpi-card:nth-child(3) .kpi-icon {
+      background: rgba(45, 212, 168, 0.12);
+    }
+
+    .kpi-card:nth-child(4) .kpi-icon {
+      background: rgba(139, 170, 145, 0.15);
+    }
+
+    .kpi-label {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 500;
+      margin-bottom: 0.35rem;
+    }
+
+    .kpi-value {
+      font-family: 'Roboto Slab', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .kpi-card:nth-child(1) .kpi-value {
+      color: var(--tru-teal);
+    }
+
+    .kpi-card:nth-child(2) .kpi-value {
+      color: #c49200;
+    }
+
+    .kpi-card:nth-child(3) .kpi-value {
+      color: var(--positive);
+    }
+
+    .kpi-card:nth-child(4) .kpi-value {
+      color: var(--tru-sage);
+    }
+
+    .kpi-sub {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-top: 0.3rem;
+    }
+
+    /* Chart grid */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.4rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .chart-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+    }
+
+    .chart-card:hover {
+      background: var(--bg-card-hover);
+    }
+
+    .chart-card.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .chart-title {
+      font-family: 'Roboto Slab', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chart-title-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      background: rgba(0, 176, 185, 0.12);
+    }
+
+    /* Heatmap shared styles */
+    .heatmap-cell {
+      border-radius: 3px;
+      transition: var(--transition);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .heatmap-cell:hover {
+      transform: scale(1.2);
+      z-index: 5;
+      box-shadow: 0 0 8px var(--tru-teal-glow);
+    }
+
+    .heatmap-cell[title]:hover::after {
+      content: attr(title);
+      position: absolute;
+      bottom: 110%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--tru-blue);
+      color: #ffffff;
+      padding: 4px 8px;
+      border-radius: 5px;
+      font-size: 0.7rem;
+      white-space: nowrap;
+      z-index: 10;
+      border: 1px solid var(--border-glass);
+    }
+
+    .heatmap-intensity-0 { background: #eef2f5; }
+    .heatmap-intensity-1 { background: rgba(0, 145, 154, 0.18); }
+    .heatmap-intensity-2 { background: rgba(0, 145, 154, 0.38); }
+    .heatmap-intensity-3 { background: rgba(0, 145, 154, 0.58); }
+    .heatmap-intensity-4 { background: rgba(0, 145, 154, 0.85); }
+
+    /* Calendar heatmap (GitHub-style) */
+    .calendar-heatmap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .cal-row {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .cal-month-labels {
+      display: flex;
+      gap: 3px;
+      padding-left: 38px;
+      margin-bottom: 2px;
+    }
+
+    .cal-month-label {
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      font-weight: 500;
+      min-width: 16px;
+      text-align: center;
+    }
+
+    .cal-day-label {
+      width: 32px;
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      text-align: right;
+      padding-right: 4px;
+      flex-shrink: 0;
+    }
+
+    .cal-cell {
+      width: 16px;
+      height: 16px;
+    }
+
+    .cal-legend {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      justify-content: flex-end;
+      margin-top: 8px;
+      font-size: 0.68rem;
+      color: var(--text-dim);
+    }
+
+    .cal-legend-cell {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+    }
+
+    /* Hourly heatmap grid */
+    .hourly-heatmap {
+      display: grid;
+      grid-template-columns: 50px repeat(24, 1fr);
+      gap: 3px;
+      font-size: 0.65rem;
+    }
+
+    .hourly-header {
+      color: var(--text-dim);
+      text-align: center;
+      padding: 2px 0 6px;
+      font-weight: 500;
+    }
+
+    .hourly-day-label {
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      font-size: 0.72rem;
+    }
+
+    .hourly-cell {
+      aspect-ratio: 1;
+      min-height: 18px;
+    }
+
+    /* Chart container */
+    .chart-container {
+      position: relative;
+      height: 260px;
+    }
+
+    /* Feedback donut legend */
+    .feedback-wrap {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .feedback-chart-area {
+      flex: 1;
+      max-width: 220px;
+      position: relative;
+    }
+
+    .feedback-chart-area canvas {
+      max-height: 220px;
+    }
+
+    .feedback-legend {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .legend-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .legend-value {
+      font-family: 'Roboto Slab', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-left: auto;
+    }
+
+    /* Recent sessions table */
+    .sessions-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+
+    .sessions-table th {
+      text-align: left;
+      color: var(--text-dim);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.7rem;
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid var(--border-glass);
+    }
+
+    .sessions-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(0, 176, 185, 0.08);
+      color: var(--text-secondary);
+    }
+
+    .sessions-table tr:hover td {
+      background: rgba(0, 176, 185, 0.05);
+      color: var(--text-primary);
+    }
+
+    .sessions-table .msg-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 22px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.75rem;
+      padding: 0 6px;
+    }
+
+    .msg-badge.high {
+      background: rgba(0, 176, 185, 0.2);
+      color: var(--tru-teal);
+    }
+
+    .msg-badge.medium {
+      background: rgba(230, 184, 0, 0.12);
+      color: #b88d00;
+    }
+
+    .msg-badge.low {
+      background: rgba(139, 170, 145, 0.15);
+      color: var(--tru-sage);
+    }
+
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .status-indicator::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--positive);
+    }
+
+    /* loading spinner */
+    .dash-loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+      color: var(--text-dim);
+      gap: 12px;
+    }
+
+    .spinner {
+      width: 22px;
+      height: 22px;
+      border: 2.5px solid var(--border-glass);
+      border-top-color: var(--tru-teal);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* fade-in animation */
+    .fade-in {
+      animation: fadeInUp 0.5s ease both;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Back to chatbot link */
+    .back-link {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: var(--transition);
+    }
+
+    .back-link:hover {
+      color: #ffffff;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .kpi-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .kpi-row {
+        grid-template-columns: 1fr;
+      }
+
+      .dash-main {
+        padding: 1rem;
+      }
+
+      .dash-header-inner {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 12px 0;
+        gap: 8px;
+      }
+
+      .heatmap-grid {
+        font-size: 0.55rem;
+      }
+
+      .feedback-wrap {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="dash-header">
+    <div class="dash-header-inner">
+      <div class="dash-logo">
+        <div class="dash-logo-icon">📊</div>
+        <div>
+          <h1>Chatbot Analytics</h1>
+          <span>TRU Risk & Safety Services</span>
+        </div>
+      </div>
+      <div class="dash-header-right">
+        <a href="/" class="back-link">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+          Back to Chatbot
+        </a>
+        <div class="dash-live-badge">
+          <div class="dash-live-dot"></div>
+          Live
+        </div>
+        <button class="dash-refresh-btn" onclick="loadDashboard()">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          Refresh
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="dash-accent-strip"></div>
+
+  <!-- Main -->
+  <main class="dash-main" id="dashboard-root">
+    <div class="dash-loading" id="loading-state">
+      <div class="spinner"></div>
+      Loading analytics…
+    </div>
+  </main>
+
+  <script>
+    // ── Supabase Config ─────────────────────────────────────
+    const SUPABASE_URL = 'https://lrzztpkleysibozjculg.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxyenp0cGtsZXlzaWJvempjdWxnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NTExMzQsImV4cCI6MjA5MDAyNzEzNH0.IMgJ-a4pwPAtfFecsIRlcHlmuj5KwhzywiqsX_FpCbI';
+
+    async function supaFetch(table, params = '') {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}${params}`, {
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Accept': 'application/json',
+        },
+      });
+      if (!res.ok) throw new Error(`Supabase ${table}: ${res.status}`);
+      return res.json();
+    }
+
+    // ── Utility ─────────────────────────────────────────────
+    function fmt(n) {
+      if (n >= 1000) return (n / 1000).toFixed(1) + 'k';
+      return n.toString();
+    }
+
+    function fmtMs(ms) {
+      if (ms >= 1000) return (ms / 1000).toFixed(2) + 's';
+      return Math.round(ms) + 'ms';
+    }
+
+    function timeAgo(dateStr) {
+      const diff = Date.now() - new Date(dateStr).getTime();
+      const mins = Math.floor(diff / 60000);
+      if (mins < 1) return 'just now';
+      if (mins < 60) return `${mins}m ago`;
+      const hrs = Math.floor(mins / 60);
+      if (hrs < 24) return `${hrs}h ago`;
+      const days = Math.floor(hrs / 24);
+      return `${days}d ago`;
+    }
+
+    const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+    // ── Main Load ───────────────────────────────────────────
+    async function loadDashboard() {
+      const root = document.getElementById('dashboard-root');
+      root.innerHTML = '<div class="dash-loading" id="loading-state"><div class="spinner"></div>Loading analytics…</div>';
+
+      try {
+        const [sessions, interactions] = await Promise.all([
+          supaFetch('chat_sessions', '?select=*&order=started_at.desc'),
+          supaFetch('chat_interactions', '?select=*&order=created_at.desc'),
+        ]);
+
+        renderDashboard(root, sessions, interactions);
+      } catch (err) {
+        root.innerHTML = `<div class="dash-loading" style="color:var(--negative)">⚠️ Failed to load data: ${err.message}</div>`;
+        console.error('[Analytics] Error:', err);
+      }
+    }
+
+    function renderDashboard(root, sessions, interactions) {
+      // ─ Compute KPIs ─
+      const totalSessions = sessions.length;
+      const totalInteractions = interactions.length;
+      const avgLatency = interactions.length
+        ? interactions.reduce((s, i) => s + i.latency_ms, 0) / interactions.length
+        : 0;
+      const positives = interactions.filter(i => i.user_feedback === 1).length;
+      const negatives = interactions.filter(i => i.user_feedback === -1).length;
+      const noFeedback = interactions.filter(i => i.user_feedback === 0).length;
+      const feedbackTotal = positives + negatives;
+      const satisfactionPct = feedbackTotal > 0 ? Math.round((positives / feedbackTotal) * 100) : 0;
+      const avgMsgs = sessions.length
+        ? (sessions.reduce((s, sess) => s + (sess.total_messages || 0), 0) / sessions.length).toFixed(1)
+        : 0;
+
+      // ─ Build heatmap data ─
+      const heatmap = {};
+      DAYS.forEach(d => { heatmap[d] = new Array(24).fill(0); });
+      sessions.forEach(s => {
+        const dt = new Date(s.started_at);
+        const day = DAYS[dt.getUTCDay()];
+        const hour = dt.getUTCHours();
+        heatmap[day][hour]++;
+      });
+      const maxHeat = Math.max(1, ...Object.values(heatmap).flat());
+
+      // ─ Build daily latency data ─
+      const dailyLatency = {};
+      interactions.forEach(i => {
+        const day = i.created_at.slice(0, 10);
+        if (!dailyLatency[day]) dailyLatency[day] = { sum: 0, count: 0 };
+        dailyLatency[day].sum += i.latency_ms;
+        dailyLatency[day].count++;
+      });
+      const latencyDays = Object.keys(dailyLatency).sort();
+      const latencyAvgs = latencyDays.map(d => Math.round(dailyLatency[d].sum / dailyLatency[d].count));
+
+      // ─ Build daily engagement ─
+      const dailyEngagement = {};
+      sessions.forEach(s => {
+        const day = s.started_at.slice(0, 10);
+        if (!dailyEngagement[day]) dailyEngagement[day] = { sum: 0, count: 0 };
+        dailyEngagement[day].sum += (s.total_messages || 0);
+        dailyEngagement[day].count++;
+      });
+      const engagementDays = Object.keys(dailyEngagement).sort();
+      const engagementAvgs = engagementDays.map(d => +(dailyEngagement[d].sum / dailyEngagement[d].count).toFixed(1));
+
+      // ─ Render ─
+      root.innerHTML = `
+        <!-- KPI Cards -->
+        <div class="kpi-row fade-in">
+          <div class="kpi-card">
+            <div class="kpi-icon">💬</div>
+            <div class="kpi-label">Total Sessions</div>
+            <div class="kpi-value">${fmt(totalSessions)}</div>
+            <div class="kpi-sub">All time</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon">⚡</div>
+            <div class="kpi-label">Total Interactions</div>
+            <div class="kpi-value">${fmt(totalInteractions)}</div>
+            <div class="kpi-sub">${sessions.length ? (totalInteractions / sessions.length).toFixed(1) : 0} per session avg</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon">⏱️</div>
+            <div class="kpi-label">Avg Latency</div>
+            <div class="kpi-value">${fmtMs(avgLatency)}</div>
+            <div class="kpi-sub">Response time</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon">😊</div>
+            <div class="kpi-label">Satisfaction</div>
+            <div class="kpi-value">${satisfactionPct}%</div>
+            <div class="kpi-sub">${positives} positive · ${negatives} negative</div>
+          </div>
+        </div>
+
+        <!-- Heatmaps -->
+        <div class="charts-grid fade-in" style="animation-delay:0.1s">
+          <div class="chart-card full-width">
+            <div class="chart-title">
+              <div class="chart-title-icon">📅</div>
+              Daily Activity
+              <span style="font-size:0.72rem;color:var(--text-dim);font-weight:400;margin-left:auto;">Sessions per day (past weeks)</span>
+            </div>
+            <div class="calendar-heatmap" id="calendar-heatmap"></div>
+          </div>
+        </div>
+
+        <div class="charts-grid fade-in" style="animation-delay:0.15s">
+          <div class="chart-card full-width">
+            <div class="chart-title">
+              <div class="chart-title-icon">🕐</div>
+              Peak Hours
+              <span style="font-size:0.72rem;color:var(--text-dim);font-weight:400;margin-left:auto;">Sessions by day of week × hour (UTC)</span>
+            </div>
+            <div class="hourly-heatmap" id="hourly-heatmap"></div>
+          </div>
+        </div>
+
+        <!-- Charts row -->
+        <div class="charts-grid fade-in" style="animation-delay:0.2s">
+          <div class="chart-card">
+            <div class="chart-title">
+              <div class="chart-title-icon">📈</div>
+              Latency Trend
+            </div>
+            <div class="chart-container"><canvas id="latency-chart"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-title">
+              <div class="chart-title-icon">👍</div>
+              Feedback Breakdown
+            </div>
+            <div class="feedback-wrap">
+              <div class="feedback-chart-area"><canvas id="feedback-chart"></canvas></div>
+              <div class="feedback-legend">
+                <div class="legend-item">
+                  <div class="legend-dot" style="background:var(--positive)"></div>
+                  <span class="legend-label">Positive</span>
+                  <span class="legend-value" style="color:var(--positive)">${positives}</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-dot" style="background:var(--negative)"></div>
+                  <span class="legend-label">Negative</span>
+                  <span class="legend-value" style="color:var(--negative)">${negatives}</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-dot" style="background:var(--neutral-badge)"></div>
+                  <span class="legend-label">No Feedback</span>
+                  <span class="legend-value" style="color:var(--neutral-badge)">${noFeedback}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Engagement + Recent Sessions -->
+        <div class="charts-grid fade-in" style="animation-delay:0.3s">
+          <div class="chart-card">
+            <div class="chart-title">
+              <div class="chart-title-icon">📊</div>
+              Engagement Depth
+              <span style="font-size:0.72rem;color:var(--text-dim);font-weight:400;margin-left:auto;">Avg messages/session</span>
+            </div>
+            <div class="chart-container"><canvas id="engagement-chart"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-title">
+              <div class="chart-title-icon">🕐</div>
+              Recent Sessions
+            </div>
+            <div style="max-height:280px;overflow-y:auto">
+              <table class="sessions-table">
+                <thead>
+                  <tr>
+                    <th>When</th>
+                    <th>Messages</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="recent-sessions-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // ── Render Calendar Heatmap (GitHub-style) ──
+      {
+        const calEl = document.getElementById('calendar-heatmap');
+        // Build daily counts from sessions
+        const dailyCounts = {};
+        sessions.forEach(s => {
+          const day = s.started_at.slice(0, 10);
+          dailyCounts[day] = (dailyCounts[day] || 0) + 1;
+        });
+        const maxDaily = Math.max(1, ...Object.values(dailyCounts));
+
+        // Generate last 8 weeks of dates
+        const today = new Date();
+        const weeksBack = 8;
+        const startDate = new Date(today);
+        startDate.setDate(startDate.getDate() - (weeksBack * 7) - startDate.getDay());
+
+        // Collect all dates in a 7-row × N-col grid (Sun=0 at top)
+        const weeks = [];
+        let d = new Date(startDate);
+        let currentWeek = [];
+        while (d <= today) {
+          if (d.getDay() === 0 && currentWeek.length > 0) {
+            weeks.push(currentWeek);
+            currentWeek = [];
+          }
+          currentWeek.push(new Date(d));
+          d.setDate(d.getDate() + 1);
+        }
+        if (currentWeek.length > 0) weeks.push(currentWeek);
+
+        // Month labels row
+        const monthLabels = document.createElement('div');
+        monthLabels.className = 'cal-month-labels';
+        let lastMonth = -1;
+        weeks.forEach(week => {
+          const firstDay = week[0];
+          const m = firstDay.getMonth();
+          const label = document.createElement('span');
+          label.className = 'cal-month-label';
+          label.style.width = '19px';
+          if (m !== lastMonth) {
+            label.textContent = firstDay.toLocaleString('en', { month: 'short' });
+            lastMonth = m;
+          }
+          monthLabels.appendChild(label);
+        });
+        calEl.appendChild(monthLabels);
+
+        // Day rows (Sun through Sat)
+        const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        for (let dow = 0; dow < 7; dow++) {
+          const row = document.createElement('div');
+          row.className = 'cal-row';
+          const label = document.createElement('span');
+          label.className = 'cal-day-label';
+          label.textContent = (dow % 2 === 1) ? dayNames[dow] : '';
+          row.appendChild(label);
+
+          weeks.forEach(week => {
+            const dateInWeek = week.find(dt => dt.getDay() === dow);
+            const cell = document.createElement('div');
+            cell.className = 'heatmap-cell cal-cell';
+            if (dateInWeek) {
+              const key = dateInWeek.toISOString().slice(0, 10);
+              const val = dailyCounts[key] || 0;
+              const intensity = val === 0 ? 0 : Math.min(4, Math.ceil((val / maxDaily) * 4));
+              cell.classList.add('heatmap-intensity-' + intensity);
+              cell.title = `${key} — ${val} session${val !== 1 ? 's' : ''}`;
+            } else {
+              cell.style.visibility = 'hidden';
+            }
+            row.appendChild(cell);
+          });
+          calEl.appendChild(row);
+        }
+
+        // Legend
+        const legend = document.createElement('div');
+        legend.className = 'cal-legend';
+        legend.innerHTML = 'Less ';
+        for (let i = 0; i <= 4; i++) {
+          legend.innerHTML += `<div class="cal-legend-cell heatmap-intensity-${i}"></div>`;
+        }
+        legend.innerHTML += ' More';
+        calEl.appendChild(legend);
+      }
+
+      // ── Render Hourly Heatmap (Day of week × Hour) ──
+      {
+        const hourlyEl = document.getElementById('hourly-heatmap');
+        // header row
+        hourlyEl.innerHTML = '<div></div>';
+        for (let h = 0; h < 24; h++) {
+          const lbl = h === 0 ? '12a' : h < 12 ? h + 'a' : h === 12 ? '12p' : (h - 12) + 'p';
+          hourlyEl.innerHTML += `<div class="hourly-header">${h % 3 === 0 ? lbl : ''}</div>`;
+        }
+        // day rows
+        DAYS.forEach(day => {
+          hourlyEl.innerHTML += `<div class="hourly-day-label">${day}</div>`;
+          for (let h = 0; h < 24; h++) {
+            const val = heatmap[day][h];
+            const intensity = val === 0 ? 0 : Math.min(4, Math.ceil((val / maxHeat) * 4));
+            hourlyEl.innerHTML += `<div class="heatmap-cell hourly-cell heatmap-intensity-${intensity}" title="${day} ${h}:00 — ${val} session${val !== 1 ? 's' : ''}"></div>`;
+          }
+        });
+      }
+
+      // ── Latency Chart ──
+      const latencyCtx = document.getElementById('latency-chart').getContext('2d');
+      new Chart(latencyCtx, {
+        type: 'line',
+        data: {
+          labels: latencyDays.map(d => d.slice(5)),
+          datasets: [{
+            label: 'Avg Latency (ms)',
+            data: latencyAvgs,
+            borderColor: '#00b0b9',
+            backgroundColor: 'rgba(0,176,185,0.1)',
+            fill: true,
+            tension: 0.4,
+            pointRadius: 4,
+            pointBackgroundColor: '#00b0b9',
+            pointBorderColor: '#ffffff',
+            pointBorderWidth: 2,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { ticks: { color: '#8a9baa', font: { size: 10 } }, grid: { color: '#eef2f5' } },
+            y: { ticks: { color: '#8a9baa', font: { size: 10 }, callback: v => v + 'ms' }, grid: { color: '#eef2f5' } },
+          },
+        },
+      });
+
+      // ── Feedback Chart ──
+      const fbCtx = document.getElementById('feedback-chart').getContext('2d');
+      new Chart(fbCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Positive', 'Negative', 'No Feedback'],
+          datasets: [{
+            data: [positives, negatives, noFeedback],
+            backgroundColor: ['#16a085', '#e74c3c', '#94a3b8'],
+            borderWidth: 0,
+            hoverOffset: 8,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          cutout: '65%',
+          plugins: { legend: { display: false } },
+        },
+      });
+
+      // ── Engagement Chart ──
+      const engCtx = document.getElementById('engagement-chart').getContext('2d');
+      new Chart(engCtx, {
+        type: 'bar',
+        data: {
+          labels: engagementDays.map(d => d.slice(5)),
+          datasets: [{
+            label: 'Avg Messages',
+            data: engagementAvgs,
+            backgroundColor: 'rgba(230,184,0,0.35)',
+            borderColor: '#c49200',
+            borderWidth: 1,
+            borderRadius: 6,
+            borderSkipped: false,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { ticks: { color: '#8a9baa', font: { size: 10 } }, grid: { color: '#eef2f5' } },
+            y: { ticks: { color: '#8a9baa', font: { size: 10 } }, grid: { color: '#eef2f5' }, beginAtZero: true },
+          },
+        },
+      });
+
+      // ── Recent Sessions Table ──
+      const tbody = document.getElementById('recent-sessions-body');
+      const recent = sessions.slice(0, 10);
+      recent.forEach(s => {
+        const msgs = s.total_messages || 0;
+        const badgeClass = msgs >= 10 ? 'high' : msgs >= 5 ? 'medium' : 'low';
+        const start = new Date(s.started_at);
+        const end = new Date(s.last_activity_at);
+        const durMins = Math.max(1, Math.round((end - start) / 60000));
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${timeAgo(s.started_at)}</td>
+          <td><span class="msg-badge ${badgeClass}">${msgs}</span></td>
+          <td>${durMins}m</td>
+          <td><span class="status-indicator">Complete</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // ── Boot ─
+    loadDashboard();
+  </script>
+</body>
+
+</html>

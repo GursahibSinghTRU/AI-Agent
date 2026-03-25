@@ -1,11 +1,12 @@
 """
-server.py — FastAPI backend with SSE streaming, health checks, and static UI.
+server.py — FastAPI backend with SSE streaming, health checks, analytics endpoints, and static UI.
 
 Started via run.py at the project root.
 """
 
 import json
 import logging
+import uuid
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -60,9 +61,19 @@ def get_agent() -> PolicyAgent:
 class ChatRequest(BaseModel):
     question: str
     chat_history: Optional[List[Dict[str, str]]] = None
+    session_id: Optional[str] = None
 
 
-# ── Routes ───────────────────────────────────────────────────────────────────
+class SessionRequest(BaseModel):
+    session_id: str
+
+
+class FeedbackRequest(BaseModel):
+    interaction_id: str
+    feedback: int  # 1 = thumbs up, -1 = thumbs down
+
+
+# ── Page Routes ──────────────────────────────────────────────────────────────
 
 @app.get("/")
 def home():
@@ -80,6 +91,17 @@ def general_tru():
         raise HTTPException(404, "General TRU page not found.")
     return FileResponse(str(page))
 
+
+@app.get("/analytics")
+def analytics_page():
+    """Serve the analytics dashboard."""
+    page = FRONTEND_DIR / "analytics.html"
+    if not page.exists():
+        raise HTTPException(404, "Analytics dashboard not found.")
+    return FileResponse(str(page))
+
+
+# ── Health & Stats ───────────────────────────────────────────────────────────
 
 @app.get("/api/health")
 async def health():
@@ -107,6 +129,23 @@ async def health():
     }
 
 
+@app.get("/api/stats")
+def stats():
+    """Return basic stats about the loaded knowledge base."""
+    count = 1  # We now use exactly 1 combined context file
+    pdf_count = len(list(settings.data_path.glob("*.pdf"))) if settings.data_path.is_dir() else 0
+    txt_count = len(list(settings.data_path.glob("*.txt"))) if settings.data_path.is_dir() else 0
+
+    return {
+        "chunks_indexed": count,
+        "pdf_files_found": pdf_count,
+        "txt_files_found": txt_count,
+        "collection": "combined_context",
+    }
+
+
+# ── Chat Endpoints ───────────────────────────────────────────────────────────
+
 @app.post("/api/chat")
 def chat(req: ChatRequest):
     """Blocking endpoint — returns the full answer at once."""
@@ -124,15 +163,37 @@ async def chat_stream(req: ChatRequest):
     Event types:
       sources  → {sources: [...]}
       token    → {token: "..."}
-      done     → {timing: {...}}
+      done     → {timing: {...}, interaction_id: "...", prompt_tokens: N, completion_tokens: N}
     """
     if not req.question.strip():
         raise HTTPException(400, "Question must not be empty.")
 
     agent = get_agent()
+    session_id = req.session_id
 
     def event_generator():
+        interaction_id = None
         for event in agent.stream(req.question, chat_history=req.chat_history):
+            if event["type"] == "done" and session_id:
+                # Log interaction to Supabase
+                try:
+                    from app.supabase_client import log_interaction, update_session_activity
+                    latency_ms = event["timing"].get("total_ms", 0)
+                    prompt_tokens = event.get("prompt_tokens", 0)
+                    completion_tokens = event.get("completion_tokens", 0)
+                    interaction_id = log_interaction(
+                        session_id=session_id,
+                        latency_ms=latency_ms,
+                        prompt_tokens=prompt_tokens,
+                        completion_tokens=completion_tokens,
+                    )
+                    # Increment by 2: user message + assistant response
+                    update_session_activity(session_id, increment_messages=2)
+                    event["interaction_id"] = interaction_id
+                except Exception as e:
+                    log.warning("Failed to log interaction to Supabase: %s", e)
+                    event["interaction_id"] = None
+
             yield f"data: {json.dumps(event)}\n\n"
 
     return StreamingResponse(
@@ -146,23 +207,29 @@ async def chat_stream(req: ChatRequest):
     )
 
 
-@app.get("/api/stats")
-def stats():
-    """Return basic stats about the loaded knowledge base."""
-    count = 1  # We now use exactly 1 combined context file
-    pdf_count = len(list(settings.data_path.glob("*.pdf"))) if settings.data_path.is_dir() else 0
-    txt_count = len(list(settings.data_path.glob("*.txt"))) if settings.data_path.is_dir() else 0
+# ── Session & Feedback Endpoints (Analytics) ─────────────────────────────────
 
-    return {
-        "chunks_indexed": count,
-        "pdf_files_found": pdf_count,
-        "txt_files_found": txt_count,
-        "collection": "combined_context",
-    }
+@app.post("/api/session")
+def create_session(req: SessionRequest):
+    """Create or touch a chat session."""
+    try:
+        from app.supabase_client import create_session as sb_create_session
+        result = sb_create_session(req.session_id)
+        return {"ok": True, "session": result}
+    except Exception as e:
+        log.warning("Failed to create session in Supabase: %s", e)
+        return {"ok": False, "error": str(e)}
 
-    return {
-        "documents": pdf_count,
-        "chunks": count,
-        "chat_model": settings.CHAT_MODEL,
-        "embedding_model": settings.EMBEDDING_MODEL,
-    }
+
+@app.post("/api/feedback")
+def submit_feedback(req: FeedbackRequest):
+    """Record thumbs-up/down feedback for a specific interaction."""
+    if req.feedback not in (1, -1, 0):
+        raise HTTPException(400, "feedback must be 1, -1, or 0")
+    try:
+        from app.supabase_client import update_feedback
+        update_feedback(req.interaction_id, req.feedback)
+        return {"ok": True}
+    except Exception as e:
+        log.warning("Failed to submit feedback to Supabase: %s", e)
+        return {"ok": False, "error": str(e)}

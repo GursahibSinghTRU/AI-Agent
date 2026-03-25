@@ -25,10 +25,12 @@
   // ── Config ─────────────────────────────────────────────
 
   const CONFIG = {
-    apiStream:  '/api/chat/stream',
-    apiHealth:  '/api/health',
-    timeoutMs:  120_000,
-    connectMs:  5_000,
+    apiStream:   '/api/chat/stream',
+    apiHealth:   '/api/health',
+    apiSession:  '/api/session',
+    apiFeedback: '/api/feedback',
+    timeoutMs:   120_000,
+    connectMs:   5_000,
   };
 
   const QUICK_REPLIES = [
@@ -46,6 +48,7 @@
   let isConnected  = false;
   let chatHistory  = [];
   let unreadCount  = 0;
+  let sessionId    = crypto.randomUUID();
 
   // ── DOM Refs ────────────────────────────────────────────
 
@@ -58,6 +61,22 @@
     cacheDOMRefs();
     bindEvents();
     checkConnection();
+    registerSession();
+  }
+
+  // ── Session Registration ────────────────────────────────
+
+  async function registerSession() {
+    try {
+      await fetch(CONFIG.apiSession, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session_id: sessionId }),
+      });
+      console.log('[TRU Chat] Session registered:', sessionId);
+    } catch (err) {
+      console.warn('[TRU Chat] Session registration failed:', err);
+    }
   }
 
   // ── HTML Injection ──────────────────────────────────────
@@ -289,6 +308,7 @@
 
     let fullText = '';
     let firstToken = true;
+    let currentInteractionId = null;
 
     try {
       const controller = new AbortController();
@@ -300,6 +320,7 @@
         signal: controller.signal,
         body: JSON.stringify({
           question: text,
+          session_id: sessionId,
           chat_history: chatHistory.slice(-8),
         }),
       });
@@ -345,11 +366,16 @@
               link.setAttribute('rel', 'noopener noreferrer');
             });
             scrollToBottom();
+          } else if (event.type === 'done') {
+            // Capture interaction_id from analytics pipeline
+            if (event.interaction_id) {
+              currentInteractionId = event.interaction_id;
+              console.log('[TRU Chat] Interaction logged:', currentInteractionId);
+            }
           } else if (event.type === 'clear_sources') {
             sourcesEl.innerHTML = '';
             sourcesEl.classList.add('tru-sources--hidden');
           }
-          // 'done' event (timing) — ignored for clean UI
         }
       }
 
@@ -362,6 +388,13 @@
       // Show feedback actions after streaming is complete
       if (actionsEl) {
         actionsEl.classList.remove('tru-msg-actions--hidden');
+        // Attach interaction_id to feedback buttons
+        if (currentInteractionId) {
+          const upBtn = actionsEl.querySelector('.tru-feedback-up');
+          const downBtn = actionsEl.querySelector('.tru-feedback-down');
+          if (upBtn) upBtn.dataset.interactionId = currentInteractionId;
+          if (downBtn) downBtn.dataset.interactionId = currentInteractionId;
+        }
       }
 
       if (!isOpen) {
@@ -442,12 +475,14 @@
       upBtn.classList.add('selected');
       downBtn.classList.remove('selected');
       console.log('[TRU Chat] User marked message as helpful');
+      sendFeedback(upBtn.dataset.interactionId, 1);
     });
     
     downBtn.addEventListener('click', () => {
       downBtn.classList.add('selected');
       upBtn.classList.remove('selected');
       console.log('[TRU Chat] User marked message as unhelpful');
+      sendFeedback(downBtn.dataset.interactionId, -1);
     });
 
     msgEl.appendChild(meta);
@@ -523,6 +558,25 @@
     textareaEl.value = '';
     autoResize(textareaEl);
     sendBtn.disabled = true;
+    // Start a fresh analytics session
+    sessionId = crypto.randomUUID();
+    registerSession();
+  }
+
+  // ── Feedback API ────────────────────────────────────────
+
+  async function sendFeedback(interactionId, feedback) {
+    if (!interactionId) return;
+    try {
+      await fetch(CONFIG.apiFeedback, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ interaction_id: interactionId, feedback: feedback }),
+      });
+      console.log('[TRU Chat] Feedback sent:', { interactionId, feedback });
+    } catch (err) {
+      console.warn('[TRU Chat] Feedback send failed:', err);
+    }
   }
 
   // ── Helpers ────────────────────────────────────────────

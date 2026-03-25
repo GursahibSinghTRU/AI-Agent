@@ -60,6 +60,10 @@ class Settings:
     # ── Ollama ───────────────────────────────────────────────────
     OLLAMA_BASE_URL: str   = "http://localhost:11434"
 
+    # ── Supabase (Analytics) ─────────────────────────────────
+    SUPABASE_URL: str      = "https://lrzztpkleysibozjculg.supabase.co"
+    SUPABASE_ANON_KEY: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxyenp0cGtsZXlzaWJvempjdWxnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NTExMzQsImV4cCI6MjA5MDAyNzEzNH0.IMgJ-a4pwPAtfFecsIRlcHlmuj5KwhzywiqsX_FpCbI"
+
     # ── Resolved absolute paths (computed) ───────────────────────
     @property
     def data_path(self) -> Path:

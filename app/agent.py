@@ -137,14 +137,20 @@ class PolicyAgent:
                         if chunk.get("done"):
                             ms_total = (time.perf_counter() - t_start) * 1000
                             ms_llm = (time.perf_counter() - t_llm_start) * 1000
+                            # Extract token counts from Ollama response
+                            prompt_tokens = chunk.get("prompt_eval_count", 0) or 0
+                            completion_tokens = chunk.get("eval_count", 0) or 0
                             yield {
                                 "type": "done",
                                 "timing": {
                                     "total_ms": int(ms_total),
                                     "llm_ms": int(ms_llm),
                                     "retrieve_ms": 0
-                                }
+                                },
+                                "prompt_tokens": prompt_tokens,
+                                "completion_tokens": completion_tokens
                             }
         except Exception as e:
             log.exception("Error during LLM stream")
             yield {"type": "token", "token": f"\n\n[Error: {str(e)}]"}
+

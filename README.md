@@ -1,10 +1,10 @@
-﻿# TRU Risk & Safety Assistant
+# TRU Risk & Safety Assistant
 
 A **local, 100% free** AI chatbot for Thompson Rivers University (TRU) Risk & Safety Services. Powered by **context injection** with local LLMs — no cloud APIs, no subscriptions, completely private.
 
 The application features a full TRU-branded website with an embedded floating chat widget that answers policy questions with markdown hyperlinks to source documents. Responses stream token-by-token for a responsive user experience.
 
-**Status:** ✅ Working | **Architecture:** Context Injection + Ollama (Qwen 3.5) | **Framework:** FastAPI + React-inspired Vanilla JS
+**Status:** ✅ Working | **Architecture:** Context Injection + Ollama (Qwen 3.5) | **Analytics:** Supabase PostgreSQL | **Framework:** FastAPI + React-inspired Vanilla JS
 
 ---
 
@@ -21,7 +21,14 @@ The application features a full TRU-branded website with an embedded floating ch
 📱 **Multi-Page Frontend:**
 - `GET /` → Risk & Safety Services (default homepage with chatbot)
 - `GET /general` → General TRU landing/dummy page
+- `GET /analytics` → Internal analytics dashboard
 - Both pages include the embedded AI chatbot widget
+
+📊 **Privacy-First Analytics (Supabase):**
+- Session tracking, interaction telemetry, and user feedback
+- No raw messages stored — only metadata and performance metrics
+- Real-time analytics dashboard with KPIs, heatmaps, and charts
+- Powered by Supabase PostgreSQL with Row Level Security
 
 ---
 
@@ -80,6 +87,7 @@ Server starts on **http://localhost:8000**
 Visit:
 - `http://localhost:8000/` — Risk & Safety homepage with chatbot
 - `http://localhost:8000/general` — General TRU page
+- `http://localhost:8000/analytics` — Analytics dashboard
 
 ### 7. Quick Command
 
@@ -95,10 +103,12 @@ AI-Agent/
     agent.py          # Context injection agent (no RAG)
     config.py         # Settings & environment variables
     server.py         # FastAPI routes + SSE streaming
+    supabase_client.py # Supabase CRUD helpers (sessions, interactions, feedback)
     __init__.py
  frontend/
     index.html        # Risk & Safety Services homepage
     general-tru.html  # General TRU landing page
+    analytics.html    # Analytics dashboard (reads from Supabase)
     chatbot.js        # Floating chat widget (context-aware UI)
     chatbot.css       # TRU-branded widget styles + hyperlink styling
  data/
@@ -124,6 +134,8 @@ Edit **`app/config.py`** for custom settings:
 | `DATA_DIR` | `data/` | Directory containing `.txt` policy files |
 | `TEMPERATURE` | `0.7` | LLM creativity (0=deterministic, 1=creative) |
 | `ALLOWED_ORIGINS` | `*` | CORS allowed origins |
+| `SUPABASE_URL` | *(project URL)* | Supabase project REST API URL |
+| `SUPABASE_ANON_KEY` | *(project key)* | Supabase anonymous/public API key |
 
 Override via environment variables:
 
@@ -154,10 +166,13 @@ Edit `SYSTEM_PROMPT` in `agent.py` to customize tone or behavior.
 |--------|------|-------------|
 | `GET` | `/` | Serves Risk & Safety homepage |
 | `GET` | `/general` | Serves General TRU page |
+| `GET` | `/analytics` | Serves analytics dashboard |
 | `GET` | `/api/health` | Health check (Ollama status) |
 | `GET` | `/api/stats` | Context file info |
 | `POST` | `/api/chat/stream` | SSE streaming chat |
 | `POST` | `/api/chat` | Non-streaming fallback |
+| `POST` | `/api/session` | Create/touch a chat session |
+| `POST` | `/api/feedback` | Submit thumbs up/down feedback |
 
 ### Streaming Chat Event Format
 
@@ -241,7 +256,7 @@ add_action('wp_footer', function() {
 
 ## Features
 
-✅ **100% Local** — No cloud dependencies, all processing on-device  
+✅ **100% Local** — No cloud dependencies for chat, all processing on-device  
 ✅ **Context-First** — All answers grounded in provided policy documents  
 ✅ **Markdown Hyperlinks** — Citations are clickable links to source files  
 ✅ **Streaming Responses** — Token-by-token generation for responsive UI  
@@ -249,6 +264,8 @@ add_action('wp_footer', function() {
 ✅ **Responsive** — Works on desktop, tablet, and mobile  
 ✅ **Multi-Page** — Risk & Safety + General TRU landing pages  
 ✅ **Embeddable** — Single JS file for easy WordPress integration  
+✅ **Privacy-First Analytics** — Session & interaction telemetry via Supabase  
+✅ **Analytics Dashboard** — KPI cards, heatmaps, charts, feedback breakdown  
 
 ---
 
