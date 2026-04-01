@@ -65,13 +65,15 @@ _WEATHER_PATTERNS = [
         r"\bcurrent\s+(?:conditions?|forecast|weather)\s+(?:in|for|at|near|around)\s+([a-zA-Z][a-zA-Z\s\-]{1,40}?)(?:\?|\.|\s*$)",
         re.IGNORECASE,
     ),
-    # "going/heading/travelling to Sun Peaks" — only used when weather intent is present
+    # "going/heading/travelling to sun peaks" — only used when weather intent is present
     re.compile(
-        r"\b(?:going|heading|travelling|traveling|visiting)\s+to\s+([A-Z][a-zA-Z\s\-]{1,40}?)(?:\?|,|\.|\s+(?:can|could|will|and|do|does|to)\b)",
+        r"\b(?:going|heading|travelling|traveling|visiting)\s+to\s+([a-zA-Z][a-zA-Z\s\-]{1,40}?)(?:\?|,|\.|\s+(?:can|could|will|and|do|does|to)\b)",
+        re.IGNORECASE,
     ),
-    # "I'm going to Sun Peaks" variant without strict punctuation terminator
+    # "I'm going to sun peaks" variant without strict punctuation terminator
     re.compile(
-        r"\bgoing\s+to\s+([A-Z][a-zA-Z\s\-]{1,30}?)\s*,",
+        r"\bgoing\s+to\s+([a-zA-Z][a-zA-Z\s\-]{1,30}?)\s*,",
+        re.IGNORECASE,
     ),
 ]
 
@@ -82,11 +84,15 @@ _STOP_WORDS = {
     "tell", "know", "find", "get", "see", "look", "ask",
 }
 
-# Common verb phrases that "going to X" might incorrectly capture
+# Common verb phrases that "going to X" or "at/in X" might incorrectly capture
 _VERB_FRAGMENTS = {
     "be", "go", "do", "get", "see", "check", "find", "look", "ask",
     "tell", "know", "help", "use", "try", "make", "take", "give",
-    "have", "need", "want", "say", "call", "show", "stay",
+    "have", "need", "want", "say", "call", "show", "stay", "work",
+    "start", "stop", "run", "return", "leave", "come", "become",
+    "bring", "keep", "let", "put", "set", "turn", "move", "play",
+    "add", "buy", "rent", "ski", "hike", "swim", "camp", "climb",
+    "this", "that", "which", "some", "any", "all", "least", "most",
 }
 
 
@@ -124,17 +130,20 @@ def detect_weather_city(question: str) -> Optional[str]:
 
 # Broader patterns used only when scanning history for a previously named place
 _HISTORY_LOCATION_PATTERNS = [
-    # "going to Sun Peaks", "heading to Sun Peaks"
+    # "going to sun peaks", "heading to sun peaks"
     re.compile(
-        r"\b(?:going|heading|travelling|traveling|visiting)\s+to\s+([A-Z][a-zA-Z\s\-]{1,40}?)(?:\?|,|\.|\s|$)",
+        r"\b(?:going|heading|travelling|traveling|visiting)\s+to\s+([a-zA-Z][a-zA-Z\s\-]{1,40}?)(?:\?|,|\.|\s|$)",
+        re.IGNORECASE,
     ),
-    # "at Sun Peaks", "in Sun Peaks", "near Sun Peaks"
+    # "at sun peaks", "in sun peaks", "near sun peaks"
     re.compile(
-        r"\b(?:at|in|near|around)\s+([A-Z][a-zA-Z][a-zA-Z\s\-]{1,38}?)(?:\?|,|\.|\s*$)",
+        r"\b(?:at|in|near|around)\s+([a-zA-Z]{2}[a-zA-Z\s\-]{1,38}?)(?:\?|,|\.|\s*$)",
+        re.IGNORECASE,
     ),
-    # "ski at/in Sun Peaks", "skiing at Sun Peaks"
+    # "ski at/in sun peaks", "skiing at sun peaks"
     re.compile(
-        r"\bski(?:ing)?\s+(?:at|in|near|around)\s+([A-Z][a-zA-Z\s\-]{1,40}?)(?:\?|,|\.|\s*$)",
+        r"\bski(?:ing)?\s+(?:at|in|near|around)\s+([a-zA-Z][a-zA-Z\s\-]{1,40}?)(?:\?|,|\.|\s*$)",
+        re.IGNORECASE,
     ),
 ]
 
