@@ -153,7 +153,7 @@ def chat(req: ChatRequest):
     if not req.question.strip():
         raise HTTPException(400, "Question must not be empty.")
     agent = get_agent()
-    weather_url = resolve_weather_link(req.question)
+    weather_url = resolve_weather_link(req.question, chat_history=req.chat_history)
     return agent.answer(req.question, chat_history=req.chat_history, weather_url=weather_url)
 
 
@@ -172,7 +172,7 @@ async def chat_stream(req: ChatRequest):
 
     agent = get_agent()
     session_id = req.session_id
-    weather_url = resolve_weather_link(req.question)
+    weather_url = resolve_weather_link(req.question, chat_history=req.chat_history)
 
     def event_generator():
         interaction_id = None
