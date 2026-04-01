@@ -1,16 +1,18 @@
 """
 weather.py — Weather query detection and Environment Canada link resolution.
 
-Detects when a user is asking about weather or conditions for a city, resolves
-coordinates via the OpenStreetMap Nominatim geocoding API, and builds a direct
-link to the Environment Canada weather page for that location.
+Detects when a user is asking about weather or conditions for a location,
+resolves coordinates via the OpenStreetMap Nominatim geocoding API, and builds
+a direct link to the Environment Canada weather page for that location.
 
-Detection covers three scenarios:
-  1. Direct ask — "weather in Kamloops", "Sun Peaks weather"
-  2. Implicit ask — "I'm going to Sun Peaks, what are the conditions?"
-     (location in current message + weather-intent words anywhere in message)
-  3. History fallback — "can you check the conditions?" with no city mentioned,
-     but a location was referenced in recent chat history
+Detection covers three tiers, tried in order:
+  1. Direct weather/conditions ask — "weather in Kamloops", "Sun Peaks weather",
+     "conditions at Whistler"
+  2. Activity + location — "skiing at Sun Peaks", "hiking near Revelstoke"
+     (no weather intent words required — the activity verb is specific enough)
+  3. History fallback — current message has weather intent but no city →
+     scan recent chat history for a previously mentioned location using both
+     activity patterns and general location patterns
 """
 
 import logging
@@ -25,9 +27,8 @@ log = logging.getLogger("weather")
 _NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
 _NOMINATIM_HEADERS = {"User-Agent": "TRU-RiskSafety-Assistant/1.0"}
 
-# ── Intent detection ──────────────────────────────────────────────────────────
+# ── Intent detection ───────────────────────────────────────────────────────────
 
-# Words that signal the user is asking about weather/conditions
 _WEATHER_INTENT_WORDS = {
     "weather", "forecast", "conditions", "condition", "temperature",
     "rain", "snow", "wind", "storm", "cold", "hot", "sunny", "cloudy",
@@ -35,63 +36,92 @@ _WEATHER_INTENT_WORDS = {
     "blizzard", "freezing", "freeze", "warming", "alert", "advisory",
 }
 
+
 def _has_weather_intent(text: str) -> bool:
-    """Return True if the text contains any weather-related intent word."""
     lower = text.lower()
     return any(word in lower for word in _WEATHER_INTENT_WORDS)
 
 
-# ── City extraction from current message ─────────────────────────────────────
+# ── City extraction from current message ──────────────────────────────────────
 
-# Patterns tried in order; first non-stop-word match wins.
+# Outdoor activity verbs — specific enough that "verb at X" reliably implies a location
+_ACTIVITY_VERB = (
+    r"(?:ski(?:ing)?|snowboard(?:ing)?|hik(?:e|ing)|camp(?:ing)?|"
+    r"climb(?:ing)?|trek(?:king)?|snowshoe(?:ing)?|kayak(?:ing)?|"
+    r"raft(?:ing)?|mountaineer(?:ing)?|board(?:ing)?)"
+)
+
+# Location preposition group
+_AT_PREP = r"(?:at|in|near|around|on|to)"
+
+# Location capture group (lazy so the terminator drives the boundary)
+_CITY = r"([a-zA-Z][a-zA-Z\s\-]{1,40}?)"
+
+# Terminators that end a city name: punctuation, sentence-final whitespace, or EOS
+_END = r"(?:\?|,|\.|\s*$)"
+
 _WEATHER_PATTERNS = [
-    # "weather in/for/at/near/around Kamloops"
+    # ── No intent gate (pattern is specific enough on its own) ────────────────
+
+    # "weather in/for/at/near Kamloops"
     re.compile(
-        r"\bweather\s+(?:like\s+)?(?:in|for|at|near|around)\s+([a-zA-Z][a-zA-Z\s\-]{1,40}?)(?:\?|\.|\s*$)",
+        rf"\bweather\s+(?:like\s+)?(?:in|for|at|near|around)\s+{_CITY}{_END}",
         re.IGNORECASE,
     ),
     # "Kamloops weather"
     re.compile(
-        r"\b([a-zA-Z][a-zA-Z\s\-]{1,40}?)\s+weather\b",
+        rf"\b{_CITY}\s+weather\b",
         re.IGNORECASE,
     ),
-    # "conditions in/at/for/near/around Sun Peaks"
+    # "conditions in/at/for/near Sun Peaks"
     re.compile(
-        r"\bconditions?\s+(?:in|for|at|near|around)\s+([a-zA-Z][a-zA-Z\s\-]{1,40}?)(?:\?|\.|\s*$)",
+        rf"\bconditions?\s+(?:in|for|at|near|around)\s+{_CITY}{_END}",
         re.IGNORECASE,
     ),
-    # "current conditions at Sun Peaks" / "current forecast for Kamloops"
+    # "current conditions/forecast/weather at Sun Peaks"
     re.compile(
-        r"\bcurrent\s+(?:conditions?|forecast|weather)\s+(?:in|for|at|near|around)\s+([a-zA-Z][a-zA-Z\s\-]{1,40}?)(?:\?|\.|\s*$)",
+        rf"\bcurrent\s+(?:conditions?|forecast|weather)\s+(?:in|for|at|near|around)\s+{_CITY}{_END}",
         re.IGNORECASE,
     ),
-    # "going/heading/travelling to sun peaks" — only used when weather intent is present
+    # "skiing at Sun Peaks", "hiking near Whistler", "snowboarding in Revelstoke"
+    # Activity verb is specific enough — no intent gate needed
     re.compile(
-        r"\b(?:going|heading|travelling|traveling|visiting)\s+to\s+([a-zA-Z][a-zA-Z\s\-]{1,40}?)(?:\?|,|\.|\s+(?:can|could|will|and|do|does|to)\b)",
+        rf"\b{_ACTIVITY_VERB}\s+{_AT_PREP}\s+{_CITY}{_END}",
         re.IGNORECASE,
     ),
-    # "I'm going to sun peaks" variant without strict punctuation terminator
+
+    # ── Intent gate required (too broad without it) ───────────────────────────
+
+    # "going/heading/travelling to Sun Peaks"
+    re.compile(
+        rf"\b(?:going|heading|travelling|traveling|visiting)\s+to\s+{_CITY}"
+        rf"(?:\?|,|\.|\s+(?:can|could|will|and|do|does|to)\b)",
+        re.IGNORECASE,
+    ),
+    # "going to Sun Peaks," — comma-terminated variant
     re.compile(
         r"\bgoing\s+to\s+([a-zA-Z][a-zA-Z\s\-]{1,30}?)\s*,",
         re.IGNORECASE,
     ),
 ]
 
-# Words that would produce false positives if captured as a city name
+# Indices of patterns that require a weather-intent word elsewhere in the message
+_INTENT_GATED = {5, 6}
+
+# Words/fragments that would produce false positives as a city name
 _STOP_WORDS = {
     "the", "current", "today", "outside", "local", "forecast",
     "tomorrow", "weekly", "hourly", "now", "right now", "check",
     "tell", "know", "find", "get", "see", "look", "ask",
 }
 
-# Common verb phrases that "going to X" or "at/in X" might incorrectly capture
 _VERB_FRAGMENTS = {
     "be", "go", "do", "get", "see", "check", "find", "look", "ask",
     "tell", "know", "help", "use", "try", "make", "take", "give",
     "have", "need", "want", "say", "call", "show", "stay", "work",
     "start", "stop", "run", "return", "leave", "come", "become",
     "bring", "keep", "let", "put", "set", "turn", "move", "play",
-    "add", "buy", "rent", "ski", "hike", "swim", "camp", "climb",
+    "add", "buy", "rent", "hike", "swim", "camp", "climb",
     "this", "that", "which", "some", "any", "all", "least", "most",
 }
 
@@ -107,42 +137,40 @@ def _is_valid_city(name: str) -> bool:
 
 def detect_weather_city(question: str) -> Optional[str]:
     """
-    Return the city name if the question directly names a location in a
-    weather/conditions context, else None.
-
-    The last two patterns (going/heading to X) are only applied when the
-    message also contains a weather-intent word, to avoid false positives.
+    Return the city name if the current question names a location in a
+    weather, conditions, or outdoor-activity context. Returns None otherwise.
     """
     has_intent = _has_weather_intent(question)
     for i, pattern in enumerate(_WEATHER_PATTERNS):
-        # The movement patterns (indices 4, 5) require weather intent elsewhere
-        if i >= 4 and not has_intent:
+        if i in _INTENT_GATED and not has_intent:
             continue
         m = pattern.search(question)
         if m:
             city = m.group(1).strip().rstrip("?,. ")
             if _is_valid_city(city):
+                log.debug("Detected city %r via pattern %d", city, i)
                 return city
     return None
 
 
-# ── City extraction from chat history ────────────────────────────────────────
+# ── City extraction from chat history ─────────────────────────────────────────
 
-# Broader patterns used only when scanning history for a previously named place
+# History patterns are ordered most-specific to least-specific to avoid
+# capturing common preposition phrases that aren't locations.
 _HISTORY_LOCATION_PATTERNS = [
-    # "going to sun peaks", "heading to sun peaks"
+    # "skiing at sun peaks", "hiking in whistler" (most specific)
     re.compile(
-        r"\b(?:going|heading|travelling|traveling|visiting)\s+to\s+([a-zA-Z][a-zA-Z\s\-]{1,40}?)(?:\?|,|\.|\s|$)",
+        rf"\b{_ACTIVITY_VERB}\s+{_AT_PREP}\s+{_CITY}{_END}",
         re.IGNORECASE,
     ),
-    # "at sun peaks", "in sun peaks", "near sun peaks"
+    # "going/heading/visiting to sun peaks"
+    re.compile(
+        rf"\b(?:going|heading|travelling|traveling|visiting)\s+to\s+{_CITY}{_END}",
+        re.IGNORECASE,
+    ),
+    # "at sun peaks", "in sun peaks", "near sun peaks" (broadest — tried last)
     re.compile(
         r"\b(?:at|in|near|around)\s+([a-zA-Z]{2}[a-zA-Z\s\-]{1,38}?)(?:\?|,|\.|\s*$)",
-        re.IGNORECASE,
-    ),
-    # "ski at/in sun peaks", "skiing at sun peaks"
-    re.compile(
-        r"\bski(?:ing)?\s+(?:at|in|near|around)\s+([a-zA-Z][a-zA-Z\s\-]{1,40}?)(?:\?|,|\.|\s*$)",
         re.IGNORECASE,
     ),
 ]
@@ -151,30 +179,28 @@ _HISTORY_LOCATION_PATTERNS = [
 def detect_city_from_history(chat_history: List[Dict[str, str]]) -> Optional[str]:
     """
     Scan recent user messages in chat history (most recent first) for a
-    location that could be resolved to a weather link.
+    previously mentioned location. Returns the first valid city found.
     """
     user_messages = [
-        m.get("content", "")
-        for m in reversed(chat_history)
-        if m.get("role") == "user"
+        entry.get("content", "")
+        for entry in reversed(chat_history)
+        if entry.get("role") == "user"
     ]
-    for msg in user_messages[:6]:  # check up to 6 recent user turns
+    for msg in user_messages[:6]:
         for pattern in _HISTORY_LOCATION_PATTERNS:
-            m = pattern.search(msg)
-            if m:
-                city = m.group(1).strip().rstrip("?,. ")
+            match = pattern.search(msg)
+            if match:
+                city = match.group(1).strip().rstrip("?,. ")
                 if _is_valid_city(city):
+                    log.debug("Found city %r in history: %r", city, msg[:60])
                     return city
     return None
 
 
-# ── Geocoding ─────────────────────────────────────────────────────────────────
+# ── Geocoding ──────────────────────────────────────────────────────────────────
 
 def get_coordinates(city: str) -> Optional[Tuple[float, float]]:
-    """
-    Resolve a city name to (latitude, longitude) via Nominatim.
-    Returns None if the city cannot be geocoded.
-    """
+    """Resolve a city name to (lat, lon) via Nominatim. Returns None on failure."""
     try:
         resp = httpx.get(
             _NOMINATIM_URL,
@@ -185,20 +211,17 @@ def get_coordinates(city: str) -> Optional[Tuple[float, float]]:
         resp.raise_for_status()
         results = resp.json()
         if results:
-            lat = float(results[0]["lat"])
-            lon = float(results[0]["lon"])
-            return lat, lon
+            return float(results[0]["lat"]), float(results[0]["lon"])
     except Exception as e:
         log.warning("Nominatim geocoding failed for %r: %s", city, e)
     return None
 
 
 def build_weather_url(lat: float, lon: float) -> str:
-    """Build an Environment Canada weather URL for the given coordinates."""
     return f"https://weather.gc.ca/en/location/index.html?coords={lat:.3f},{lon:.3f}"
 
 
-# ── Public entry point ────────────────────────────────────────────────────────
+# ── Public entry point ─────────────────────────────────────────────────────────
 
 def resolve_weather_link(
     question: str,
@@ -207,14 +230,12 @@ def resolve_weather_link(
     """
     Full pipeline: detect city → geocode → build URL.
 
-    City detection order:
-      1. Direct match in the current question (explicit weather/conditions ask)
-      2. Implicit match in current question (movement phrase + weather intent)
-      3. History fallback: current message has weather intent but no city →
-         scan recent chat history for a previously mentioned location
+    Detection order:
+      1. Direct or activity-based match in current question (no intent gate)
+      2. Movement phrase in current question (intent gate: needs weather word)
+      3. History fallback: question has weather intent but no city → scan history
 
-    Returns the Environment Canada weather URL, or None if no city can be
-    resolved or geocoding fails.
+    Returns the Environment Canada weather URL string, or None.
     """
     city = detect_weather_city(question)
 
@@ -226,9 +247,9 @@ def resolve_weather_link(
 
     coords = get_coordinates(city)
     if not coords:
-        log.info("Could not resolve coordinates for city: %r", city)
+        log.info("Could not geocode city: %r", city)
         return None
 
     url = build_weather_url(*coords)
-    log.info("Resolved weather link for %r → %s", city, url)
+    log.info("Weather link for %r → %s", city, url)
     return url
