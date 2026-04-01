@@ -84,7 +84,7 @@
   function injectHTML() {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = `
-<!-- TRU Policy Chatbot FAB -->
+<!-- TRU Risk & Safety Chatbot FAB -->
 <button id="tru-chat-fab" aria-label="Open TRU Risk & Safety Assistant" title="Ask about TRU Safety & Risk">
   <span class="fab-badge" id="tru-fab-badge"></span>
   <svg class="fab-icon-chat" width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="1.8">
@@ -96,7 +96,7 @@
   </svg>
 </button>
 
-<!-- TRU Policy Chat Window -->
+<!-- TRU Risk & Safety Chat Window -->
 <div id="tru-chat-window" role="dialog" aria-label="TRU Risk & Safety Assistant" aria-modal="false">
 
   <!-- Header -->
@@ -138,9 +138,9 @@
       <textarea
         class="tru-chat-textarea"
         id="tru-input"
-        placeholder="Ask a policy question…"
+        placeholder="Ask a Risk & Safety question…"
         rows="1"
-        aria-label="Type your policy question"
+        aria-label="Type your Risk & Safety question"
       ></textarea>
     </div>
     <button class="tru-send-btn" id="tru-send-btn" aria-label="Send message" disabled>
@@ -152,7 +152,7 @@
 
   <!-- Footer -->
   <div class="tru-chat-footer">
-    Answers sourced from TRU policy documents · <a href="https://www.tru.ca" target="_blank" rel="noopener">tru.ca</a>
+    Answers sourced from TRU Risk & Safety documents · <a href="https://www.tru.ca" target="_blank" rel="noopener">tru.ca</a>
   </div>
 </div>`;
 
@@ -170,8 +170,8 @@
     return `
 <div class="tru-welcome" id="tru-welcome-block">
   <div class="tru-welcome-logo">📋</div>
-  <h3>Policy Assistant</h3>
-  <p>Ask me anything about Risk & Safety at TRU. I will try to provide you with accurate information based on our policy documents.</p>
+  <h3>Risk & Safety Assistant</h3>
+  <p>Ask me anything about Risk & Safety at TRU. I will try to provide you with accurate information based on our Risk & Safety documents.</p>
   <div class="tru-quick-replies">${chips}</div>
 </div>`;
   }
@@ -265,7 +265,7 @@
       if (res.ok) {
         const data = await res.json();
         isConnected = true;
-        const label = data.ok ? 'Ready · Policy RAG' : 'Connected';
+        const label = data.ok ? 'Ready · Risk & Safety RAG' : 'Connected';
         setStatus('online', label);
         sendBtn.disabled = textareaEl.value.trim() === '';
       } else {
@@ -275,7 +275,7 @@
       isConnected = false;
       setStatus('offline', 'Offline — start the server');
       sendBtn.disabled = true;
-      console.warn('[TRU Policy Chat] Connection failed:', err);
+      console.warn('[TRU Risk & Safety Chat] Connection failed:', err);
     }
   }
 
@@ -380,7 +380,7 @@
       }
 
       if (firstToken && fullText === '') {
-        bubbleEl.innerHTML = renderMarkdown('No response received from the policy documents.');
+        bubbleEl.innerHTML = renderMarkdown('No response received from the Risk & Safety documents.');
       }
 
       chatHistory.push({ role: 'assistant', content: fullText });
@@ -406,10 +406,10 @@
       chatHistory.pop();
       let msg = 'Something went wrong. Please try again.';
       if (err.name === 'AbortError') msg = 'Request timed out. Please try again.';
-      else if (err.name === 'TypeError') msg = 'Unable to reach the Policy Assistant. Make sure the server is running.';
+      else if (err.name === 'TypeError') msg = 'Unable to reach the Risk & Safety Assistant. Make sure the server is running.';
       msgEl.remove();
       appendError(msg);
-      console.error('[TRU Policy Chat] Error:', err);
+      console.error('[TRU Risk & Safety Chat] Error:', err);
     } finally {
       isLoading = false;
       sendBtn.disabled = textareaEl.value.trim() === '';
@@ -443,7 +443,7 @@
 
     const meta = document.createElement('div');
     meta.className = 'tru-msg-meta';
-    meta.textContent = 'Policy Assistant';
+    meta.textContent = 'Risk & Safety Assistant';
 
     const bubbleEl = document.createElement('div');
     bubbleEl.className = 'tru-msg-bubble';
@@ -513,7 +513,7 @@
 
     const seen = new Set();
     for (const s of sources) {
-      const key = typeof s === 'string' ? s : (s.policy || s.file || '');
+      const key = typeof s === 'string' ? s : (s.risk || s.file || '');
       if (seen.has(key)) continue;
       seen.add(key);
 
@@ -522,7 +522,7 @@
 
       const name = document.createElement('span');
       name.className = 'tru-source-chip-name';
-      name.textContent = typeof s === 'string' ? s : (s.policy || s.file || 'Document');
+      name.textContent = typeof s === 'string' ? s : (s.risk || s.file || 'Document');
       chip.appendChild(name);
 
       if (s.page) {

@@ -17,7 +17,7 @@ from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from app.agent import PolicyAgent
+from app.agent import RiskandSafetyAgent
 from app.config import settings
 
 log = logging.getLogger("server")
@@ -46,13 +46,13 @@ if FRONTEND_DIR.is_dir():
     app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="static")
 
 # ── Agent (lazy singleton) ───────────────────────────────────────────────────
-_agent: Optional[PolicyAgent] = None
+_agent: Optional[RiskandSafetyAgent] = None
 
 
-def get_agent() -> PolicyAgent:
+def get_agent() -> RiskandSafetyAgent:
     global _agent
     if _agent is None:
-        _agent = PolicyAgent()
+        _agent = RiskandSafetyAgent()
     return _agent
 
 

@@ -2,7 +2,7 @@
 
 A **local, 100% free** AI chatbot for Thompson Rivers University (TRU) Risk & Safety Services. Powered by **context injection** with local LLMs — no cloud APIs, no subscriptions, completely private.
 
-The application features a full TRU-branded website with an embedded floating chat widget that answers policy questions with markdown hyperlinks to source documents. Responses stream token-by-token for a responsive user experience.
+The application features a full TRU-branded website with an embedded floating chat widget that answers Risk & Safety questions with markdown hyperlinks to source documents. Responses stream token-by-token for a responsive user experience.
 
 **Status:** ✅ Working | **Architecture:** Context Injection + Ollama (Qwen 3.5) | **Analytics:** Supabase PostgreSQL | **Framework:** FastAPI + React-inspired Vanilla JS
 
@@ -66,7 +66,7 @@ ollama pull qwen3.5:0.8b
 
 ### 4. Prepare Your Data
 
-Place all policy `.txt` files in the **`data/`** folder (or they already exist in the repo).
+Place all Risk & Safety `.txt` files in the **`data/`** folder (or they already exist in the repo).
 
 ### 5. Build Combined Context
 
@@ -112,7 +112,7 @@ AI-Agent/
     chatbot.js        # Floating chat widget (context-aware UI)
     chatbot.css       # TRU-branded widget styles + hyperlink styling
  data/
-    *.txt             # Policy text files
+    *.txt             # Risk & Safety text files
     combined_context.txt  # Auto-generated concatenated context
  build_context.py     # Generate combined_context.txt
  clean_html.py        # Utility to clean corrupted characters from HTML
@@ -131,7 +131,7 @@ Edit **`app/config.py`** for custom settings:
 |---------|---------|-------------|
 | `CHAT_MODEL` | `qwen3.5:0.8b` | Ollama chat model identifier |
 | `OLLAMA_BASE_URL` | `http://localhost:11434` | Ollama API endpoint |
-| `DATA_DIR` | `data/` | Directory containing `.txt` policy files |
+| `DATA_DIR` | `data/` | Directory containing `.txt` Risk & Safety files |
 | `TEMPERATURE` | `0.7` | LLM creativity (0=deterministic, 1=creative) |
 | `ALLOWED_ORIGINS` | `*` | CORS allowed origins |
 | `SUPABASE_URL` | *(project URL)* | Supabase project REST API URL |
@@ -179,7 +179,7 @@ Edit `SYSTEM_PROMPT` in `agent.py` to customize tone or behavior.
 `POST /api/chat/stream` returns `text/event-stream` with these events:
 
 ```json
-data: {"type":"sources","sources":[{"file":"combined_context.txt","policy":"All Documents","relevance":1.0}]}
+data: {"type":"sources","sources":[{"file":"combined_context.txt","riskandsafetydocs":"All Documents","relevance":1.0}]}
 data: {"type":"token","token":"Here"}
 data: {"type":"token","token":" is"}
 ...
@@ -257,7 +257,7 @@ add_action('wp_footer', function() {
 ## Features
 
 ✅ **100% Local** — No cloud dependencies for chat, all processing on-device  
-✅ **Context-First** — All answers grounded in provided policy documents  
+✅ **Context-First** — All answers grounded in provided Risk & Safety documents  
 ✅ **Markdown Hyperlinks** — Citations are clickable links to source files  
 ✅ **Streaming Responses** — Token-by-token generation for responsive UI  
 ✅ **TRU Branded** — Full design system following TRU brand guidelines  

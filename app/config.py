@@ -30,7 +30,7 @@ class Settings:
     DATA_DIR: str          = "data"
     PERSIST_DIR: str       = "chroma_db"
     FRONTEND_DIR: str      = "frontend"
-    COLLECTION_NAME: str   = "policy_docs"
+    COLLECTION_NAME: str   = "riskandsafety_docs"
 
     # ── Chunking ─────────────────────────────────────────────────
     CHUNK_SIZE: int        = 1000

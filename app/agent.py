@@ -1,5 +1,5 @@
 """
-agent.py - The Policy Agent: Context Injection + LLM Answer + Streaming
+agent.py - The Risk & Safety Agent: Context Injection + LLM Answer + Streaming
 
 This version completely removes RAG indexing and tool calling.
 It reads all text from `data/combined_context.txt` and provides it
@@ -20,7 +20,7 @@ log = logging.getLogger("agent")
 
 SYSTEM_PROMPT = """\
 You are an intelligent AI assistant Risk And Safety Services for Thompson Rivers University (TRU).
-You will be provided with ALL the context from the policy documents perfectly organized in the first user message.
+You will be provided with ALL the context from the Risk & Safety documents perfectly organized in the first user message.
 
 CRITICAL INSTRUCTIONS:
 1. The first message you receive from the user is pure context. Use it exclusively to ground your answers. Do NOT greet the context or treat it as a conversation starter.
@@ -54,7 +54,7 @@ def _build_messages(question: str, chat_history: Optional[List[Dict[str, str]]],
 
 #  Agent 
 
-class PolicyAgent:
+class RiskandSafetyAgent:
     """
     Agent that generates answers via a local Ollama model using an injected
     combined context file instead of RAG and tool calls.
@@ -70,7 +70,7 @@ class PolicyAgent:
             log.info(f"Loaded {len(self.context_text)} characters of context.")
         else:
             log.warning("combined_context.txt not found. Agent will have no context.")
-        log.info("PolicyAgent ready.")
+        log.info("Risk & Safety Agent ready.")
 
     #  Blocking answer 
 
@@ -107,7 +107,7 @@ class PolicyAgent:
         t_start = time.perf_counter()
         messages = _build_messages(question, chat_history, self.context_text)
 
-        yield {"type": "sources", "sources": [{"file": "combined_context.txt", "policy": "All Documents", "relevance": 1.0}]}
+        yield {"type": "sources", "sources": [{"file": "combined_context.txt", "Risk & Safety": "All Documents", "relevance": 1.0}]}
 
         log.info("Streaming answer based on full context ...")
         t_llm_start = time.perf_counter()
