@@ -25,6 +25,29 @@ from app.rag_core import (
 log = logging.getLogger("agent")
 
 
+def _get_city_coordinates(city: str) -> Optional[tuple]:
+    """
+    Look up (lat, lon) for a city using OpenStreetMap Nominatim.
+    Returns (lat, lon) rounded to 3 decimal places, or None on failure.
+    """
+    try:
+        with httpx.Client(timeout=10.0) as client:
+            resp = client.get(
+                "https://nominatim.openstreetmap.org/search",
+                params={"q": city, "format": "json", "limit": "1"},
+                headers={"User-Agent": "TRU-RiskSafetyAgent/1.0"},
+            )
+            resp.raise_for_status()
+            results = resp.json()
+            if results:
+                lat = round(float(results[0]["lat"]), 3)
+                lon = round(float(results[0]["lon"]), 3)
+                return lat, lon
+    except Exception as e:
+        log.warning("Geocoding failed for '%s': %s", city, e)
+    return None
+
+
 def _build_messages(question: str, chat_history: Optional[List[Dict[str, str]]]) -> List[Dict[str, str]]:
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
     
@@ -65,6 +88,23 @@ class PolicyAgent:
                             }
                         },
                         "required": ["query"]
+                    }
+                }
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_weather_link",
+                    "description": "Look up the coordinates of a city and return a Government of Canada weather forecast link for that location. Use this whenever the user asks about the weather in a city or location.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "city": {
+                                "type": "string",
+                                "description": "The name of the city or location to get weather for (e.g. 'Kamloops', 'Vancouver', 'Toronto')"
+                            }
+                        },
+                        "required": ["city"]
                     }
                 }
             }
@@ -162,10 +202,10 @@ class PolicyAgent:
                         if fn_name == "search_knowledge_base":
                             search_query = args.get("query", question)
                             log.info(f"Executing search_knowledge_base for query: '{search_query}'")
-                            
+
                             context, sources, _, r_ms = self._retrieve(search_query)
                             retrieve_ms += r_ms
-                            
+
                             if context:
                                 tool_result = f"Documents retrieved:\n{context}"
                                 sources_to_emit.extend(sources)
@@ -173,6 +213,23 @@ class PolicyAgent:
                                 tool_result = "No documents found matching the query."
 
                             # Append tool result to messages
+                            messages.append({
+                                "role": "tool",
+                                "content": tool_result,
+                                "name": fn_name
+                            })
+
+                        elif fn_name == "get_weather_link":
+                            city = args.get("city", "")
+                            log.info(f"Executing get_weather_link for city: '{city}'")
+                            coords = _get_city_coordinates(city)
+                            if coords:
+                                lat, lon = coords
+                                weather_url = f"https://weather.gc.ca/en/location/index.html?coords={lat},{lon}"
+                                tool_result = f"Coordinates for {city}: lat={lat}, lon={lon}. Weather link: {weather_url}"
+                            else:
+                                tool_result = f"Could not find coordinates for '{city}'. Unable to generate a weather link."
+
                             messages.append({
                                 "role": "tool",
                                 "content": tool_result,
