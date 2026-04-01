@@ -19,6 +19,7 @@ from pydantic import BaseModel
 
 from app.agent import RiskandSafetyAgent
 from app.config import settings
+from app.weather import resolve_weather_link
 
 log = logging.getLogger("server")
 
@@ -152,7 +153,8 @@ def chat(req: ChatRequest):
     if not req.question.strip():
         raise HTTPException(400, "Question must not be empty.")
     agent = get_agent()
-    return agent.answer(req.question, chat_history=req.chat_history)
+    weather_url = resolve_weather_link(req.question)
+    return agent.answer(req.question, chat_history=req.chat_history, weather_url=weather_url)
 
 
 @app.post("/api/chat/stream")
@@ -170,10 +172,11 @@ async def chat_stream(req: ChatRequest):
 
     agent = get_agent()
     session_id = req.session_id
+    weather_url = resolve_weather_link(req.question)
 
     def event_generator():
         interaction_id = None
-        for event in agent.stream(req.question, chat_history=req.chat_history):
+        for event in agent.stream(req.question, chat_history=req.chat_history, weather_url=weather_url):
             if event["type"] == "done" and session_id:
                 # Log interaction to Supabase
                 try:
