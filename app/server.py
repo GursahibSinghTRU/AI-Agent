@@ -6,8 +6,6 @@ Started via run.py at the project root.
 
 import json
 import logging
-import uuid
-from pathlib import Path
 from typing import Dict, List, Optional
 
 import httpx
@@ -153,7 +151,7 @@ def chat(req: ChatRequest):
     if not req.question.strip():
         raise HTTPException(400, "Question must not be empty.")
     agent = get_agent()
-    weather_url = resolve_weather_link(req.question, chat_history=req.chat_history)
+    weather_url = resolve_weather_link(req.question)
     return agent.answer(req.question, chat_history=req.chat_history, weather_url=weather_url)
 
 
@@ -172,7 +170,7 @@ async def chat_stream(req: ChatRequest):
 
     agent = get_agent()
     session_id = req.session_id
-    weather_url = resolve_weather_link(req.question, chat_history=req.chat_history)
+    weather_url = resolve_weather_link(req.question)
 
     def event_generator():
         interaction_id = None
@@ -180,7 +178,7 @@ async def chat_stream(req: ChatRequest):
             if event["type"] == "done" and session_id:
                 # Log interaction to Supabase
                 try:
-                    from app.supabase_client import log_interaction, update_session_activity
+                    from app.oracle_client import log_interaction, update_session_activity
                     latency_ms = event["timing"].get("total_ms", 0)
                     prompt_tokens = event.get("prompt_tokens", 0)
                     completion_tokens = event.get("completion_tokens", 0)
@@ -216,11 +214,11 @@ async def chat_stream(req: ChatRequest):
 def create_session(req: SessionRequest):
     """Create or touch a chat session."""
     try:
-        from app.supabase_client import create_session as sb_create_session
-        result = sb_create_session(req.session_id)
+        from app.oracle_client import create_session as ora_create_session
+        result = ora_create_session(req.session_id)
         return {"ok": True, "session": result}
     except Exception as e:
-        log.warning("Failed to create session in Supabase: %s", e)
+        log.warning("Failed to create session in Oracle: %s", e)
         return {"ok": False, "error": str(e)}
 
 
@@ -230,9 +228,23 @@ def submit_feedback(req: FeedbackRequest):
     if req.feedback not in (1, -1, 0):
         raise HTTPException(400, "feedback must be 1, -1, or 0")
     try:
-        from app.supabase_client import update_feedback
+        from app.oracle_client import update_feedback
         update_feedback(req.interaction_id, req.feedback)
         return {"ok": True}
     except Exception as e:
-        log.warning("Failed to submit feedback to Supabase: %s", e)
+        log.warning("Failed to submit feedback to Oracle: %s", e)
         return {"ok": False, "error": str(e)}
+
+
+@app.get("/api/analytics")
+def analytics_data():
+    """Return all sessions and interactions for the analytics dashboard."""
+    try:
+        from app.oracle_client import get_all_sessions, get_all_interactions
+        return {
+            "sessions": get_all_sessions(),
+            "interactions": get_all_interactions(),
+        }
+    except Exception as e:
+        log.warning("Failed to fetch analytics from Oracle: %s", e)
+        return {"sessions": [], "interactions": []}

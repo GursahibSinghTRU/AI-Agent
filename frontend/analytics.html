@@ -786,19 +786,10 @@
   </footer>
 
   <script>
-    // ── Supabase Config ─────────────────────────────────────
-    const SUPABASE_URL = 'https://lrzztpkleysibozjculg.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxyenp0cGtsZXlzaWJvempjdWxnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NTExMzQsImV4cCI6MjA5MDAyNzEzNH0.IMgJ-a4pwPAtfFecsIRlcHlmuj5KwhzywiqsX_FpCbI';
-
-    async function supaFetch(table, params = '') {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}${params}`, {
-        headers: {
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Accept': 'application/json',
-        },
-      });
-      if (!res.ok) throw new Error(`Supabase ${table}: ${res.status}`);
+    // ── Analytics API ────────────────────────────────────────
+    async function fetchAnalytics() {
+      const res = await fetch('/api/analytics');
+      if (!res.ok) throw new Error(`Analytics API: ${res.status}`);
       return res.json();
     }
 
@@ -840,10 +831,7 @@
       `;
 
       try {
-        const [sessions, interactions] = await Promise.all([
-          supaFetch('chat_sessions', '?select=*&order=started_at.desc'),
-          supaFetch('chat_interactions', '?select=*&order=created_at.desc'),
-        ]);
+        const { sessions, interactions } = await fetchAnalytics();
 
         const now = new Date();
         document.getElementById('banner-timestamp').innerHTML = `

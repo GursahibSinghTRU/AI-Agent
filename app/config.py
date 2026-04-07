@@ -9,6 +9,11 @@ import os
 from dataclasses import dataclass, fields
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+# Load .env from the project root into os.environ before settings are built
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
+
 # Project root = parent of the app/ package
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
@@ -60,9 +65,12 @@ class Settings:
     # ── Ollama ───────────────────────────────────────────────────
     OLLAMA_BASE_URL: str   = "http://localhost:11434"
 
-    # ── Supabase (Analytics) ─────────────────────────────────
-    SUPABASE_URL: str      = "https://lrzztpkleysibozjculg.supabase.co"
-    SUPABASE_ANON_KEY: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxyenp0cGtsZXlzaWJvempjdWxnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NTExMzQsImV4cCI6MjA5MDAyNzEzNH0.IMgJ-a4pwPAtfFecsIRlcHlmuj5KwhzywiqsX_FpCbI"
+    # ── Oracle 23ai (Analytics) ──────────────────────────────
+    ORACLE_HOST: str       = "localhost"
+    ORACLE_PORT: int       = 1521
+    ORACLE_SERVICE: str    = "ORCL"
+    ORACLE_USER: str       = ""
+    ORACLE_PASSWORD: str   = ""
 
     # ── Resolved absolute paths (computed) ───────────────────────
     @property
