@@ -32,9 +32,9 @@ This is the single source of truth for infrastructure settings.
 | `COLLECTION_NAME` | **Unique per agent** — keeps vector stores separate | `"wellness_docs"` |
 | `DATA_DIR` | Folder where ingestion reads PDFs from | `"data/wellness"` |
 | `CHAT_MODEL` | Ollama model name | `"qwen3:0.6b"` / `"llama3.2:3b"` |
-| `K` | Number of retrieved chunks (default 6) | Increase for dense policy docs |
+| `K` | Number of retrieved chunks (default 6) | Increase for dense Risk & Safety docs |
 | `SCORE_THRESHOLD` | Similarity cutoff (default 1.0 = loose) | Lower = more selective |
-| `TEMPERATURE` | LLM creativity (default 0.1 = factual) | Keep low for policy/advisory |
+| `TEMPERATURE` | LLM creativity (default 0.1 = factual) | Keep low for Risk & Safety/advisory |
 
 **Example — Wellness Agent config:**
 ```python
@@ -50,12 +50,12 @@ All settings can also be overridden with environment variables (the field names 
 
 The `SYSTEM_PROMPT` constant defines who the agent *is*, what it knows, and what it will/won't do.
 
-### Current (Policy Assistant):
+### Current (Risk & Safety Assistant):
 ```python
 SYSTEM_PROMPT = (
-    "You are the TRU Policy Assistant — an expert on Thompson Rivers University policies. "
-    "Answer questions using ONLY the provided policy context. "
-    "Cite the policy name and page number when possible. "
+    "You are the TRU Risk & Safety Assistant — an expert on Thompson Rivers University policies. "
+    "Answer questions using ONLY the provided Risk & Safety doc context. "
+    "Cite the Risk & Safety name and page number when possible. "
     "If the answer is not in the context, say you cannot find it in the available policies. "
     "Be clear, professional, and concise."
 )
@@ -103,7 +103,7 @@ SYSTEM_PROMPT = (
 
 ## 3 — `frontend/chatbot.js` — Widget Identity
 
-There are **9 locations** where "Policy Assistant" (or agent-specific text) appears. Search for the current agent name and replace all at once, OR update each section below:
+There are **9 locations** where "Risk & Safety Assistant" (or agent-specific text) appears. Search for the current agent name and replace all at once, OR update each section below:
 
 ### 3a — File header comment (line ~2)
 ```js
@@ -133,7 +133,7 @@ welcomeP.textContent  = '[One-sentence description of what this agent helps with
 These are the pre-populated question chips shown on first open. Change them to reflect the domain:
 
 ```js
-// Policy Assistant (current)
+// Policy Assistant 
 const QUICK_REPLIES = [
   'What is the records destruction policy?',
   'Travel expense reimbursement rules?',
@@ -188,7 +188,7 @@ The chatbot FAB and window inject themselves into the DOM automatically.
 
 ## 5 — `app/server.py` — FastAPI Metadata (optional)
 
-Line ~29: `title="TRU Policy Assistant"` — this only affects the auto-generated API docs at `/docs`. Change it for cleanliness:
+Line ~29: `title="TRU Risk & Safety Assistant"` — this only affects the auto-generated API docs at `/docs`. Change it for cleanliness:
 
 ```python
 app = FastAPI(title="TRU Wellness Advisor")
@@ -234,7 +234,7 @@ python run.py
 
 ## 7 — Running Multiple Agents Simultaneously
 
-To run the Policy Assistant and Wellness Advisor at the same time (different ports), override settings with environment variables:
+To run the Risk & Safety Assistant and Wellness Advisor at the same time (different ports), override settings with environment variables:
 
 **Windows PowerShell:**
 ```powershell

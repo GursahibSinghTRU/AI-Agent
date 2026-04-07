@@ -394,6 +394,86 @@
   box-shadow: 0 1px 4px rgba(0,62,81,0.09);
 }
 
+/* ── Feedback Actions ───────────────────────────────────── */
+
+.tru-msg-actions {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  margin-top: 1px;
+  padding-left: 2px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.tru-msg-actions.tru-msg-actions--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tru-feedback-btn {
+  background: transparent;
+  border: none;
+  color: #a0b8c1;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.tru-feedback-btn:hover {
+  background: rgba(0, 176, 185, 0.06);
+  color: var(--tru-teal);
+}
+
+.tru-feedback-btn.selected {
+  color: var(--tru-blue);
+  background: rgba(0, 62, 81, 0.06);
+}
+
+.tru-feedback-btn.selected svg {
+  fill: currentColor;
+}
+
+/* ── Hyperlinks in Messages ────────────────────────────── */
+
+.tru-msg-bubble a {
+  color: var(--tru-teal);
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  border-bottom: 2px solid var(--tru-yellow);
+  padding-bottom: 2px;
+  transition: all 0.2s ease;
+  border-radius: 3px;
+  padding: 2px 6px;
+  margin: 0 1px;
+}
+
+.tru-msg-bubble a:hover {
+  background: rgba(0, 176, 185, 0.08);
+  color: var(--tru-blue-light);
+  border-bottom-color: var(--tru-blue);
+}
+
+.tru-msg-bubble a:active {
+  transform: scale(0.98);
+  background: rgba(0, 176, 185, 0.12);
+}
+
+.tru-message.user .tru-msg-bubble a {
+  color: var(--tru-yellow);
+  border-bottom-color: rgba(255, 205, 0, 0.5);
+}
+
+.tru-message.user .tru-msg-bubble a:hover {
+  background: rgba(255, 205, 0, 0.12);
+  border-bottom-color: var(--tru-white);
+}
+
 /* ── Typing Indicator ───────────────────────────────────── */
 
 .tru-typing-indicator {

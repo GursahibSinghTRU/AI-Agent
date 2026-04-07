@@ -1,0 +1,9 @@
+In this project, start by going through the README to understand the project. Then, review the supabase-analytics-handoff.md plan to understand how the database should be integrated.
+
+By this point, you should have a thorough understanding of the requirements and files. Next, use Supabase MCP to create the schema and set everything up on Supabase. Also, add some dummy data.
+
+Then, update the agent code so it connects to Supabase and works smoothly, including proper updates and full CRUD functionality.
+
+If you have any questions, feel free to ask—but aim to do a great job implementing the database.
+
+Finally, create a new HTML-based analytics dashboard page that reads directly from the database, and make it visually appealing.

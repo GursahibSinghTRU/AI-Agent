@@ -12,7 +12,9 @@
   function renderMarkdown(text) {
     if (window.marked) {
       marked.setOptions({ breaks: true, gfm: true });
-      return marked.parse(text);
+      const html = marked.parse(text);
+      console.log('[TRU Chat] Rendered markdown HTML:', html);
+      return html;
     }
     // Fallback: escape HTML, preserve newlines
     return text
@@ -23,10 +25,12 @@
   // ── Config ─────────────────────────────────────────────
 
   const CONFIG = {
-    apiStream:  '/api/chat/stream',
-    apiHealth:  '/api/health',
-    timeoutMs:  120_000,
-    connectMs:  5_000,
+    apiStream:   '/api/chat/stream',
+    apiHealth:   '/api/health',
+    apiSession:  '/api/session',
+    apiFeedback: '/api/feedback',
+    timeoutMs:   120_000,
+    connectMs:   5_000,
   };
 
   const QUICK_REPLIES = [
@@ -44,6 +48,7 @@
   let isConnected  = false;
   let chatHistory  = [];
   let unreadCount  = 0;
+  let sessionId    = crypto.randomUUID();
 
   // ── DOM Refs ────────────────────────────────────────────
 
@@ -56,6 +61,22 @@
     cacheDOMRefs();
     bindEvents();
     checkConnection();
+    registerSession();
+  }
+
+  // ── Session Registration ────────────────────────────────
+
+  async function registerSession() {
+    try {
+      await fetch(CONFIG.apiSession, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session_id: sessionId }),
+      });
+      console.log('[TRU Chat] Session registered:', sessionId);
+    } catch (err) {
+      console.warn('[TRU Chat] Session registration failed:', err);
+    }
   }
 
   // ── HTML Injection ──────────────────────────────────────
@@ -63,7 +84,7 @@
   function injectHTML() {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = `
-<!-- TRU Policy Chatbot FAB -->
+<!-- TRU Risk & Safety Chatbot FAB -->
 <button id="tru-chat-fab" aria-label="Open TRU Risk & Safety Assistant" title="Ask about TRU Safety & Risk">
   <span class="fab-badge" id="tru-fab-badge"></span>
   <svg class="fab-icon-chat" width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="1.8">
@@ -75,7 +96,7 @@
   </svg>
 </button>
 
-<!-- TRU Policy Chat Window -->
+<!-- TRU Risk & Safety Chat Window -->
 <div id="tru-chat-window" role="dialog" aria-label="TRU Risk & Safety Assistant" aria-modal="false">
 
   <!-- Header -->
@@ -117,9 +138,9 @@
       <textarea
         class="tru-chat-textarea"
         id="tru-input"
-        placeholder="Ask a policy question…"
+        placeholder="Ask a Risk & Safety question…"
         rows="1"
-        aria-label="Type your policy question"
+        aria-label="Type your Risk & Safety question"
       ></textarea>
     </div>
     <button class="tru-send-btn" id="tru-send-btn" aria-label="Send message" disabled>
@@ -131,7 +152,7 @@
 
   <!-- Footer -->
   <div class="tru-chat-footer">
-    Answers sourced from TRU policy documents · <a href="https://www.tru.ca/policy/all-policy.html" target="_blank" rel="noopener">TRU Policies</a>
+    Answers sourced from TRU Risk & Safety documents · <a href="https://www.tru.ca" target="_blank" rel="noopener">tru.ca</a>
   </div>
 </div>`;
 
@@ -149,8 +170,8 @@
     return `
 <div class="tru-welcome" id="tru-welcome-block">
   <div class="tru-welcome-logo">📋</div>
-  <h3>Policy Assistant</h3>
-  <p>Ask me anything about Risk & Safety at TRU. I will try to provide you with accurate information based on our policy documents.</p>
+  <h3>Risk & Safety Assistant</h3>
+  <p>Ask me anything about Risk & Safety at TRU. I will try to provide you with accurate information based on our Risk & Safety documents.</p>
   <div class="tru-quick-replies">${chips}</div>
 </div>`;
   }
@@ -244,7 +265,7 @@
       if (res.ok) {
         const data = await res.json();
         isConnected = true;
-        const label = data.ok ? 'Ready · Policy RAG' : 'Connected';
+        const label = data.ok ? 'Ready · Risk & Safety RAG' : 'Connected';
         setStatus('online', label);
         sendBtn.disabled = textareaEl.value.trim() === '';
       } else {
@@ -254,7 +275,7 @@
       isConnected = false;
       setStatus('offline', 'Offline — start the server');
       sendBtn.disabled = true;
-      console.warn('[TRU Policy Chat] Connection failed:', err);
+      console.warn('[TRU Risk & Safety Chat] Connection failed:', err);
     }
   }
 
@@ -281,12 +302,13 @@
     sendBtn.disabled = true;
     isLoading = true;
 
-    const { msgEl, bubbleEl, sourcesEl } = createAssistantContainer();
+    const { msgEl, bubbleEl, sourcesEl, actionsEl } = createAssistantContainer();
     bubbleEl.innerHTML = '<em style="opacity:0.55;font-style:normal">Thinking…</em>';
     scrollToBottom();
 
     let fullText = '';
     let firstToken = true;
+    let currentInteractionId = null;
 
     try {
       const controller = new AbortController();
@@ -298,6 +320,7 @@
         signal: controller.signal,
         body: JSON.stringify({
           question: text,
+          session_id: sessionId,
           chat_history: chatHistory.slice(-8),
         }),
       });
@@ -326,28 +349,53 @@
           try { event = JSON.parse(raw); } catch { continue; }
 
           if (event.type === 'sources') {
-            renderSources(sourcesEl, event.sources || []);
+            // Sources display hidden — citations are embedded in the response text
           } else if (event.type === 'token') {
             if (firstToken) {
               bubbleEl.innerHTML = '';
               firstToken = false;
             }
             fullText += event.token;
+            console.log('[TRU Chat] Received token:', event.token);
+            console.log('[TRU Chat] Full response so far:', fullText);
             bubbleEl.innerHTML = renderMarkdown(fullText);
+            // Make all links open in a new tab
+            const links = bubbleEl.querySelectorAll('a');
+            links.forEach(link => {
+              link.setAttribute('target', '_blank');
+              link.setAttribute('rel', 'noopener noreferrer');
+            });
             scrollToBottom();
+          } else if (event.type === 'done') {
+            // Capture interaction_id from analytics pipeline
+            if (event.interaction_id) {
+              currentInteractionId = event.interaction_id;
+              console.log('[TRU Chat] Interaction logged:', currentInteractionId);
+            }
           } else if (event.type === 'clear_sources') {
             sourcesEl.innerHTML = '';
             sourcesEl.classList.add('tru-sources--hidden');
           }
-          // 'done' event (timing) — ignored for clean UI
         }
       }
 
       if (firstToken && fullText === '') {
-        bubbleEl.innerHTML = renderMarkdown('No response received from the policy documents.');
+        bubbleEl.innerHTML = renderMarkdown('No response received from the Risk & Safety documents.');
       }
 
       chatHistory.push({ role: 'assistant', content: fullText });
+
+      // Show feedback actions after streaming is complete
+      if (actionsEl) {
+        actionsEl.classList.remove('tru-msg-actions--hidden');
+        // Attach interaction_id to feedback buttons
+        if (currentInteractionId) {
+          const upBtn = actionsEl.querySelector('.tru-feedback-up');
+          const downBtn = actionsEl.querySelector('.tru-feedback-down');
+          if (upBtn) upBtn.dataset.interactionId = currentInteractionId;
+          if (downBtn) downBtn.dataset.interactionId = currentInteractionId;
+        }
+      }
 
       if (!isOpen) {
         unreadCount++;
@@ -358,10 +406,10 @@
       chatHistory.pop();
       let msg = 'Something went wrong. Please try again.';
       if (err.name === 'AbortError') msg = 'Request timed out. Please try again.';
-      else if (err.name === 'TypeError') msg = 'Unable to reach the Policy Assistant. Make sure the server is running.';
+      else if (err.name === 'TypeError') msg = 'Unable to reach the Risk & Safety Assistant. Make sure the server is running.';
       msgEl.remove();
       appendError(msg);
-      console.error('[TRU Policy Chat] Error:', err);
+      console.error('[TRU Risk & Safety Chat] Error:', err);
     } finally {
       isLoading = false;
       sendBtn.disabled = textareaEl.value.trim() === '';
@@ -395,7 +443,7 @@
 
     const meta = document.createElement('div');
     meta.className = 'tru-msg-meta';
-    meta.textContent = 'Policy Assistant';
+    meta.textContent = 'Risk & Safety Assistant';
 
     const bubbleEl = document.createElement('div');
     bubbleEl.className = 'tru-msg-bubble';
@@ -403,13 +451,48 @@
     const sourcesEl = document.createElement('div');
     sourcesEl.className = 'tru-sources tru-sources--hidden';
 
+    // Feedback actions
+    const actionsEl = document.createElement('div');
+    actionsEl.className = 'tru-msg-actions tru-msg-actions--hidden';
+    actionsEl.innerHTML = `
+      <button class="tru-feedback-btn tru-feedback-up" aria-label="Helpful" title="Helpful">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.514" />
+        </svg>
+      </button>
+      <button class="tru-feedback-btn tru-feedback-down" aria-label="Unhelpful" title="Unhelpful">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.714.211-1.412.608-2.006L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.514" />
+        </svg>
+      </button>
+    `;
+
+    // Bind feedback events
+    const upBtn = actionsEl.querySelector('.tru-feedback-up');
+    const downBtn = actionsEl.querySelector('.tru-feedback-down');
+    
+    upBtn.addEventListener('click', () => {
+      upBtn.classList.add('selected');
+      downBtn.classList.remove('selected');
+      console.log('[TRU Chat] User marked message as helpful');
+      sendFeedback(upBtn.dataset.interactionId, 1);
+    });
+    
+    downBtn.addEventListener('click', () => {
+      downBtn.classList.add('selected');
+      upBtn.classList.remove('selected');
+      console.log('[TRU Chat] User marked message as unhelpful');
+      sendFeedback(downBtn.dataset.interactionId, -1);
+    });
+
     msgEl.appendChild(meta);
     msgEl.appendChild(bubbleEl);
     msgEl.appendChild(sourcesEl);
+    msgEl.appendChild(actionsEl);
     messagesEl.appendChild(msgEl);
     scrollToBottom();
 
-    return { msgEl, bubbleEl, sourcesEl };
+    return { msgEl, bubbleEl, sourcesEl, actionsEl };
   }
 
   // ── Citations / Sources ───────────────────────────────
@@ -430,7 +513,7 @@
 
     const seen = new Set();
     for (const s of sources) {
-      const key = typeof s === 'string' ? s : (s.policy || s.file || '');
+      const key = typeof s === 'string' ? s : (s.risk || s.file || '');
       if (seen.has(key)) continue;
       seen.add(key);
 
@@ -439,7 +522,7 @@
 
       const name = document.createElement('span');
       name.className = 'tru-source-chip-name';
-      name.textContent = typeof s === 'string' ? s : (s.policy || s.file || 'Document');
+      name.textContent = typeof s === 'string' ? s : (s.risk || s.file || 'Document');
       chip.appendChild(name);
 
       if (s.page) {
@@ -475,6 +558,25 @@
     textareaEl.value = '';
     autoResize(textareaEl);
     sendBtn.disabled = true;
+    // Start a fresh analytics session
+    sessionId = crypto.randomUUID();
+    registerSession();
+  }
+
+  // ── Feedback API ────────────────────────────────────────
+
+  async function sendFeedback(interactionId, feedback) {
+    if (!interactionId) return;
+    try {
+      await fetch(CONFIG.apiFeedback, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ interaction_id: interactionId, feedback: feedback }),
+      });
+      console.log('[TRU Chat] Feedback sent:', { interactionId, feedback });
+    } catch (err) {
+      console.warn('[TRU Chat] Feedback send failed:', err);
+    }
   }
 
   // ── Helpers ────────────────────────────────────────────

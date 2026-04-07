@@ -1,0 +1,2516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TRU AI Agent Platform — Analytics</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --tru-navy:       #003865;
+      --tru-navy-deep:  #002649;
+      --tru-navy-mid:   #0056A0;
+      --tru-gold:       #F7A800;
+      --tru-gold-light: #FFC740;
+      --tru-gold-pale:  #FFF5D6;
+      --bg:             #F4F6FA;
+      --surface:        #FFFFFF;
+      --surface-2:      #F8F9FC;
+      --border:         #E2E8F0;
+      --border-strong:  #CBD5E1;
+      --text-primary:   #0F1C2E;
+      --text-secondary: #4A5568;
+      --text-muted:     #94A3B8;
+      --green:          #1DB97A;
+      --green-bg:       #EDFBF4;
+      --red:            #E53E3E;
+      --red-bg:         #FEF2F2;
+      --amber:          #F59E0B;
+      --amber-bg:       #FFFBEB;
+      --blue-accent:    #3B82F6;
+      --sidebar-w:      260px;
+      --header-h:       70px;
+      --radius:         12px;
+      --radius-sm:      8px;
+      --shadow-sm:      0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow:         0 4px 16px rgba(0,56,101,.07), 0 1px 4px rgba(0,56,101,.04);
+      --shadow-lg:      0 12px 40px rgba(0,56,101,.12);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── SIDEBAR ─────────────────────────────────────── */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-height: 100vh;
+      background: var(--tru-navy-deep);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 100;
+      transition: transform .25s ease;
+    }
+
+    .sidebar-logo {
+      padding: 24px 24px 20px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .logo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: var(--tru-gold);
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--tru-navy-deep);
+      font-family: 'Lora', serif;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-title {
+      font-family: 'Lora', serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .logo-sub {
+      font-size: 11px;
+      color: rgba(255,255,255,.45);
+      font-weight: 400;
+      letter-spacing: .4px;
+      margin-top: 2px;
+    }
+
+    .sidebar-section-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+      padding: 20px 24px 8px;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 8px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      color: rgba(255,255,255,.6);
+      font-size: 14px;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all .2s;
+      text-decoration: none;
+    }
+
+    .nav-item:hover { background: rgba(255,255,255,.07); color: rgba(255,255,255,.9); }
+    .nav-item.active {
+      background: var(--tru-gold);
+      color: var(--tru-navy-deep);
+      font-weight: 600;
+    }
+
+    .nav-item .nav-icon {
+      font-size: 16px;
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: var(--tru-gold);
+      color: var(--tru-navy-deep);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 20px;
+    }
+
+    .nav-item.active .nav-badge {
+      background: rgba(0,38,73,.25);
+      color: var(--tru-navy-deep);
+    }
+
+    .sidebar-footer {
+      padding: 16px 12px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+
+    .sidebar-user:hover { background: rgba(255,255,255,.06); }
+
+    .user-avatar {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--tru-gold), #E89500);
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--tru-navy-deep);
+      flex-shrink: 0;
+    }
+
+    .user-info { flex: 1; min-width: 0; }
+    .user-name { font-size: 13px; font-weight: 500; color: rgba(255,255,255,.85); }
+    .user-role { font-size: 11px; color: rgba(255,255,255,.4); margin-top: 1px; }
+    .user-caret { color: rgba(255,255,255,.3); font-size: 12px; }
+
+    /* ─── MAIN LAYOUT ─────────────────────────────────── */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ─── TOPBAR ──────────────────────────────────────── */
+    .topbar {
+      height: var(--header-h);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 32px;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar-title {
+      flex: 1;
+    }
+
+    .topbar-title h1 {
+      font-family: 'Lora', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--tru-navy);
+      line-height: 1.2;
+    }
+
+    .topbar-title p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .topbar-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .filter-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 20px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all .18s;
+    }
+
+    .filter-pill:hover { border-color: var(--tru-navy); color: var(--tru-navy); }
+
+    .filter-pill.active {
+      background: var(--tru-navy);
+      border-color: var(--tru-navy);
+      color: #fff;
+    }
+
+    .btn-export {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      background: var(--tru-gold);
+      color: var(--tru-navy-deep);
+      border: none;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .18s;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn-export:hover { background: var(--tru-gold-light); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(247,168,0,.3); }
+
+    .live-dot {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--green);
+      padding: 6px 12px;
+      background: var(--green-bg);
+      border-radius: 20px;
+    }
+
+    .live-dot::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse-dot 1.8s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .5; transform: scale(.8); }
+    }
+
+    /* ─── PAGE CONTENT ────────────────────────────────── */
+    .content {
+      flex: 1;
+      padding: 28px 32px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ─── KPI STRIP ───────────────────────────────────── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .kpi-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 22px 22px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow .2s, transform .2s;
+      cursor: default;
+    }
+
+    .kpi-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+
+    .kpi-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+
+    .kpi-card.gold::after  { background: var(--tru-gold); }
+    .kpi-card.navy::after  { background: var(--tru-navy); }
+    .kpi-card.green::after { background: var(--green); }
+    .kpi-card.blue::after  { background: var(--blue-accent); }
+
+    .kpi-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .kpi-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .kpi-icon {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-sm);
+      display: grid;
+      place-items: center;
+      font-size: 17px;
+    }
+
+    .kpi-icon.gold  { background: var(--tru-gold-pale);  }
+    .kpi-icon.navy  { background: #E8F0F8; }
+    .kpi-icon.green { background: var(--green-bg); }
+    .kpi-icon.blue  { background: #EFF6FF; }
+
+    .kpi-value {
+      font-family: 'Lora', serif;
+      font-size: 34px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+    .kpi-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+    }
+
+    .kpi-delta {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 12px;
+    }
+
+    .kpi-delta.up   { color: var(--green); background: var(--green-bg); }
+    .kpi-delta.down { color: var(--red);   background: var(--red-bg); }
+
+    .kpi-delta-label { color: var(--text-muted); }
+
+    /* ─── CHART GRID ──────────────────────────────────── */
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+    }
+
+    .chart-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      gap: 20px;
+    }
+
+    .card-header > div:first-child {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-title {
+      font-family: 'Lora', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .card-subtitle {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .card-action {
+      font-size: 12px;
+      color: var(--tru-navy-mid);
+      font-weight: 500;
+      cursor: pointer;
+      padding: 5px 10px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      transition: all .18s;
+    }
+
+    .card-action:hover { background: var(--tru-navy); color: white; border-color: var(--tru-navy); }
+
+    .chart-wrap {
+      position: relative;
+    }
+
+    /* ─── PERIOD TABS ─────────────────────────────────── */
+    .period-tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--bg);
+      border-radius: 20px;
+      padding: 3px;
+    }
+
+    .period-tab {
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 16px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all .18s;
+    }
+
+    .period-tab.active {
+      background: var(--surface);
+      color: var(--tru-navy);
+      font-weight: 600;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ─── FEEDBACK LEGEND ─────────────────────────────── */
+    .donut-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .donut-chart-area {
+      position: relative;
+      width: 180px; height: 180px;
+    }
+
+    .donut-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .donut-center-val {
+      font-family: 'Lora', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .donut-center-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .feedback-legend {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .legend-label { font-size: 13px; color: var(--text-secondary); flex: 1; }
+    .legend-val   { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+    .legend-pct   { font-size: 11px; color: var(--text-muted); margin-left: 4px; }
+
+    /* ─── AGENT TABLE ─────────────────────────────────── */
+    .agent-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .agent-table th {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .7px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: left;
+      padding: 0 12px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .agent-table td {
+      padding: 13px 12px;
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .agent-table tr:last-child td { border-bottom: none; }
+    .agent-table tr:hover td { background: var(--bg); }
+
+    .agent-name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .agent-avatar {
+      width: 30px; height: 30px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+
+    .status-badge.live   { background: var(--green-bg); color: var(--green); }
+    .status-badge.draft  { background: var(--amber-bg); color: var(--amber); }
+    .status-badge.req    { background: #EFF6FF; color: var(--blue-accent); }
+
+    .status-badge::before { content: '●'; font-size: 8px; }
+
+    .bar-inline {
+      width: 100%;
+      height: 6px;
+      background: var(--bg);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .bar-inline-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: var(--tru-gold);
+      transition: width 1s ease;
+    }
+
+    /* ─── ACTIVITY FEED ───────────────────────────────── */
+    .activity-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .activity-item {
+      display: flex;
+      gap: 14px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+
+    .activity-item:last-child { border-bottom: none; }
+
+    .activity-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .activity-body { flex: 1; min-width: 0; }
+    .activity-title { font-size: 13.5px; color: var(--text-primary); font-weight: 500; line-height: 1.4; }
+    .activity-title span { color: var(--tru-navy); font-weight: 600; }
+    .activity-time { font-size: 11.5px; color: var(--text-muted); margin-top: 3px; }
+
+    /* ─── COST ESTIMATE CARD ──────────────────────────── */
+    .cost-card {
+      background: linear-gradient(135deg, var(--tru-navy-deep) 0%, var(--tru-navy) 100%);
+      border-radius: var(--radius);
+      padding: 24px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cost-card::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: rgba(247,168,0,.12);
+    }
+
+    .cost-card::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; right: 60px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: rgba(247,168,0,.07);
+    }
+
+    .cost-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+    }
+
+    .cost-value {
+      font-family: 'Lora', serif;
+      font-size: 38px;
+      font-weight: 700;
+      margin: 8px 0 4px;
+      color: var(--tru-gold);
+      line-height: 1;
+    }
+
+    .cost-period { font-size: 13px; color: rgba(255,255,255,.5); margin-bottom: 20px; }
+
+    .cost-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cost-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      background: rgba(255,255,255,.07);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+    }
+
+    .cost-row-label { color: rgba(255,255,255,.65); }
+    .cost-row-val   { color: white; font-weight: 600; }
+
+    /* ─── SECTION HEADING ─────────────────────────────── */
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .section-heading h2 {
+      font-family: 'Lora', serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── COUNTERS ANIMATION ──────────────────────────── */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .kpi-card { animation: fadeSlideUp .5s ease both; }
+    .kpi-card:nth-child(1) { animation-delay: .05s; }
+    .kpi-card:nth-child(2) { animation-delay: .10s; }
+    .kpi-card:nth-child(3) { animation-delay: .15s; }
+    .kpi-card:nth-child(4) { animation-delay: .20s; }
+
+    .card { animation: fadeSlideUp .5s ease both; animation-delay: .25s; }
+
+    /* ─── SPARKLINE ───────────────────────────────────── */
+    .sparkline-wrap {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 28px;
+      margin-top: 8px;
+    }
+
+    .spark-bar {
+      flex: 1;
+      border-radius: 3px 3px 0 0;
+      background: var(--tru-gold-pale);
+      transition: height .4s ease;
+    }
+
+    .spark-bar.highlight { background: var(--tru-gold); }
+
+    /* ─── SCROLLBAR ───────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+
+    /* ─── TOKEN USAGE BAR ─────────────────────────────── */
+    .token-usage-row {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .token-bar-item {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .token-bar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .token-bar-label { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
+    .token-bar-val   { font-size: 12.5px; color: var(--text-muted); }
+
+    .token-bar-track {
+      height: 8px;
+      background: var(--bg);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .token-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 1.2s cubic-bezier(.17,.67,.35,1);
+    }
+
+    /* ─── HEATMAP GRID ────────────────────────────────── */
+    .heatmap-grid {
+      display: grid;
+      grid-template-columns: 50px repeat(7, 36px);
+      gap: 2px;
+      font-size: 10px;
+      align-items: center;
+      justify-items: center;
+    }
+
+    .heatmap-col-label {
+      text-align: center;
+      color: var(--text-muted);
+      padding-bottom: 8px;
+      font-weight: 500;
+      width: 36px;
+      font-size: 11px;
+    }
+
+    .heatmap-row-label {
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 12px;
+      font-size: 10px;
+      font-weight: 500;
+      width: 50px;
+      line-height: 1;
+    }
+
+    .heatmap-cell {
+      width: 36px;
+      height: 36px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all .15s;
+    }
+
+    .heatmap-cell:hover { transform: scale(1.12); box-shadow: 0 2px 8px rgba(0,56,101,.2); }
+
+    .hm-0 { background: var(--bg); }
+    .hm-1 { background: #D4E8FF; }
+    .hm-2 { background: #90C2FF; }
+    .hm-3 { background: #4A9EE8; }
+    .hm-4 { background: var(--tru-navy-mid); }
+    .hm-5 { background: var(--tru-navy); }
+
+    /* ─── PHASE 2: SEMESTER COMPARISON ───────────────── */
+    .semester-tabs {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+      flex-wrap: nowrap;
+    }
+    .sem-tab {
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1.5px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all .18s;
+      white-space: nowrap;
+    }
+    .sem-tab.active { background: var(--tru-navy); border-color: var(--tru-navy); color: white; font-weight: 600; }
+    .sem-tab:hover:not(.active) { border-color: var(--tru-navy); color: var(--tru-navy); background: var(--surface-2); }
+
+    /* ─── PHASE 2: TOP QUESTIONS ──────────────────────── */
+    .question-list { display: flex; flex-direction: column; gap: 0; }
+    .question-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background .15s;
+      border-radius: 0;
+    }
+    .question-item:last-child { border-bottom: none; }
+    .question-item:hover { background: var(--bg); margin: 0 -12px; padding: 12px 12px; border-radius: var(--radius-sm); }
+    .q-rank {
+      width: 26px; height: 26px;
+      border-radius: 6px;
+      display: grid; place-items: center;
+      font-size: 12px; font-weight: 700;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .q-rank.top { background: var(--tru-gold-pale); color: #9A6800; }
+    .q-rank.mid { background: var(--bg); color: var(--text-muted); }
+    .q-body { flex: 1; min-width: 0; }
+    .q-text { font-size: 13.5px; color: var(--text-primary); font-weight: 500; line-height: 1.45; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .q-meta { display: flex; gap: 12px; margin-top: 4px; }
+    .q-meta-item { font-size: 11.5px; color: var(--text-muted); display: flex; align-items: center; gap: 3px; }
+    .q-count-bar { width: 70px; height: 5px; background: var(--bg); border-radius: 3px; overflow: hidden; align-self: center; flex-shrink: 0; }
+    .q-count-fill { height: 100%; background: var(--tru-gold); border-radius: 3px; }
+
+    /* ─── PHASE 2: RAG METRICS ────────────────────────── */
+    .rag-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .rag-metric-tile {
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .rag-metric-val {
+      font-family: 'Lora', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--tru-navy);
+    }
+    .rag-metric-label { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+    .rag-metric-delta { font-size: 11.5px; font-weight: 600; }
+    .rag-metric-delta.good { color: var(--green); }
+    .rag-metric-delta.warn { color: var(--amber); }
+
+    /* ─── PHASE 2: CONVERSATIONS TABLE ───────────────── */
+    .conv-table { width: 100%; border-collapse: collapse; }
+    .conv-table th {
+      font-size: 11px; font-weight: 600; letter-spacing: .7px;
+      text-transform: uppercase; color: var(--text-muted);
+      text-align: left; padding: 0 14px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .conv-table td {
+      padding: 12px 14px; font-size: 13px;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .conv-table tr:last-child td { border-bottom: none; }
+    .conv-table tbody tr { cursor: pointer; transition: background .15s; }
+    .conv-table tbody tr:hover td { background: var(--bg); }
+    .conv-table tbody tr.expanded-row td { background: var(--bg); }
+
+    .conv-user { display: flex; align-items: center; gap: 9px; }
+    .conv-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--tru-navy) 0%, var(--tru-navy-mid) 100%);
+      color: white; font-size: 11px; font-weight: 700;
+      display: grid; place-items: center; flex-shrink: 0;
+    }
+    .conv-name { font-weight: 500; color: var(--text-primary); font-size: 13px; }
+    .conv-email { font-size: 11px; color: var(--text-muted); }
+
+    .expand-row { background: #F8FAFD; }
+    .expand-row td { padding: 0; border-bottom: 1px solid var(--border); }
+    .expand-inner { padding: 16px 20px; display: none; }
+    .expand-inner.open { display: block; }
+    .conv-exchange { display: flex; flex-direction: column; gap: 10px; }
+    .conv-bubble {
+      max-width: 75%; padding: 10px 14px;
+      border-radius: 12px; font-size: 13px; line-height: 1.5;
+    }
+    .conv-bubble.user-bubble {
+      background: var(--tru-navy);
+      color: white; align-self: flex-end;
+      border-bottom-right-radius: 3px;
+    }
+    .conv-bubble.agent-bubble {
+      background: white; color: var(--text-secondary);
+      border: 1px solid var(--border);
+      align-self: flex-start;
+      border-bottom-left-radius: 3px;
+    }
+    .expand-chevron { transition: transform .25s; display: inline-block; }
+    .expanded-row .expand-chevron { transform: rotate(180deg); }
+
+    /* ─── PHASE 2: ERROR LOG ──────────────────────────── */
+    .error-log { display: flex; flex-direction: column; gap: 0; }
+    .error-item {
+      display: flex; gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .error-item:last-child { border-bottom: none; }
+    .error-type-pill {
+      padding: 3px 9px; border-radius: 20px;
+      font-size: 10.5px; font-weight: 600;
+      white-space: nowrap; flex-shrink: 0; margin-top: 1px;
+    }
+    .err-scraper  { background: #FEF3C7; color: #92400E; }
+    .err-embed    { background: #FEE2E2; color: #991B1B; }
+    .err-auth     { background: #EDE9FE; color: #5B21B6; }
+    .err-llm      { background: #DBEAFE; color: #1E40AF; }
+    .err-db       { background: #D1FAE5; color: #065F46; }
+    .error-detail { flex: 1; min-width: 0; }
+    .error-msg { font-size: 13px; color: var(--text-primary); font-weight: 500; line-height: 1.4; }
+    .error-trace { font-size: 11.5px; color: var(--text-muted); margin-top: 3px; font-family: 'DM Mono', monospace; }
+    .error-time { font-size: 11.5px; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
+
+    /* ─── PHASE 2: SEARCH BAR ─────────────────────────── */
+    .search-input-wrap {
+      position: relative;
+      flex: 1;
+      max-width: 280px;
+    }
+    .search-input {
+      width: 100%;
+      padding: 7px 12px 7px 34px;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text-primary);
+      background: var(--surface);
+      outline: none;
+      transition: border-color .18s;
+    }
+    .search-input:focus { border-color: var(--tru-navy); }
+    .search-icon {
+      position: absolute; left: 11px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px; color: var(--text-muted); pointer-events: none;
+    }
+
+    /* ─── PHASE 2: RESPONSE TIME DIST ─────────────────── */
+    .chart-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* ─── PHASE 2: FULL-WIDTH CHART ───────────────────── */
+    .chart-full { width: 100%; }
+
+    /* ─── PHASE 2: BANNER ─────────────────────────────── */
+    .info-banner {
+      background: var(--tru-gold-pale);
+      border: 1.5px solid #F7C84080;
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13.5px;
+      color: #7A5000;
+    }
+    .info-banner strong { font-weight: 600; }
+    .info-banner-icon { font-size: 20px; flex-shrink: 0; }
+    .info-banner-dismiss {
+      margin-left: auto;
+      font-size: 18px;
+      color: #B07800;
+      cursor: pointer;
+      opacity: .7;
+      transition: opacity .15s;
+    }
+    .info-banner-dismiss:hover { opacity: 1; }
+
+    /* ─── PHASE 2: DOCUMENT COVERAGE ─────────────────── */
+    .doc-coverage-list { display: flex; flex-direction: column; gap: 12px; }
+    .doc-row { display: flex; flex-direction: column; gap: 5px; }
+    .doc-row-header { display: flex; justify-content: space-between; align-items: center; }
+    .doc-row-name { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
+    .doc-row-meta { font-size: 12px; color: var(--text-muted); }
+    .doc-bar-track { height: 7px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+    .doc-bar-fill  { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--tru-navy), var(--tru-navy-mid)); transition: width 1.2s cubic-bezier(.17,.67,.35,1); }
+
+  </style>
+</head>
+<body>
+
+<!-- ════════════ SIDEBAR ════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-badge">
+      <div class="logo-icon">T</div>
+      <div class="logo-text">
+        <span class="logo-title">AI Agent Platform</span>
+        <span class="logo-sub">Thompson Rivers University</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:0 12px">
+    <div class="sidebar-section-label">Main</div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="nav-item active" href="#">
+      <span class="nav-icon">📊</span> Analytics
+    </a>
+    <a class="nav-item" href="#">
+      <span class="nav-icon">🤖</span> Agents
+      <span class="nav-badge">3</span>
+    </a>
+    <a class="nav-item" href="#">
+      <span class="nav-icon">💬</span> Conversations
+    </a>
+    <a class="nav-item" href="#">
+      <span class="nav-icon">👥</span> Users
+    </a>
+
+    <div style="padding: 12px 0 4px; font-size:10px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; color:rgba(255,255,255,.3);">Management</div>
+
+    <a class="nav-item" href="#">
+      <span class="nav-icon">📄</span> Documents
+    </a>
+    <a class="nav-item" href="#">
+      <span class="nav-icon">⚙️</span> Settings
+    </a>
+    <a class="nav-item" href="#">
+      <span class="nav-icon">🛡️</span> Audit Logs
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="user-avatar">AK</div>
+      <div class="user-info">
+        <div class="user-name">Admin User</div>
+        <div class="user-role">Platform Administrator</div>
+      </div>
+      <span class="user-caret">⌄</span>
+    </div>
+  </div>
+</aside>
+
+<!-- ════════════ MAIN ════════════ -->
+<main class="main">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-title">
+      <h1>Analytics Overview</h1>
+      <p>Monitoring AI agent activity across TRU departments</p>
+    </div>
+    <div class="topbar-controls">
+      <div class="live-dot">Live</div>
+      <div class="period-tabs">
+        <div class="period-tab">7d</div>
+        <div class="period-tab active">30d</div>
+        <div class="period-tab">Semester</div>
+        <div class="period-tab">All time</div>
+      </div>
+      <button class="btn-export">⬇ Export CSV</button>
+    </div>
+  </header>
+
+  <!-- PAGE BODY -->
+  <div class="content">
+
+    <!-- ── KPI STRIP ── -->
+    <div class="kpi-grid">
+
+      <div class="kpi-card gold">
+        <div class="kpi-header">
+          <span class="kpi-label">Total Questions</span>
+          <div class="kpi-icon gold">💬</div>
+        </div>
+        <div class="kpi-value" id="kpi-questions">0</div>
+        <div class="sparkline-wrap" id="spark-questions"></div>
+        <div class="kpi-meta">
+          <span class="kpi-delta up">↑ 18.4%</span>
+          <span class="kpi-delta-label">vs. last 30 days</span>
+        </div>
+      </div>
+
+      <div class="kpi-card navy">
+        <div class="kpi-header">
+          <span class="kpi-label">Tokens Consumed</span>
+          <div class="kpi-icon navy">⚡</div>
+        </div>
+        <div class="kpi-value" id="kpi-tokens">0</div>
+        <div class="sparkline-wrap" id="spark-tokens"></div>
+        <div class="kpi-meta">
+          <span class="kpi-delta up">↑ 22.1%</span>
+          <span class="kpi-delta-label">vs. last 30 days</span>
+        </div>
+      </div>
+
+      <div class="kpi-card green">
+        <div class="kpi-header">
+          <span class="kpi-label">Satisfaction Rate</span>
+          <div class="kpi-icon green">👍</div>
+        </div>
+        <div class="kpi-value" id="kpi-sat">0%</div>
+        <div class="sparkline-wrap" id="spark-sat"></div>
+        <div class="kpi-meta">
+          <span class="kpi-delta up">↑ 3.2%</span>
+          <span class="kpi-delta-label">vs. last 30 days</span>
+        </div>
+      </div>
+
+      <div class="kpi-card blue">
+        <div class="kpi-header">
+          <span class="kpi-label">Unique Users</span>
+          <div class="kpi-icon blue">🎓</div>
+        </div>
+        <div class="kpi-value" id="kpi-users">0</div>
+        <div class="sparkline-wrap" id="spark-users"></div>
+        <div class="kpi-meta">
+          <span class="kpi-delta down">↓ 4.0%</span>
+          <span class="kpi-delta-label">vs. last 30 days</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── MAIN CHART ROW ── -->
+    <div class="chart-grid">
+
+      <!-- Line Chart: Daily Questions -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Daily Question Volume</div>
+            <div class="card-subtitle">Number of user queries submitted per day — all agents</div>
+          </div>
+          <span class="card-action">Full Report</span>
+        </div>
+        <div class="chart-wrap" style="height:240px">
+          <canvas id="chartDailyVolume"></canvas>
+        </div>
+      </div>
+
+      <!-- Donut: Feedback Distribution -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Response Feedback</div>
+            <div class="card-subtitle">User ratings this period</div>
+          </div>
+        </div>
+        <div class="donut-wrap">
+          <div class="donut-chart-area">
+            <canvas id="chartFeedback"></canvas>
+            <div class="donut-center">
+              <div class="donut-center-val">87%</div>
+              <div class="donut-center-label">Positive</div>
+            </div>
+          </div>
+          <div class="feedback-legend">
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#1DB97A"></div>
+              <span class="legend-label">👍 Helpful</span>
+              <span class="legend-val">1,824</span>
+              <span class="legend-pct">87%</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#F59E0B"></div>
+              <span class="legend-label">👎 Unhelpful</span>
+              <span class="legend-val">189</span>
+              <span class="legend-pct">9%</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#E53E3E"></div>
+              <span class="legend-label">⚠️ Reported</span>
+              <span class="legend-val">84</span>
+              <span class="legend-pct">4%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── SECOND CHART ROW ── -->
+    <div class="chart-grid-2">
+
+      <!-- Bar: Questions by Agent/Dept -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Questions by Agent</div>
+            <div class="card-subtitle">Volume breakdown per deployed agent</div>
+          </div>
+          <span class="card-action">View Agents</span>
+        </div>
+        <div class="chart-wrap" style="height:220px">
+          <canvas id="chartByAgent"></canvas>
+        </div>
+      </div>
+
+      <!-- Usage Heatmaps: Both Months -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Usage Heatmap - Last 2 Months</div>
+            <div class="card-subtitle">Query density by day & hour</div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 0 24px;">
+          <div>
+            <div style="font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 12px; padding-left: 2px;">March 2026</div>
+            <div id="heatmapContainerCurrent" style="overflow-x: auto;"></div>
+          </div>
+          <div>
+            <div style="font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 12px; padding-left: 2px;">February 2026</div>
+            <div id="heatmapContainerPrevious" style="overflow-x: auto;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── AGENT TABLE + COST ── -->
+    <div class="chart-grid">
+
+      <!-- Agent Table -->
+      <div class="card" style="padding:24px 24px 16px">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Agent Performance</div>
+            <div class="card-subtitle">All deployed and pending agents</div>
+          </div>
+          <span class="card-action">+ New Agent</span>
+        </div>
+        <table class="agent-table">
+          <thead>
+            <tr>
+              <th>Agent</th>
+              <th>Status</th>
+              <th>Questions</th>
+              <th>Sat. Rate</th>
+              <th>Share</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="agent-name">
+                  <div class="agent-avatar" style="background:#E8F5F0; font-size:15px">🛡️</div>
+                  Risk &amp; Safety
+                </div>
+              </td>
+              <td><span class="status-badge live">Live</span></td>
+              <td><strong style="color:var(--text-primary)">1,247</strong></td>
+              <td><span style="color:var(--green);font-weight:600">91%</span></td>
+              <td>
+                <div class="bar-inline"><div class="bar-inline-fill" style="width:72%"></div></div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="agent-name">
+                  <div class="agent-avatar" style="background:#EFF6FF; font-size:15px">📚</div>
+                  Academic Advising
+                </div>
+              </td>
+              <td><span class="status-badge draft">Draft</span></td>
+              <td><strong style="color:var(--text-primary)">312</strong></td>
+              <td><span style="color:var(--green);font-weight:600">82%</span></td>
+              <td>
+                <div class="bar-inline"><div class="bar-inline-fill" style="width:18%"></div></div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="agent-name">
+                  <div class="agent-avatar" style="background:#FFF5D6; font-size:15px">🏛️</div>
+                  Student Services
+                </div>
+              </td>
+              <td><span class="status-badge req">Requested</span></td>
+              <td><strong style="color:var(--text-primary)">—</strong></td>
+              <td><span style="color:var(--text-muted)">—</span></td>
+              <td>
+                <div class="bar-inline"><div class="bar-inline-fill" style="width:0%"></div></div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="agent-name">
+                  <div class="agent-avatar" style="background:#FEF2F2; font-size:15px">🔬</div>
+                  Research Office
+                </div>
+              </td>
+              <td><span class="status-badge req">Requested</span></td>
+              <td><strong style="color:var(--text-primary)">—</strong></td>
+              <td><span style="color:var(--text-muted)">—</span></td>
+              <td>
+                <div class="bar-inline"><div class="bar-inline-fill" style="width:0%"></div></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Cost Estimate -->
+      <div class="cost-card">
+        <p class="cost-label">Estimated Compute Cost</p>
+        <div class="cost-value">$47.20</div>
+        <p class="cost-period">This month · Local GPU/CPU (Ollama)</p>
+
+        <div class="cost-breakdown">
+          <div class="cost-row">
+            <span class="cost-row-label">🔥 GPU Energy (kWh)</span>
+            <span class="cost-row-val">124.8 kWh</span>
+          </div>
+          <div class="cost-row">
+            <span class="cost-row-label">⚡ Tokens Processed</span>
+            <span class="cost-row-val">2.14M</span>
+          </div>
+          <div class="cost-row">
+            <span class="cost-row-label">💰 vs. External API (est.)</span>
+            <span class="cost-row-val" style="color:var(--tru-gold-light)">$342 saved</span>
+          </div>
+          <div class="cost-row">
+            <span class="cost-row-label">📈 Projected / semester</span>
+            <span class="cost-row-val">$283.20</span>
+          </div>
+        </div>
+
+        <div style="margin-top:18px; padding:12px 14px; background:rgba(247,168,0,.12); border-radius:var(--radius-sm); border:1px solid rgba(247,168,0,.25)">
+          <p style="font-size:12px; color:rgba(255,255,255,.75); line-height:1.5;">
+            <span style="color:var(--tru-gold);font-weight:600">Data sovereignty:</span> All queries processed on-premise — zero data sent to external providers.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── TOKEN USAGE + ACTIVITY ── -->
+    <div class="chart-grid-2">
+
+      <!-- Token Usage by Model Component -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Token Usage Breakdown</div>
+            <div class="card-subtitle">Consumption split by pipeline stage this month</div>
+          </div>
+        </div>
+        <div class="token-usage-row">
+          <div class="token-bar-item">
+            <div class="token-bar-header">
+              <span class="token-bar-label">🤖 LLM Inference (Qwen 3.5)</span>
+              <span class="token-bar-val">1,340K tokens</span>
+            </div>
+            <div class="token-bar-track">
+              <div class="token-bar-fill" style="width:62.6%; background:var(--tru-navy)"></div>
+            </div>
+          </div>
+          <div class="token-bar-item">
+            <div class="token-bar-header">
+              <span class="token-bar-label">🔍 RAG Context (Retrieved Chunks)</span>
+              <span class="token-bar-val">540K tokens</span>
+            </div>
+            <div class="token-bar-track">
+              <div class="token-bar-fill" style="width:25.2%; background:var(--tru-gold)"></div>
+            </div>
+          </div>
+          <div class="token-bar-item">
+            <div class="token-bar-header">
+              <span class="token-bar-label">💬 User Queries (Input)</span>
+              <span class="token-bar-val">210K tokens</span>
+            </div>
+            <div class="token-bar-track">
+              <div class="token-bar-fill" style="width:9.8%; background:var(--green)"></div>
+            </div>
+          </div>
+          <div class="token-bar-item">
+            <div class="token-bar-header">
+              <span class="token-bar-label">⚙️ System Prompts (Static)</span>
+              <span class="token-bar-val">52K tokens</span>
+            </div>
+            <div class="token-bar-track">
+              <div class="token-bar-fill" style="width:2.4%; background:var(--blue-accent)"></div>
+            </div>
+          </div>
+
+          <div style="margin-top:8px; padding:14px; background:var(--bg); border-radius:var(--radius-sm); display:flex; justify-content:space-between; align-items:center;">
+            <div style="text-align:center">
+              <div style="font-family:'Lora',serif; font-size:22px; font-weight:700; color:var(--tru-navy)">2.14M</div>
+              <div style="font-size:11px; color:var(--text-muted); margin-top:2px">Total Tokens</div>
+            </div>
+            <div style="text-align:center">
+              <div style="font-family:'Lora',serif; font-size:22px; font-weight:700; color:var(--tru-navy)">1,559</div>
+              <div style="font-size:11px; color:var(--text-muted); margin-top:2px">Avg / Session</div>
+            </div>
+            <div style="text-align:center">
+              <div style="font-family:'Lora',serif; font-size:22px; font-weight:700; color:var(--tru-navy)">342ms</div>
+              <div style="font-size:11px; color:var(--text-muted); margin-top:2px">Avg Response</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Recent Activity</div>
+            <div class="card-subtitle">Latest platform events</div>
+          </div>
+          <span class="card-action">View All</span>
+        </div>
+        <div class="activity-feed">
+          <div class="activity-item">
+            <div class="activity-icon" style="background:#E8F5F0">🛡️</div>
+            <div class="activity-body">
+              <div class="activity-title"><span>Risk &amp; Safety Agent</span> answered 42 queries today</div>
+              <div class="activity-time">Today · 2:14 PM</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon" style="background:#FFF5D6">⚠️</div>
+            <div class="activity-body">
+              <div class="activity-title">3 responses <span>flagged as incorrect</span> — Risk &amp; Safety</div>
+              <div class="activity-time">Today · 11:02 AM</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon" style="background:#EFF6FF">📄</div>
+            <div class="activity-body">
+              <div class="activity-title">Scraper re-indexed <span>14 new documents</span> from Risk &amp; Safety site</div>
+              <div class="activity-time">Yesterday · 9:41 PM</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon" style="background:#FEF2F2">🔴</div>
+            <div class="activity-body">
+              <div class="activity-title"><span>Embedding pipeline error</span> — 2 chunks failed to store</div>
+              <div class="activity-time">Yesterday · 4:55 PM</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon" style="background:#E8F0F8">🤖</div>
+            <div class="activity-body">
+              <div class="activity-title"><span>Academic Advising Agent</span> moved to Draft — pending review</div>
+              <div class="activity-time">Mar 18 · 3:10 PM</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon" style="background:var(--tru-gold-pale)">🎉</div>
+            <div class="activity-body">
+              <div class="activity-title">Platform reached <span>500 unique users</span> milestone</div>
+              <div class="activity-time">Mar 15 · 12:00 PM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- PHASE 2 SECTIONS                                       -->
+    <!-- ══════════════════════════════════════════════════════ -->
+
+    <!-- ── BANNER: SSO/DB PENDING ── -->
+    <div class="info-banner" id="pendingBanner">
+      <span class="info-banner-icon">🔔</span>
+      <div><strong>Pending provisioning:</strong> TRU SSO authentication and Oracle DB are awaiting IT confirmation. Some metrics below are based on prototype data.</div>
+      <span class="info-banner-dismiss" onclick="this.closest('.info-banner').style.display='none'">×</span>
+    </div>
+
+    <!-- ── SEMESTER COMPARISON + RESPONSE TIME DIST ── -->
+    <div class="chart-grid">
+
+      <!-- Semester Comparison Chart -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Semester-over-Semester Comparison</div>
+            <div class="card-subtitle">Monthly question volume across academic terms</div>
+          </div>
+          <div class="semester-tabs">
+            <div class="sem-tab active">Winter 2026</div>
+            <div class="sem-tab">Fall 2025</div>
+            <div class="sem-tab">Summer 2025</div>
+          </div>
+        </div>
+        <div class="chart-wrap" style="height:230px">
+          <canvas id="chartSemester"></canvas>
+        </div>
+      </div>
+
+      <!-- Response Time Distribution -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Response Latency</div>
+            <div class="card-subtitle">Distribution of LLM response times (ms)</div>
+          </div>
+        </div>
+        <div class="chart-wrap" style="height:160px; margin-bottom:16px">
+          <canvas id="chartLatency"></canvas>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px">
+          <div style="text-align:center; background:var(--bg); border-radius:var(--radius-sm); padding:10px 8px">
+            <div style="font-family:'Lora',serif;font-size:20px;font-weight:700;color:var(--tru-navy)">342ms</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Median (p50)</div>
+          </div>
+          <div style="text-align:center; background:var(--bg); border-radius:var(--radius-sm); padding:10px 8px">
+            <div style="font-family:'Lora',serif;font-size:20px;font-weight:700;color:var(--amber)">614ms</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px">p95 Latency</div>
+          </div>
+          <div style="text-align:center; background:var(--bg); border-radius:var(--radius-sm); padding:10px 8px">
+            <div style="font-family:'Lora',serif;font-size:20px;font-weight:700;color:var(--red)">1,240ms</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px">p99 Latency</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── RAG METRICS + DOCUMENT COVERAGE ── -->
+    <div class="chart-grid-2">
+
+      <!-- RAG Quality Metrics -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">RAG Retrieval Quality</div>
+            <div class="card-subtitle">Vector search & pipeline performance — Risk &amp; Safety Agent</div>
+          </div>
+          <span class="card-action">View Pipeline</span>
+        </div>
+        <div class="rag-metrics-grid">
+          <div class="rag-metric-tile">
+            <div class="rag-metric-val">3.8</div>
+            <div class="rag-metric-label">Avg Chunks Retrieved</div>
+            <div class="rag-metric-delta good">↑ Optimal range 3–5</div>
+          </div>
+          <div class="rag-metric-tile">
+            <div class="rag-metric-val">0.82</div>
+            <div class="rag-metric-label">Avg Cosine Similarity</div>
+            <div class="rag-metric-delta good">↑ High relevance</div>
+          </div>
+          <div class="rag-metric-tile">
+            <div class="rag-metric-val">48ms</div>
+            <div class="rag-metric-label">Avg Vector Search Time</div>
+            <div class="rag-metric-delta good">✓ Within target</div>
+          </div>
+          <div class="rag-metric-tile">
+            <div class="rag-metric-val">94.1%</div>
+            <div class="rag-metric-label">Retrieval Hit Rate</div>
+            <div class="rag-metric-delta good">↑ Strong coverage</div>
+          </div>
+          <div class="rag-metric-tile">
+            <div class="rag-metric-val">5.9%</div>
+            <div class="rag-metric-label">No-Context Fallbacks</div>
+            <div class="rag-metric-delta warn">⚠ Monitor closely</div>
+          </div>
+          <div class="rag-metric-tile">
+            <div class="rag-metric-val">1,247</div>
+            <div class="rag-metric-label">Indexed Doc Chunks</div>
+            <div class="rag-metric-delta good">✓ ChromaDB</div>
+          </div>
+        </div>
+        <div style="height:120px">
+          <canvas id="chartRagSim"></canvas>
+        </div>
+      </div>
+
+      <!-- Document Coverage -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Knowledge Base Coverage</div>
+            <div class="card-subtitle">Document scraping coverage per agent source</div>
+          </div>
+          <span class="card-action">Re-scrape</span>
+        </div>
+        <div class="doc-coverage-list">
+          <div class="doc-row">
+            <div class="doc-row-header">
+              <span class="doc-row-name">🛡️ Risk &amp; Safety — Main Site</span>
+              <span class="doc-row-meta">214 pages · Last indexed 2h ago</span>
+            </div>
+            <div class="doc-bar-track"><div class="doc-bar-fill" style="width:96%"></div></div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-row-header">
+              <span class="doc-row-name">📄 WHMIS &amp; Safety PDFs</span>
+              <span class="doc-row-meta">38 PDFs · Last indexed yesterday</span>
+            </div>
+            <div class="doc-bar-track"><div class="doc-bar-fill" style="width:88%"></div></div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-row-header">
+              <span class="doc-row-name">📋 Emergency Procedures</span>
+              <span class="doc-row-meta">12 docs · Last indexed 3 days ago</span>
+            </div>
+            <div class="doc-bar-track"><div class="doc-bar-fill" style="width:100%"></div></div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-row-header">
+              <span class="doc-row-name">📚 Academic Advising — Handbook</span>
+              <span class="doc-row-meta">67 pages · Draft agent</span>
+            </div>
+            <div class="doc-bar-track"><div class="doc-bar-fill" style="width:42%; background:var(--tru-gold)"></div></div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-row-header">
+              <span class="doc-row-name">🏛️ Student Services — FAQ</span>
+              <span class="doc-row-meta">Not indexed · Agent requested</span>
+            </div>
+            <div class="doc-bar-track"><div class="doc-bar-fill" style="width:0%"></div></div>
+          </div>
+        </div>
+        <div style="margin-top:16px; padding:12px 14px; background:var(--bg); border-radius:var(--radius-sm); display:flex; justify-content:space-between; align-items:center;">
+          <div style="font-size:12.5px; color:var(--text-muted)">Total documents indexed</div>
+          <div style="font-family:'Lora',serif; font-size:18px; font-weight:700; color:var(--tru-navy)">264 <span style="font-size:13px; font-weight:400; color:var(--text-muted)">pages &amp; files</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── TOP QUESTIONS + CONVERSATION EXPLORER ── -->
+    <div class="chart-grid">
+
+      <!-- Top Questions -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Top Questions Asked</div>
+            <div class="card-subtitle">Most frequent user queries — Risk &amp; Safety Agent, last 30 days</div>
+          </div>
+          <span class="card-action">Export</span>
+        </div>
+        <div class="question-list">
+          <div class="question-item">
+            <div class="q-rank top">1</div>
+            <div class="q-body">
+              <div class="q-text">What do I do if I find a chemical spill on campus?</div>
+              <div class="q-meta">
+                <span class="q-meta-item">💬 142 times</span>
+                <span class="q-meta-item">👍 96% sat.</span>
+                <span class="q-meta-item">🤖 Risk &amp; Safety</span>
+              </div>
+            </div>
+            <div class="q-count-bar"><div class="q-count-fill" style="width:100%"></div></div>
+          </div>
+          <div class="question-item">
+            <div class="q-rank top">2</div>
+            <div class="q-body">
+              <div class="q-text">How do I report a workplace injury at TRU?</div>
+              <div class="q-meta">
+                <span class="q-meta-item">💬 118 times</span>
+                <span class="q-meta-item">👍 93% sat.</span>
+                <span class="q-meta-item">🤖 Risk &amp; Safety</span>
+              </div>
+            </div>
+            <div class="q-count-bar"><div class="q-count-fill" style="width:83%"></div></div>
+          </div>
+          <div class="question-item">
+            <div class="q-rank top">3</div>
+            <div class="q-body">
+              <div class="q-text">Where are the AED defibrillators located on campus?</div>
+              <div class="q-meta">
+                <span class="q-meta-item">💬 97 times</span>
+                <span class="q-meta-item">👍 91% sat.</span>
+                <span class="q-meta-item">🤖 Risk &amp; Safety</span>
+              </div>
+            </div>
+            <div class="q-count-bar"><div class="q-count-fill" style="width:68%"></div></div>
+          </div>
+          <div class="question-item">
+            <div class="q-rank mid">4</div>
+            <div class="q-body">
+              <div class="q-text">What is the fire evacuation procedure for Old Main building?</div>
+              <div class="q-meta">
+                <span class="q-meta-item">💬 84 times</span>
+                <span class="q-meta-item">👍 88% sat.</span>
+                <span class="q-meta-item">🤖 Risk &amp; Safety</span>
+              </div>
+            </div>
+            <div class="q-count-bar"><div class="q-count-fill" style="width:59%"></div></div>
+          </div>
+          <div class="question-item">
+            <div class="q-rank mid">5</div>
+            <div class="q-body">
+              <div class="q-text">Do I need WHMIS training before using the lab?</div>
+              <div class="q-meta">
+                <span class="q-meta-item">💬 76 times</span>
+                <span class="q-meta-item">👍 94% sat.</span>
+                <span class="q-meta-item">🤖 Risk &amp; Safety</span>
+              </div>
+            </div>
+            <div class="q-count-bar"><div class="q-count-fill" style="width:54%"></div></div>
+          </div>
+          <div class="question-item">
+            <div class="q-rank mid">6</div>
+            <div class="q-body">
+              <div class="q-text">What PPE is required for chemistry lab sessions?</div>
+              <div class="q-meta">
+                <span class="q-meta-item">💬 61 times</span>
+                <span class="q-meta-item">👍 90% sat.</span>
+                <span class="q-meta-item">🤖 Risk &amp; Safety</span>
+              </div>
+            </div>
+            <div class="q-count-bar"><div class="q-count-fill" style="width:43%"></div></div>
+          </div>
+          <div class="question-item">
+            <div class="q-rank mid">7</div>
+            <div class="q-body">
+              <div class="q-text">Who is the TRU safety officer and how can I contact them?</div>
+              <div class="q-meta">
+                <span class="q-meta-item">💬 54 times</span>
+                <span class="q-meta-item">👍 85% sat.</span>
+                <span class="q-meta-item">🤖 Risk &amp; Safety</span>
+              </div>
+            </div>
+            <div class="q-count-bar"><div class="q-count-fill" style="width:38%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error & Debug Log -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Error &amp; Debug Log</div>
+            <div class="card-subtitle">Recent platform errors — last 7 days</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="background:var(--red-bg);color:var(--red);font-size:12px;font-weight:700;padding:3px 9px;border-radius:20px;">7 errors</span>
+            <span class="card-action">Clear</span>
+          </div>
+        </div>
+        <div class="error-log">
+          <div class="error-item">
+            <span class="error-type-pill err-embed">Embedding</span>
+            <div class="error-detail">
+              <div class="error-msg">2 document chunks failed to store in ChromaDB</div>
+              <div class="error-trace">chromadb.errors.InvalidDimensionException — expected 768, got 384</div>
+            </div>
+            <div class="error-time">Yesterday 4:55 PM</div>
+          </div>
+          <div class="error-item">
+            <span class="error-type-pill err-scraper">Scraper</span>
+            <div class="error-detail">
+              <div class="error-msg">403 Forbidden on /risk/internal-docs/restricted</div>
+              <div class="error-trace">requests.exceptions.HTTPError: 403 Client Error</div>
+            </div>
+            <div class="error-time">Yesterday 2:12 PM</div>
+          </div>
+          <div class="error-item">
+            <span class="error-type-pill err-llm">LLM</span>
+            <div class="error-detail">
+              <div class="error-msg">Ollama timeout — response exceeded 30s threshold</div>
+              <div class="error-trace">ollama.ResponseTimeoutError: stream closed after 30,012ms</div>
+            </div>
+            <div class="error-time">Mar 18 · 11:44 AM</div>
+          </div>
+          <div class="error-item">
+            <span class="error-type-pill err-auth">Auth</span>
+            <div class="error-detail">
+              <div class="error-msg">SSO token validation failed for 1 session</div>
+              <div class="error-trace">jwt.exceptions.ExpiredSignatureError — token expired 120s ago</div>
+            </div>
+            <div class="error-time">Mar 18 · 9:02 AM</div>
+          </div>
+          <div class="error-item">
+            <span class="error-type-pill err-db">Database</span>
+            <div class="error-detail">
+              <div class="error-msg">SQLite write lock contention — 3 writes queued</div>
+              <div class="error-trace">sqlite3.OperationalError: database is locked</div>
+            </div>
+            <div class="error-time">Mar 17 · 3:30 PM</div>
+          </div>
+          <div class="error-item">
+            <span class="error-type-pill err-scraper">Scraper</span>
+            <div class="error-detail">
+              <div class="error-msg">PDF extraction failed — encrypted document skipped</div>
+              <div class="error-trace">pdfminer.pdfpage.PDFTextExtractionNotAllowed</div>
+            </div>
+            <div class="error-time">Mar 16 · 6:18 PM</div>
+          </div>
+          <div class="error-item">
+            <span class="error-type-pill err-llm">LLM</span>
+            <div class="error-detail">
+              <div class="error-msg">Context window exceeded — prompt truncated to 4096 tokens</div>
+              <div class="error-trace">Warning: input_tokens (4,842) exceeds max_context (4,096)</div>
+            </div>
+            <div class="error-time">Mar 15 · 1:07 PM</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── CONVERSATION EXPLORER ── -->
+    <div class="card">
+      <div class="card-header" style="flex-wrap:wrap; gap:12px">
+        <div>
+          <div class="card-title">Conversation Explorer</div>
+          <div class="card-subtitle">Browse recent sessions — click a row to expand the exchange</div>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-left:auto;">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input class="search-input" type="text" placeholder="Search conversations…" id="convSearch" />
+          </div>
+          <div class="period-tabs" style="background:var(--bg)">
+            <div class="period-tab active">All agents</div>
+            <div class="period-tab">Risk &amp; Safety</div>
+            <div class="period-tab">Flagged only</div>
+          </div>
+        </div>
+      </div>
+      <table class="conv-table" id="convTable">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Agent</th>
+            <th>Questions</th>
+            <th>Tokens</th>
+            <th>Feedback</th>
+            <th>Date &amp; Time</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="convTableBody"></tbody>
+      </table>
+    </div>
+
+  </div><!-- /content -->
+</main>
+
+<script>
+  // ── ANIMATED COUNTERS ──────────────────────────────────────
+  function animateCounter(el, target, suffix='', duration=1200) {
+    const start = performance.now();
+    const isFloat = target % 1 !== 0;
+    function step(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const ease = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+      const val = target * ease;
+      el.textContent = isFloat
+        ? val.toFixed(1) + suffix
+        : Math.floor(val).toLocaleString() + suffix;
+      if (t < 1) requestAnimationFrame(step);
+      else el.textContent = (isFloat ? target.toFixed(1) : target.toLocaleString()) + suffix;
+    }
+    requestAnimationFrame(step);
+  }
+
+  window.addEventListener('load', () => {
+    animateCounter(document.getElementById('kpi-questions'), 1734);
+    animateCounter(document.getElementById('kpi-tokens'),    2143000);
+    animateCounter(document.getElementById('kpi-sat'),       87.3, '%');
+    animateCounter(document.getElementById('kpi-users'),     512);
+  });
+
+  // ── SPARKLINES ────────────────────────────────────────────
+  function buildSparkline(id, data, highlightLast=true) {
+    const wrap = document.getElementById(id);
+    if (!wrap) return;
+    const max = Math.max(...data);
+    data.forEach((v, i) => {
+      const bar = document.createElement('div');
+      bar.className = 'spark-bar' + (highlightLast && i === data.length-1 ? ' highlight' : '');
+      bar.style.height = Math.max(4, (v/max)*100) + '%';
+      wrap.appendChild(bar);
+    });
+  }
+
+  buildSparkline('spark-questions', [42,55,38,67,71,80,63,88,72,95,101,110,88,103,115,122,108,130,142,128,150,138,155,160,145,170,162,175,180,195]);
+  buildSparkline('spark-tokens',    [38,52,35,60,68,78,60,84,70,92,98,107,86,100,112,119,105,127,139,125,147,135,152,158,142,168,160,172,178,192]);
+  buildSparkline('spark-sat',       [78,80,82,79,83,85,84,86,87,85,88,87,89,88,90,87,89,88,91,89,90,91,88,92,90,91,93,89,92,87]);
+  buildSparkline('spark-users',     [20,28,18,35,40,45,32,50,38,55,58,62,50,58,64,70,60,74,80,72,85,78,88,90,82,96,92,98,102,110]);
+
+  // ── Chart.js: DAILY VOLUME LINE ────────────────────────────
+  const labels = [];
+  const now = new Date();
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(now); d.setDate(d.getDate() - i);
+    labels.push(d.toLocaleDateString('en-CA', { month:'short', day:'numeric' }));
+  }
+
+  const volumeData = [42,38,55,67,71,80,63,88,72,95,101,110,88,103,115,122,108,130,142,128,150,138,155,160,145,170,162,175,180,195];
+
+  const ctxLine = document.getElementById('chartDailyVolume').getContext('2d');
+  const gradLine = ctxLine.createLinearGradient(0, 0, 0, 240);
+  gradLine.addColorStop(0, 'rgba(0,56,101,.18)');
+  gradLine.addColorStop(1, 'rgba(0,56,101,0)');
+
+  new Chart(ctxLine, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Questions',
+        data: volumeData,
+        borderColor: '#003865',
+        borderWidth: 2.5,
+        pointRadius: 0,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: '#003865',
+        tension: 0.42,
+        fill: true,
+        backgroundColor: gradLine
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#fff',
+          titleColor: '#0F1C2E',
+          bodyColor: '#4A5568',
+          borderColor: '#E2E8F0',
+          borderWidth: 1,
+          padding: 10,
+          titleFont: { family: "'DM Sans'", weight: '600', size: 12 },
+          bodyFont: { family: "'DM Sans'", size: 12 },
+          callbacks: { label: ctx => ` ${ctx.parsed.y} queries` }
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          border: { display: false },
+          ticks: {
+            font: { family: "'DM Sans'", size: 11 },
+            color: '#94A3B8',
+            maxTicksLimit: 8
+          }
+        },
+        y: {
+          grid: { color: '#F1F5F9', drawBorder: false },
+          border: { display: false, dash: [4,4] },
+          ticks: {
+            font: { family: "'DM Sans'", size: 11 },
+            color: '#94A3B8',
+            padding: 8
+          },
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  // ── Chart.js: FEEDBACK DONUT ───────────────────────────────
+  new Chart(document.getElementById('chartFeedback').getContext('2d'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Helpful', 'Unhelpful', 'Reported'],
+      datasets: [{
+        data: [1824, 189, 84],
+        backgroundColor: ['#1DB97A', '#F59E0B', '#E53E3E'],
+        borderWidth: 0,
+        hoverOffset: 6
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      cutout: '72%',
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#fff',
+          titleColor: '#0F1C2E',
+          bodyColor: '#4A5568',
+          borderColor: '#E2E8F0',
+          borderWidth: 1,
+          padding: 10,
+          titleFont: { family: "'DM Sans'", weight: '600', size: 12 },
+          bodyFont: { family: "'DM Sans'", size: 12 }
+        }
+      }
+    }
+  });
+
+  // ── Chart.js: BY AGENT BAR ─────────────────────────────────
+  new Chart(document.getElementById('chartByAgent').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['Risk & Safety', 'Academic Advising', 'Student Services', 'Research Office'],
+      datasets: [{
+        label: 'Questions',
+        data: [1247, 312, 0, 0],
+        backgroundColor: ['#003865', '#F7A800', '#E2E8F0', '#E2E8F0'],
+        borderRadius: 7,
+        borderSkipped: false,
+        barPercentage: 0.55,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#fff',
+          titleColor: '#0F1C2E',
+          bodyColor: '#4A5568',
+          borderColor: '#E2E8F0',
+          borderWidth: 1,
+          padding: 10,
+          titleFont: { family: "'DM Sans'", weight: '600', size: 12 },
+          bodyFont: { family: "'DM Sans'", size: 12 },
+          callbacks: { label: ctx => ` ${ctx.parsed.y.toLocaleString()} queries` }
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          border: { display: false },
+          ticks: { font: { family: "'DM Sans'", size: 11 }, color: '#94A3B8' }
+        },
+        y: {
+          grid: { color: '#F1F5F9' },
+          border: { display: false },
+          ticks: { font: { family: "'DM Sans'", size: 11 }, color: '#94A3B8', padding: 8 },
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  // ── HEATMAP ────────────────────────────────────────────────
+  function buildHeatmap(containerId, monthLabel, monthData) {
+    const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    const hours = ['6am','8am','10am','12pm','2pm','4pm','6pm','8pm'];
+
+    const grid = document.getElementById(containerId);
+    const wrapper = document.createElement('div');
+    wrapper.className = 'heatmap-grid';
+
+    // Header row
+    wrapper.appendChild(document.createElement('div')); // empty corner
+    days.forEach(d => {
+      const lbl = document.createElement('div');
+      lbl.className = 'heatmap-col-label';
+      lbl.textContent = d;
+      wrapper.appendChild(lbl);
+    });
+
+    // Data rows
+    hours.forEach((h, hi) => {
+      const rowLbl = document.createElement('div');
+      rowLbl.className = 'heatmap-row-label';
+      rowLbl.textContent = h;
+      wrapper.appendChild(rowLbl);
+      days.forEach((d, di) => {
+        const cell = document.createElement('div');
+        const intensity = monthData[hi] ? monthData[hi][di] : 0;
+        cell.className = `heatmap-cell hm-${intensity}`;
+        cell.title = `${h} ${d}: ${intensity} intensity`;
+        wrapper.appendChild(cell);
+      });
+    });
+
+    grid.appendChild(wrapper);
+
+    // Legend
+    const legend = document.createElement('div');
+    legend.style.cssText = 'display:flex;align-items:center;gap:5px;margin-top:12px;font-size:11px;color:#94A3B8;justify-content:flex-start;';
+    legend.innerHTML = '<span style="margin-right:8px;">Less</span>';
+    [0,1,2,3,4,5].forEach(v => {
+      const s = document.createElement('div');
+      s.style.cssText = `width:13px;height:13px;border-radius:3px;`;
+      s.className = `heatmap-cell hm-${v}`;
+      legend.appendChild(s);
+    });
+    legend.innerHTML += '<span style="margin-left:8px;">More</span>';
+    grid.appendChild(legend);
+  }
+
+  // Current month data (March 2026)
+  const marchData = [
+    [0,1,0,1,0,0,0], // 6am
+    [1,2,3,4,3,1,0], // 8am
+    [2,3,5,5,4,2,0], // 10am
+    [3,5,5,4,5,2,1], // 12pm
+    [2,4,5,5,4,2,0], // 2pm
+    [3,4,4,3,4,1,0], // 4pm
+    [1,2,3,3,2,1,0], // 6pm
+    [0,1,2,1,1,0,0], // 8pm
+  ];
+
+  // Previous month data (February 2026)
+  const februaryData = [
+    [0,0,1,0,0,0,0], // 6am
+    [1,1,2,3,2,1,0], // 8am
+    [2,2,4,4,3,2,0], // 10am
+    [2,4,4,3,4,2,1], // 12pm
+    [1,3,4,4,3,1,0], // 2pm
+    [2,3,3,2,3,1,0], // 4pm
+    [1,1,2,2,1,0,0], // 6pm
+    [0,0,1,0,0,0,0], // 8pm
+  ];
+
+  buildHeatmap('heatmapContainerCurrent', 'March 2026', marchData);
+  buildHeatmap('heatmapContainerPrevious', 'February 2026', februaryData);
+
+  // ── PERIOD TAB CLICK ───────────────────────────────────────
+  document.querySelectorAll('.period-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // ── FILTER PILLS ───────────────────────────────────────────
+  document.querySelectorAll('.filter-pill').forEach(pill => {
+    pill.addEventListener('click', function() {
+      this.classList.toggle('active');
+    });
+  });
+
+  // ══════════════════════════════════════════════════════════
+  // PHASE 2 SCRIPTS
+  // ══════════════════════════════════════════════════════════
+
+  // ── SEMESTER TABS ──────────────────────────────────────────
+  document.querySelectorAll('.sem-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.sem-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // ── SEMESTER COMPARISON CHART ─────────────────────────────
+  const semMonths = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const ctxSem = document.getElementById('chartSemester').getContext('2d');
+  new Chart(ctxSem, {
+    type: 'bar',
+    data: {
+      labels: semMonths,
+      datasets: [
+        {
+          label: 'Winter 2026',
+          data: [320, 410, 195, null, null, null, null, null, null, null, null, null],
+          backgroundColor: 'rgba(0,56,101,0.85)',
+          borderRadius: 6,
+          borderSkipped: false,
+          barPercentage: 0.55,
+        },
+        {
+          label: 'Fall 2025',
+          data: [null, null, null, null, null, null, null, null, 280, 395, 430, 310],
+          backgroundColor: 'rgba(247,168,0,0.85)',
+          borderRadius: 6,
+          borderSkipped: false,
+          barPercentage: 0.55,
+        },
+        {
+          label: 'Summer 2025',
+          data: [null, null, null, null, 140, 165, 120, null, null, null, null, null],
+          backgroundColor: 'rgba(29,185,122,0.65)',
+          borderRadius: 6,
+          borderSkipped: false,
+          barPercentage: 0.55,
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            font: { family: "'DM Sans'", size: 12 },
+            color: '#4A5568',
+            boxWidth: 12, boxHeight: 12,
+            borderRadius: 3,
+            padding: 16
+          }
+        },
+        tooltip: {
+          backgroundColor: '#fff',
+          titleColor: '#0F1C2E', bodyColor: '#4A5568',
+          borderColor: '#E2E8F0', borderWidth: 1, padding: 10,
+          titleFont: { family: "'DM Sans'", weight: '600', size: 12 },
+          bodyFont: { family: "'DM Sans'", size: 12 },
+          callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y} queries` }
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false }, border: { display: false },
+          ticks: { font: { family: "'DM Sans'", size: 11 }, color: '#94A3B8' }
+        },
+        y: {
+          grid: { color: '#F1F5F9' }, border: { display: false },
+          ticks: { font: { family: "'DM Sans'", size: 11 }, color: '#94A3B8', padding: 8 },
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  // ── LATENCY DISTRIBUTION CHART ────────────────────────────
+  const ctxLat = document.getElementById('chartLatency').getContext('2d');
+  const gradLat = ctxLat.createLinearGradient(0,0,0,120);
+  gradLat.addColorStop(0, 'rgba(0,86,160,0.3)');
+  gradLat.addColorStop(1, 'rgba(0,86,160,0)');
+  new Chart(ctxLat, {
+    type: 'line',
+    data: {
+      labels: ['<100','100-200','200-300','300-400','400-500','500-700','700-1000','1000+'],
+      datasets: [{
+        label: 'Queries',
+        data: [18, 142, 384, 510, 390, 248, 124, 32],
+        borderColor: '#0056A0',
+        borderWidth: 2,
+        pointRadius: 3,
+        pointBackgroundColor: '#0056A0',
+        tension: 0.5,
+        fill: true,
+        backgroundColor: gradLat
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor:'#fff', titleColor:'#0F1C2E', bodyColor:'#4A5568',
+          borderColor:'#E2E8F0', borderWidth:1, padding:8,
+          titleFont:{family:"'DM Sans'",weight:'600',size:12},
+          bodyFont:{family:"'DM Sans'",size:12},
+          callbacks: { label: ctx => ` ${ctx.parsed.y} queries` }
+        }
+      },
+      scales: {
+        x: { grid:{display:false}, border:{display:false}, ticks:{font:{family:"'DM Sans'",size:10}, color:'#94A3B8'} },
+        y: { display:false, beginAtZero:true }
+      }
+    }
+  });
+
+  // ── RAG SIMILARITY TREND ──────────────────────────────────
+  const ctxRag = document.getElementById('chartRagSim').getContext('2d');
+  const gradRag = ctxRag.createLinearGradient(0,0,600,0);
+  gradRag.addColorStop(0,'#F7A800');
+  gradRag.addColorStop(1,'#003865');
+  new Chart(ctxRag, {
+    type: 'line',
+    data: {
+      labels: ['Week 1','Week 2','Week 3','Week 4','Week 5','Week 6','Week 7','Week 8'],
+      datasets: [{
+        label: 'Avg Similarity',
+        data: [0.74, 0.76, 0.78, 0.77, 0.80, 0.81, 0.82, 0.82],
+        borderColor: gradRag,
+        borderWidth: 2.5,
+        pointRadius: 4,
+        pointBackgroundColor: '#003865',
+        tension: 0.42,
+        fill: false,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor:'#fff', titleColor:'#0F1C2E', bodyColor:'#4A5568',
+          borderColor:'#E2E8F0', borderWidth:1, padding:8,
+          callbacks: { label: ctx => ` Avg similarity: ${ctx.parsed.y.toFixed(2)}` }
+        }
+      },
+      scales: {
+        x: { grid:{display:false}, border:{display:false}, ticks:{font:{family:"'DM Sans'",size:10}, color:'#94A3B8'} },
+        y: {
+          grid:{color:'#F1F5F9'}, border:{display:false},
+          min:0.65, max:0.90,
+          ticks:{font:{family:"'DM Sans'",size:10}, color:'#94A3B8', callback: v => v.toFixed(2)}
+        }
+      }
+    }
+  });
+
+  // ── CONVERSATION TABLE ─────────────────────────────────────
+  const conversations = [
+    { user:'A. Patel', email:'apatel@mytru.ca', agent:'Risk & Safety', questions:4, tokens:2840, feedback:'👍 Helpful', date:'Mar 20 · 2:14 PM',
+      exchanges:[
+        {role:'user',text:'What do I do if I find a chemical spill in the lab?'},
+        {role:'agent',text:'If you encounter a chemical spill, first alert others in the area and evacuate if necessary. Call TRU Safety at ext. 5000. For minor spills, use the spill kit located near the lab entrance. Do not attempt to clean up unknown substances.'},
+        {role:'user',text:'Where is the nearest eyewash station in IB building?'},
+        {role:'agent',text:'Eyewash stations in the IB building are located on each floor near the main lab entrances — specifically IB 110, IB 220, and IB 315. All stations are inspected weekly.'},
+      ]},
+    { user:'M. Thompson', email:'mthompson@tru.ca', agent:'Risk & Safety', questions:2, tokens:1420, feedback:'👎 Unhelpful', date:'Mar 20 · 1:02 PM',
+      exchanges:[
+        {role:'user',text:'Is there a quiet room or sensory room available on campus for students?'},
+        {role:'agent',text:'I don\'t have specific information about sensory rooms in my current knowledge base. I recommend contacting Student Affairs at student.affairs@tru.ca or visiting the Student Services building for the most accurate information.'},
+      ]},
+    { user:'J. Kim', email:'jkim@mytru.ca', agent:'Risk & Safety', questions:6, tokens:3910, feedback:'👍 Helpful', date:'Mar 20 · 11:55 AM',
+      exchanges:[
+        {role:'user',text:'Do I need to complete WHMIS training before starting my lab TA position?'},
+        {role:'agent',text:'Yes, WHMIS 2015 training is mandatory for all lab TAs before their first shift. You can complete it online through the TRU Safety Training Portal. Once done, forward your completion certificate to risk.safety@tru.ca.'},
+        {role:'user',text:'How long does the WHMIS online course take?'},
+        {role:'agent',text:'The online WHMIS 2015 course typically takes 2–3 hours to complete. It includes a knowledge assessment at the end which you must pass with 80% or higher.'},
+      ]},
+    { user:'S. Reyes', email:'sreyes@mytru.ca', agent:'Academic Advising', questions:3, tokens:2100, feedback:'⚠️ Reported', date:'Mar 19 · 4:30 PM',
+      exchanges:[
+        {role:'user',text:'What GPA do I need to get into the Nursing program?'},
+        {role:'agent',text:'The Bachelor of Science in Nursing program at TRU typically requires a competitive GPA of approximately 3.0 or higher, though admission cutoffs vary by year. I recommend checking the TRU Admissions website for the most current requirements.'},
+      ]},
+    { user:'R. Okafor', email:'rokafor@tru.ca', agent:'Risk & Safety', questions:5, tokens:3250, feedback:'👍 Helpful', date:'Mar 19 · 2:15 PM',
+      exchanges:[
+        {role:'user',text:'Who do I contact to report an unsafe working condition in my department?'},
+        {role:'agent',text:'You can report unsafe working conditions to the TRU Risk & Safety office at risk.safety@tru.ca or by calling ext. 5000. You may also speak with your Joint Health & Safety Committee (JHSC) representative. Anonymous reports can be submitted through the online Safety Concern Form on the TRU Safety website.'},
+      ]},
+    { user:'L. Nguyen', email:'lnguyen@mytru.ca', agent:'Risk & Safety', questions:1, tokens:640, feedback:'👍 Helpful', date:'Mar 18 · 9:42 AM',
+      exchanges:[
+        {role:'user',text:'What is the campus emergency number?'},
+        {role:'agent',text:'The TRU Campus Security emergency number is 250-828-5033. For life-threatening emergencies, always call 911 first. Campus Security can also be reached by pressing the blue emergency phone buttons located throughout campus.'},
+      ]},
+  ];
+
+  function feedbackStyle(f) {
+    if (f.startsWith('👍')) return `color:var(--green);font-weight:600`;
+    if (f.startsWith('👎')) return `color:var(--amber);font-weight:600`;
+    return `color:var(--red);font-weight:600`;
+  }
+
+  function renderConvTable(data) {
+    const tbody = document.getElementById('convTableBody');
+    tbody.innerHTML = '';
+    data.forEach((c, idx) => {
+      const initials = c.user.split(' ').map(w=>w[0]).join('');
+      const agentEmoji = c.agent === 'Risk & Safety' ? '🛡️' : '📚';
+
+      // Main row
+      const tr = document.createElement('tr');
+      tr.className = '';
+      tr.dataset.idx = idx;
+      tr.innerHTML = `
+        <td>
+          <div class="conv-user">
+            <div class="conv-avatar">${initials}</div>
+            <div>
+              <div class="conv-name">${c.user}</div>
+              <div class="conv-email">${c.email}</div>
+            </div>
+          </div>
+        </td>
+        <td>${agentEmoji} ${c.agent}</td>
+        <td><strong style="color:var(--text-primary)">${c.questions}</strong></td>
+        <td>${c.tokens.toLocaleString()}</td>
+        <td><span style="${feedbackStyle(c.feedback)}">${c.feedback}</span></td>
+        <td style="color:var(--text-muted)">${c.date}</td>
+        <td style="text-align:right"><span class="expand-chevron" style="color:var(--text-muted)">▾</span></td>
+      `;
+
+      // Expand row
+      const expandTr = document.createElement('tr');
+      expandTr.className = 'expand-row';
+      const bubbles = c.exchanges.map(e =>
+        `<div class="conv-bubble ${e.role === 'user' ? 'user-bubble' : 'agent-bubble'}">${e.text}</div>`
+      ).join('');
+      expandTr.innerHTML = `<td colspan="7"><div class="expand-inner" id="expand-${idx}"><div class="conv-exchange">${bubbles}</div></div></td>`;
+
+      tr.addEventListener('click', () => {
+        const inner = document.getElementById(`expand-${idx}`);
+        const isOpen = inner.classList.contains('open');
+        // Close all
+        document.querySelectorAll('.expand-inner').forEach(el => el.classList.remove('open'));
+        document.querySelectorAll('.conv-table tbody tr:not(.expand-row)').forEach(r => r.classList.remove('expanded-row'));
+        if (!isOpen) {
+          inner.classList.add('open');
+          tr.classList.add('expanded-row');
+        }
+      });
+
+      tbody.appendChild(tr);
+      tbody.appendChild(expandTr);
+    });
+  }
+
+  renderConvTable(conversations);
+
+  // ── CONV SEARCH ────────────────────────────────────────────
+  document.getElementById('convSearch').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    const filtered = conversations.filter(c =>
+      c.user.toLowerCase().includes(q) ||
+      c.email.toLowerCase().includes(q) ||
+      c.agent.toLowerCase().includes(q) ||
+      c.exchanges.some(e => e.text.toLowerCase().includes(q))
+    );
+    renderConvTable(filtered);
+  });
+
+</script>
+</body>
+</html>

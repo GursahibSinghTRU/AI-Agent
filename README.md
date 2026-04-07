@@ -1,253 +1,329 @@
-﻿# TRU Policy Assistant
+# TRU Risk & Safety Assistant
 
-A **local, 100% free** RAG (Retrieval-Augmented Generation) chatbot for querying Thompson Rivers University policy documents. Every answer is grounded in official policy PDFs  no cloud APIs, no subscriptions, completely private.
+A **local, 100% free** AI chatbot for Thompson Rivers University (TRU) Risk & Safety Services. Powered by **context injection** with local LLMs — no cloud APIs, no subscriptions, completely private.
 
-The UI is a full TRU-branded website with a floating chat widget powered by the RAG backend. Answers stream token-by-token with Markdown formatting and document citations shown below each response.
+The application features a full TRU-branded website with an embedded floating chat widget that answers Risk & Safety questions with markdown hyperlinks to source documents. Responses stream token-by-token for a responsive user experience.
 
-**Status:  Working**  Qwen 3.5  nomic-embed-text  ChromaDB  FastAPI
+**Status:** ✅ Working | **Architecture:** Context Injection + Ollama (Qwen 3.5) | **Analytics:** Supabase PostgreSQL | **Framework:** FastAPI + React-inspired Vanilla JS
 
 ---
 
-## Architecture
+## What's New (vs Original RAG Approach)
 
-```
-PDF files  pypdf  text chunks  nomic-embed-text (Ollama)  ChromaDB
-                                                                    
-User asks a question in the chat widget
-    embed question  cosine similarity search in ChromaDB
-    top matching chunks  qwen3.5:0.8b (Ollama)  streaming answer
-    rendered as Markdown with citation chips
-```
+✨ **New Context Injection Architecture:**
+- ❌ No ChromaDB indexing overhead
+- ❌ No chunking or embedding generation
+- ✅ Single `combined_context.txt` file with all policies
+- ✅ Direct context injection into LLM as first message
+- ✅ Faster startup, simpler deployment
+- ✅ Markdown hyperlinks with proper citation support
+
+📱 **Multi-Page Frontend:**
+- `GET /` → Risk & Safety Services (default homepage with chatbot)
+- `GET /general` → General TRU landing/dummy page
+- `GET /analytics` → Internal analytics dashboard
+- Both pages include the embedded AI chatbot widget
+
+📊 **Privacy-First Analytics (Supabase):**
+- Session tracking, interaction telemetry, and user feedback
+- No raw messages stored — only metadata and performance metrics
+- Real-time analytics dashboard with KPIs, heatmaps, and charts
+- Powered by Supabase PostgreSQL with Row Level Security
 
 ---
 
 ## Prerequisites
 
 - **Python 3.10+**
-- **Ollama** installed and running  [ollama.com](https://ollama.com)
+- **Ollama** running locally — [ollama.com](https://ollama.com)
+- **Ollama Models:**
+  - `qwen3.5:0.8b` (Chat, ~1 GB)
+  - Optional: `llama3:8b` or other models
 
 ---
 
 ## Quick Start
 
-### 1. Pull the models
+### 1. Setup Virtual Environment
 
 ```bash
-ollama pull nomic-embed-text    # Embeddings (274 MB)
-ollama pull qwen3.5:0.8b        # Chat LLM (1 GB)  fast and local
+python -m venv venv
+.\venv\Scripts\Activate.ps1  # Windows
+source venv/bin/activate     # Mac/Linux
 ```
 
-### 2. Install Python dependencies
+### 2. Install Dependencies
 
 ```bash
-pip install fastapi uvicorn pypdf chromadb httpx
+pip install fastapi uvicorn httpx pydantic
 ```
 
-### 3. Add your PDFs
-
-Drop TRU policy PDF files into the **`data/`** folder.
-
-### 4. Ingest documents
+### 3. Pull Ollama Models
 
 ```bash
-python ingest.py              # Incremental  add new PDFs only
-python ingest.py --fresh      # Wipe vector DB and re-ingest everything
+ollama pull qwen3.5:0.8b
 ```
 
-Use `--fresh` whenever you add or remove PDFs to keep the index clean.
+### 4. Prepare Your Data
 
-### 5. Start the server
+Place all Risk & Safety `.txt` files in the **`data/`** folder (or they already exist in the repo).
+
+### 5. Build Combined Context
+
+```bash
+python build_context.py
+```
+
+This generates `data/combined_context.txt` by concatenating all `.txt` files with separators like `--- filename.txt`.
+
+### 6. Start the Server
 
 ```bash
 python run.py
 ```
 
-Open **http://localhost:8000** in your browser — the TRU-branded page loads. Click the chat button (bottom-right FAB) to start asking policy questions.
+Server starts on **http://localhost:8000**
 
+Visit:
+- `http://localhost:8000/` — Risk & Safety homepage with chatbot
+- `http://localhost:8000/general` — General TRU page
+- `http://localhost:8000/analytics` — Analytics dashboard
 
----
-.\venv\Scripts\activate; python run.py
+### 7. Quick Command
+
+.\venv\Scripts\Activate.ps1; python run.py
+
 ---
 
 ## Project Structure
 
 ```
-FunctionalRAGAgent/
+AI-Agent/
  app/
-    agent.py        # RAG pipeline: retrieve  generate
-    config.py       # All tunables (models, thresholds, paths)
-    rag_core.py     # ChromaDB setup, embedding helpers
-    server.py       # FastAPI routes + SSE streaming
+    agent.py          # Context injection agent (no RAG)
+    config.py         # Settings & environment variables
+    server.py         # FastAPI routes + SSE streaming
+    supabase_client.py # Supabase CRUD helpers (sessions, interactions, feedback)
     __init__.py
  frontend/
-    index.html      # Full TRU-branded university website
-    chatbot.css     # TRU-branded widget styles + Markdown prose
-    chatbot.js      # Floating chat widget  calls RAG API, streams
-                         answers, renders Markdown + source citations
- data/               # Drop your policy PDFs here
- chroma_db/          # ChromaDB persistent vector store (auto-created)
- ingest.py           # PDF  chunk  embed  ChromaDB
- run.py              # Starts uvicorn on port 8000
+    index.html        # Risk & Safety Services homepage
+    general-tru.html  # General TRU landing page
+    analytics.html    # Analytics dashboard (reads from Supabase)
+    chatbot.js        # Floating chat widget (context-aware UI)
+    chatbot.css       # TRU-branded widget styles + hyperlink styling
+ data/
+    *.txt             # Risk & Safety text files
+    combined_context.txt  # Auto-generated concatenated context
+ build_context.py     # Generate combined_context.txt
+ clean_html.py        # Utility to clean corrupted characters from HTML
+ run.py               # Uvicorn startup
  requirements.txt
- tru-brand-guide_SKILL.md   # TRU brand colours, fonts, tone reference
+ README.md
 ```
 
 ---
 
 ## Configuration
 
-Edit `app/config.py` to change any of these:
+Edit **`app/config.py`** for custom settings:
 
 | Setting | Default | Description |
-|---|---|---|
-| `CHAT_MODEL` | `qwen3.5:0.8b` | Ollama chat model |
-| `EMBED_MODEL` | `nomic-embed-text` | Ollama embedding model |
-| `OLLAMA_BASE_URL` | `http://localhost:11434` | Ollama API |
-| `DATA_DIR` | `data/` | Folder to read PDFs from |
-| `CHROMA_PATH` | `chroma_db/` | ChromaDB storage |
-| `SIMILARITY_THRESHOLD` | (low) | Min cosine similarity to include a chunk |
-| `TOP_K` | `5` | Number of chunks retrieved per query |
+|---------|---------|-------------|
+| `CHAT_MODEL` | `qwen3.5:0.8b` | Ollama chat model identifier |
+| `OLLAMA_BASE_URL` | `http://localhost:11434` | Ollama API endpoint |
+| `DATA_DIR` | `data/` | Directory containing `.txt` Risk & Safety files |
+| `TEMPERATURE` | `0.7` | LLM creativity (0=deterministic, 1=creative) |
+| `ALLOWED_ORIGINS` | `*` | CORS allowed origins |
+| `SUPABASE_URL` | *(project URL)* | Supabase project REST API URL |
+| `SUPABASE_ANON_KEY` | *(project key)* | Supabase anonymous/public API key |
 
-All settings can be overridden via environment variables of the same name (uppercased):
+Override via environment variables:
 
 ```bash
-CHAT_MODEL=llama3:8b python run.py
+CHAT_MODEL=llama3:8b TEMPERATURE=0.5 python run.py
 ```
 
-### System Prompt
+---
 
-The system prompt (instructions for how the LLM should behave) is defined in **`app/rag_core.py`** starting at line 238. The `SYSTEM_PROMPT` constant tells the model to:
-- Answer only from provided policy documents
-- Return "Not found in the provided documents" if no answer is available
-- Cite policy names and page numbers
-- Use professional language and concise format
+## System Prompt
 
-Edit `SYSTEM_PROMPT` in `app/rag_core.py` to customize the behaviour or tone of responses.
+The AI's instructions are defined in **`app/agent.py`** (see `SYSTEM_PROMPT` variable).
+
+**Key behaviors:**
+1. Treats the combined context as ground truth
+2. Only answers questions found in the provided context
+3. Cites sources as markdown hyperlinks: `[Source Name](URL)`
+4. Ends responses with helpful next-step questions
+5. Professional, neutral tone reflecting TRU brand values
+
+Edit `SYSTEM_PROMPT` in `agent.py` to customize tone or behavior.
 
 ---
 
 ## API Endpoints
 
 | Method | Path | Description |
-|---|---|---|
-| `GET` | `/` | Serves the TRU-branded HTML frontend |
-| `GET` | `/api/health` | Deep health check (Ollama + models) |
-| `GET` | `/api/stats` | Document and chunk counts |
-| `POST` | `/api/chat/stream` | SSE streaming RAG chat |
+|--------|------|-------------|
+| `GET` | `/` | Serves Risk & Safety homepage |
+| `GET` | `/general` | Serves General TRU page |
+| `GET` | `/analytics` | Serves analytics dashboard |
+| `GET` | `/api/health` | Health check (Ollama status) |
+| `GET` | `/api/stats` | Context file info |
+| `POST` | `/api/chat/stream` | SSE streaming chat |
 | `POST` | `/api/chat` | Non-streaming fallback |
+| `POST` | `/api/session` | Create/touch a chat session |
+| `POST` | `/api/feedback` | Submit thumbs up/down feedback |
 
-### Chat stream event format
+### Streaming Chat Event Format
 
-The `POST /api/chat/stream` endpoint returns `text/event-stream` with these event types:
+`POST /api/chat/stream` returns `text/event-stream` with these events:
 
-```
-data: {"type":"sources","sources":[{"policy":"...","page":1,"relevance":0.82}]}
+```json
+data: {"type":"sources","sources":[{"file":"combined_context.txt","riskandsafetydocs":"All Documents","relevance":1.0}]}
 data: {"type":"token","token":"Here"}
-data: {"type":"token","token":" are"}
+data: {"type":"token","token":" is"}
 ...
-data: {"type":"done","timing":{"total_s":2.1,"retrieve_ms":45,"llm_ms":2055}}
+data: {"type":"done","timing":{"total_ms":2100,"llm_ms":2055,"retrieve_ms":0}}
 ```
 
 ---
 
-## Frontend
+## Console Debugging
 
-The frontend is pure HTML/CSS/JS  no build tools, no framework.
+Browser console logs all received tokens and rendered markdown for debugging:
 
-### `frontend/index.html`
-Full TRU university website layout (nav, hero, programs, campus life, admissions, footer) using TRU brand colours, Roboto + Roboto Slab fonts. The chatbot widget is injected by `chatbot.js` at page load.
+```javascript
+[TRU Chat] Received token: "..."
+[TRU Chat] Full response so far: "..."
+[TRU Chat] Rendered markdown HTML: "<p>...</p>"
+```
 
-### `frontend/chatbot.css`
-TRU-branded floating widget styles:
-- Floating Action Button (bottom-right)
-- Chat window: header, messages area, input bar
-- **Markdown prose styles** scoped to `.tru-message.assistant .tru-msg-bubble`  bold in TRU Blue, teal list markers, blockquotes, headings, code snippets
-- Source citation chips: document name, page number, relevance %
-
-### `frontend/chatbot.js`
-Self-contained IIFE that:
-1. Injects the chat FAB and window into the page DOM
-2. Checks `/api/health` on load and shows connection status
-3. On send  calls `/api/chat/stream` via SSE
-4. Parses `sources`, `token`, and `done` events
-5. Renders assistant text with **marked.js** (loaded from CDN via `index.html`)
-6. Displays citation chips (document source, page, match %) below each answer
-7. Shows quick-reply chips with common policy questions on first open
+Open DevTools (F12 → Console) while chatting to see real-time output.
 
 ---
 
-## Notes
+## Embedding on WordPress
 
-- **Qwen 3.5 thinking mode**: The model internally reasons before answering. Thinking output is disabled via `"think": false` in the Ollama API call (see `app/agent.py`) for clean, direct responses.
-- **Similarity threshold**: With a small corpus (< 50 chunks) the default threshold may filter everything out. Lower the `SIMILARITY_THRESHOLD` in `config.py` if you see "Not found in documents".
-- **Fresh ingest**: Always run `python ingest.py --fresh` after adding or deleting PDFs to avoid stale vectors.
-- **Docker**: A `Dockerfile` and `docker-compose.yml` are included but assume Ollama is accessible on the host network.
+To embed the chatbot on an external WordPress site:
+
+### 1. Deploy Backend to Production
+
+Host `app/server.py` on a production server (AWS, Heroku, etc.) with a public URL like `https://your-api.com`
+
+### 2. Update JavaScript Configuration
+
+Modify `frontend/chatbot.js` to accept a configurable API URL:
+
+```javascript
+window.TRUChatbotConfig = {
+  apiBaseUrl: 'https://your-api.com',
+  apiStream: '/api/chat/stream'
+};
+```
+
+### 3. Host Chatbot JS File
+
+Push `frontend/chatbot.js` + `frontend/chatbot.css` to a CDN or GitHub:
+
+```
+https://cdn.jsdelivr.net/gh/YourOrg/AI-Agent@latest/frontend/chatbot.js
+https://cdn.jsdelivr.net/gh/YourOrg/AI-Agent@latest/frontend/chatbot.css
+```
+
+### 4. Add to WordPress
+
+In WordPress theme or via plugin:
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/YourOrg/AI-Agent@latest/frontend/chatbot.css?v=1">
+<script src="https://cdn.jsdelivr.net/gh/YourOrg/AI-Agent@latest/frontend/chatbot.js?v=1"></script>
+```
+
+Or create a WordPress plugin:
+
+```php
+<?php
+/**
+ * Plugin Name: TRU Chatbot
+ */
+add_action('wp_footer', function() {
+    wp_enqueue_style('tru-chat', 'https://cdn.jsdelivr.net/gh/YourOrg/...chatbot.css?v=1');
+    wp_enqueue_script('tru-chat', 'https://cdn.jsdelivr.net/gh/YourOrg/...chatbot.js?v=1', array(), '1.0', true);
+});
+```
+
+---
+
+## Features
+
+✅ **100% Local** — No cloud dependencies for chat, all processing on-device  
+✅ **Context-First** — All answers grounded in provided Risk & Safety documents  
+✅ **Markdown Hyperlinks** — Citations are clickable links to source files  
+✅ **Streaming Responses** — Token-by-token generation for responsive UI  
+✅ **TRU Branded** — Full design system following TRU brand guidelines  
+✅ **Responsive** — Works on desktop, tablet, and mobile  
+✅ **Multi-Page** — Risk & Safety + General TRU landing pages  
+✅ **Embeddable** — Single JS file for easy WordPress integration  
+✅ **Privacy-First Analytics** — Session & interaction telemetry via Supabase  
+✅ **Analytics Dashboard** — KPI cards, heatmaps, charts, feedback breakdown  
+
+---
+
+## TRU Brand Guidelines
+
+All design follows [TRU's official brand guide](tru-brand-guide_SKILL.md):
+
+- **Colours:** Blue (#003e51), Teal (#00b0b9), Yellow (#ffcd00), Sage, Grey
+- **Typography:** Roboto (body), Roboto Slab (headings)
+- **Tone:** Purposeful, empowering, collaborative, open, visionary
+- **Voice:** Confident but not arrogant; warm and inclusive
 
 ---
 
 ## Troubleshooting
 
-### Can't reach http://0.0.0.0:8000
+**Chatbot widget not showing:**
+- Ensure `/static/chatbot.css?v=1` loads (check DevTools Network tab)
+- Verify `frontend/chatbot.js` is being served
+- Clear browser cache or use private/incognito mode
 
-If you see **"Hmmm… can't reach this page"**, you're trying to visit the server's bind address directly. `0.0.0.0` is an internal bind address (listens on all interfaces) but isn't routable in browsers.
+**No response from chatbot:**
+- Confirm Ollama is running: `ollama list`
+- Check that `qwen3.5:0.8b` is installed: `ollama pull qwen3.5:0.8b`
+- Verify `data/combined_context.txt` exists and is not empty
+- Check browser console for JavaScript errors (F12 → Console)
+- Check server logs for backend errors
 
-**Solution:** Use `http://localhost:8000` or `http://127.0.0.1:8000` instead. The server is running fine — you just need the correct URL in your browser.
-
-The default HOST in `app/config.py` is now `localhost`, so this shouldn't happen. If you changed it back to `0.0.0.0`, revert it or always access via `http://localhost:8000`.
+**CSS not applying:**
+- Add cache-busting query param: `/static/chatbot.css?v=2`
+- Hard refresh browser (Ctrl+Shift+R)
+- Verify CSS file size in DevTools Network tab
 
 ---
 
-### Port 8000 Already in Use
+## Git Branch
 
-If you get an error like `Address already in use` when running `python run.py`, the port is occupied. You have two options:
-
-#### Option 1: Kill the existing process on port 8000
-
-**Windows PowerShell:**
-```powershell
-# Find and kill the process using port 8000
-Get-Process python | Where-Object { $_.CommandLine -like "*run.py*" } | Stop-Process -Force
-```
-
-**Linux/macOS:**
-```bash
-# Find the process on port 8000
-lsof -i :8000
-# Kill by PID
-kill -9 <PID>
-```
-
-#### Option 2: Run on a different port
-
-Edit `run.py` and change the port number:
-
-```python
-# Current (port 8000)
-uvicorn.run(app, host="0.0.0.0", port=8000)
-
-# Change to (port 8001)
-uvicorn.run(app, host="0.0.0.0", port=8001)
-```
-
-Or use an environment variable without editing:
+All changes tracked in: `feature/context-injection-approach`
 
 ```bash
-PORT=8001 python run.py
+git checkout feature/context-injection-approach
+git log --oneline
 ```
 
-Then open **http://localhost:8001** in your browser.
+---
 
-#### Option 3: Check what's using the port
+## License & Attribution
 
-**Windows PowerShell:**
-```powershell
-netstat -ano | findstr :8000
-# Shows: TCP    0.0.0.0:8000    0.0.0.0:0    LISTENING    12345
-# Then kill by PID: Stop-Process -Id 12345 -Force
-```
+Thompson Rivers University (TRU) brand guidelines and materials are property of TRU.
 
-**Linux/macOS:**
-```bash
-lsof -i :8000
-# Shows all processes using port 8000
-```
+This project is open-source for educational and non-commercial use.
+
+---
+
+## Contact & Support
+
+- **TRU Risk & Safety Services:** safety@tru.ca
+- **Questions:** Check the `/api/health` endpoint or review browser console logs
+- **Issues:** Ensure Ollama is running and models are pulled
+
+**Happy chatting! 🎓**

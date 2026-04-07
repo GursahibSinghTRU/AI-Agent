@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics Dashboard — TRU Risk & Safety AI Assistant</title>
+  <meta name="description"
+    content="Internal analytics dashboard for the TRU Risk & Safety AI chatbot — usage patterns, performance metrics, and user satisfaction.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Slab:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --tru-blue: #003e51;
+      --tru-blue-mid: #005570;
+      --tru-teal: #00919a;
+      --tru-teal-light: rgba(0, 145, 154, 0.10);
+      --tru-yellow: #ffcd00;
+      --tru-yellow-dark: #d4a900;
+      --tru-sage: #4a7a52;
+      --bg-body: #f0f3f6;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f8fafc;
+      --border: #dde3ea;
+      --border-light: #edf0f4;
+      --text-primary: #0d1f2b;
+      --text-secondary: #4a6070;
+      --text-dim: #8499a8;
+      --positive: #1a7a5e;
+      --positive-bg: rgba(26, 122, 94, 0.10);
+      --negative: #c0392b;
+      --negative-bg: rgba(192, 57, 43, 0.10);
+      --neutral: #6b7f8c;
+      --neutral-bg: rgba(107, 127, 140, 0.10);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,0.08), 0 12px 32px rgba(0,0,0,0.06);
+      --transition: 0.2s ease;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Roboto', system-ui, sans-serif;
+      background: var(--bg-body);
+      color: var(--text-primary);
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ── Header ── */
+    .dash-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--tru-blue);
+      border-bottom: 3px solid var(--tru-yellow);
+    }
+
+    .dash-header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .dash-branding {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .dash-brand-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--tru-yellow);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .dash-brand-icon svg { display: block; }
+
+    .dash-brand-text h1 {
+      font-family: 'Roboto Slab', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.2px;
+      line-height: 1.2;
+    }
+
+    .dash-brand-text p {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.60);
+      font-weight: 400;
+      letter-spacing: 0.2px;
+    }
+
+    .dash-header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .back-link {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 0.80rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: color var(--transition);
+      border-right: 1px solid rgba(255,255,255,0.15);
+      padding-right: 20px;
+    }
+    .back-link:hover { color: #ffffff; }
+
+    .dash-live-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #7df3d0;
+      letter-spacing: 0.5px;
+    }
+
+    .dash-live-dot {
+      width: 7px;
+      height: 7px;
+      background: #7df3d0;
+      border-radius: 50%;
+      animation: pulse-live 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-live {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(125,243,208,0.5); }
+      50% { opacity: 0.7; box-shadow: 0 0 0 5px rgba(125,243,208,0); }
+    }
+
+    .dash-refresh-btn {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.20);
+      color: #ffffff;
+      padding: 7px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 500;
+      font-family: 'Roboto', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background var(--transition);
+    }
+    .dash-refresh-btn:hover { background: rgba(255,255,255,0.20); }
+
+    /* ── Page Banner ── */
+    .page-banner {
+      background: linear-gradient(135deg, var(--tru-blue) 0%, var(--tru-blue-mid) 100%);
+      padding: 2rem 2rem 2.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-banner::after {
+      content: '';
+      position: absolute;
+      right: -60px;
+      top: -60px;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: rgba(0,145,154,0.12);
+      pointer-events: none;
+    }
+
+    .page-banner-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-banner h2 {
+      font-family: 'Roboto Slab', serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 0.4rem;
+    }
+
+    .page-banner-sub {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.60);
+      font-weight: 400;
+    }
+
+    .page-banner-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.55);
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .page-banner-meta svg { opacity: 0.6; }
+
+    /* ── Main Layout ── */
+    .dash-main {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 1.8rem 2rem 3rem;
+    }
+
+    /* ── Section Label ── */
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── KPI Row ── */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.5rem 1.3rem;
+      box-shadow: var(--shadow);
+      transition: transform var(--transition), box-shadow var(--transition);
+      position: relative;
+      overflow: hidden;
+      border-left: 4px solid transparent;
+    }
+
+    .kpi-card:nth-child(1) { border-left-color: var(--tru-teal); }
+    .kpi-card:nth-child(2) { border-left-color: var(--tru-yellow-dark); }
+    .kpi-card:nth-child(3) { border-left-color: var(--positive); }
+    .kpi-card:nth-child(4) { border-left-color: var(--tru-sage); }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .kpi-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .kpi-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .kpi-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .kpi-card:nth-child(1) .kpi-icon { background: var(--tru-teal-light); color: var(--tru-teal); }
+    .kpi-card:nth-child(2) .kpi-icon { background: rgba(212,169,0,0.12); color: var(--tru-yellow-dark); }
+    .kpi-card:nth-child(3) .kpi-icon { background: var(--positive-bg); color: var(--positive); }
+    .kpi-card:nth-child(4) .kpi-icon { background: rgba(74,122,82,0.12); color: var(--tru-sage); }
+
+    .kpi-value {
+      font-family: 'Roboto Slab', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+
+    .kpi-card:nth-child(1) .kpi-value { color: var(--tru-teal); }
+    .kpi-card:nth-child(2) .kpi-value { color: var(--tru-yellow-dark); }
+    .kpi-card:nth-child(3) .kpi-value { color: var(--positive); }
+    .kpi-card:nth-child(4) .kpi-value { color: var(--tru-sage); }
+
+    .kpi-sub {
+      font-size: 0.74rem;
+      color: var(--text-dim);
+    }
+
+    /* ── Chart Grid ── */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .charts-grid.single {
+      grid-template-columns: 1fr;
+    }
+
+    .chart-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.5rem;
+      box-shadow: var(--shadow);
+      transition: box-shadow var(--transition);
+    }
+
+    .chart-card:hover { box-shadow: var(--shadow-hover); }
+
+    .chart-card.full-width { grid-column: 1 / -1; }
+
+    .chart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .chart-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chart-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: var(--radius-sm);
+      background: var(--tru-teal-light);
+      color: var(--tru-teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .chart-title {
+      font-family: 'Roboto Slab', serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .chart-subtitle {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      font-weight: 400;
+    }
+
+    /* ── Period Tabs ── */
+    .period-tabs {
+      display: flex;
+      gap: 3px;
+      background: var(--bg-body);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 3px;
+    }
+
+    .period-tab {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      font-family: 'Roboto', sans-serif;
+      color: var(--text-dim);
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+      white-space: nowrap;
+    }
+
+    .period-tab:hover { color: var(--text-primary); }
+
+    .period-tab.active {
+      background: var(--bg-card);
+      color: var(--tru-teal);
+      font-weight: 600;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    /* ── Heatmap Styles ── */
+    .heatmap-cell {
+      border-radius: 3px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      cursor: default;
+      position: relative;
+    }
+
+    .heatmap-cell:hover {
+      transform: scale(1.25);
+      z-index: 5;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .heatmap-cell[title]:hover::after {
+      content: attr(title);
+      position: absolute;
+      bottom: 130%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--tru-blue);
+      color: #ffffff;
+      padding: 4px 8px;
+      border-radius: 5px;
+      font-size: 0.68rem;
+      white-space: nowrap;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .heatmap-intensity-0 { background: #e8edf2; }
+    .heatmap-intensity-1 { background: rgba(0,145,154,0.20); }
+    .heatmap-intensity-2 { background: rgba(0,145,154,0.42); }
+    .heatmap-intensity-3 { background: rgba(0,145,154,0.65); }
+    .heatmap-intensity-4 { background: rgba(0,145,154,0.90); }
+
+    /* Calendar heatmap */
+    .calendar-heatmap {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .cal-month-labels {
+      display: flex;
+      gap: 3px;
+      padding-left: 36px;
+      margin-bottom: 2px;
+    }
+
+    .cal-month-label {
+      font-size: 0.67rem;
+      color: var(--text-dim);
+      font-weight: 500;
+      min-width: 16px;
+      text-align: center;
+    }
+
+    .cal-row {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .cal-day-label {
+      width: 30px;
+      font-size: 0.67rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      text-align: right;
+      padding-right: 4px;
+      flex-shrink: 0;
+    }
+
+    .cal-cell { width: 15px; height: 15px; }
+
+    .cal-legend {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      justify-content: flex-end;
+      margin-top: 8px;
+      font-size: 0.67rem;
+      color: var(--text-dim);
+    }
+
+    .cal-legend-cell { width: 13px; height: 13px; border-radius: 3px; }
+
+    /* Hourly heatmap */
+    .hourly-heatmap {
+      display: grid;
+      grid-template-columns: 44px repeat(24, 1fr);
+      gap: 3px;
+      font-size: 0.63rem;
+    }
+
+    .hourly-header {
+      color: var(--text-dim);
+      text-align: center;
+      padding: 2px 0 6px;
+      font-weight: 500;
+    }
+
+    .hourly-day-label {
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      font-size: 0.70rem;
+    }
+
+    .hourly-cell { aspect-ratio: 1; min-height: 18px; }
+
+    /* Chart.js containers */
+    .chart-container { position: relative; height: 250px; }
+
+    /* Feedback card */
+    .feedback-wrap {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .feedback-chart-area {
+      flex-shrink: 0;
+      width: 200px;
+      height: 200px;
+      position: relative;
+    }
+
+    .feedback-chart-area canvas { max-height: 200px; }
+
+    .feedback-legend {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-body);
+    }
+
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    .legend-label { font-size: 0.82rem; color: var(--text-secondary); flex: 1; }
+
+    .legend-value {
+      font-family: 'Roboto Slab', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    /* Sessions table */
+    .sessions-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.80rem;
+    }
+
+    .sessions-table thead th {
+      text-align: left;
+      color: var(--text-dim);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      font-size: 0.68rem;
+      padding: 0 0.9rem 0.7rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .sessions-table tbody td {
+      padding: 0.70rem 0.9rem;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-secondary);
+      vertical-align: middle;
+    }
+
+    .sessions-table tbody tr:last-child td { border-bottom: none; }
+
+    .sessions-table tbody tr:hover td {
+      background: rgba(0,145,154,0.04);
+      color: var(--text-primary);
+    }
+
+    .msg-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 22px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.72rem;
+      padding: 0 6px;
+    }
+    .msg-badge.high { background: var(--tru-teal-light); color: var(--tru-teal); }
+    .msg-badge.medium { background: rgba(212,169,0,0.12); color: var(--tru-yellow-dark); }
+    .msg-badge.low { background: rgba(74,122,82,0.12); color: var(--tru-sage); }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--positive);
+    }
+
+    .status-chip::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--positive);
+      flex-shrink: 0;
+    }
+
+    /* ── Loading ── */
+    .dash-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 260px;
+      gap: 14px;
+      color: var(--text-dim);
+    }
+
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 2.5px solid var(--border);
+      border-top-color: var(--tru-teal);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .fade-in { animation: fadeInUp 0.4s ease both; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Footer ── */
+    .dash-footer {
+      border-top: 1px solid var(--border);
+      background: var(--bg-card);
+      padding: 1.2rem 2rem;
+      margin-top: 1rem;
+    }
+
+    .dash-footer-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+    }
+
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) {
+      .kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .charts-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .kpi-row { grid-template-columns: 1fr; }
+      .dash-main { padding: 1rem; }
+      .dash-header-inner { flex-wrap: wrap; height: auto; padding: 10px 1rem; gap: 10px; }
+      .page-banner { padding: 1.2rem 1rem 1.5rem; }
+      .page-banner-inner { flex-direction: column; align-items: flex-start; }
+      .feedback-wrap { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Header ── -->
+  <header class="dash-header">
+    <div class="dash-header-inner">
+      <div class="dash-branding">
+        <div class="dash-brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#003e51" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 4-6"/>
+          </svg>
+        </div>
+        <div class="dash-brand-text">
+          <h1>Analytics Dashboard</h1>
+          <p>Thompson Rivers University — Risk &amp; Safety Services</p>
+        </div>
+      </div>
+      <div class="dash-header-right">
+        <a href="/" class="back-link">
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+          </svg>
+          Back to Chatbot
+        </a>
+        <div class="dash-live-badge">
+          <div class="dash-live-dot"></div>
+          LIVE
+        </div>
+        <button class="dash-refresh-btn" onclick="loadDashboard()">
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+          Refresh
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Page Banner ── -->
+  <div class="page-banner">
+    <div class="page-banner-inner">
+      <div>
+        <h2>AI Assistant Usage Analytics</h2>
+        <p class="page-banner-sub">Session metrics, response performance, and user satisfaction — internal use only</p>
+      </div>
+      <div class="page-banner-meta" id="banner-timestamp">
+        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/>
+        </svg>
+        Loading…
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Main ── -->
+  <main class="dash-main" id="dashboard-root">
+    <div class="dash-loading" id="loading-state">
+      <div class="spinner"></div>
+      <span>Loading analytics data…</span>
+    </div>
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="dash-footer">
+    <div class="dash-footer-inner">
+      <span>Made by ITS Department &nbsp;·&nbsp; Handled by AI &amp; Automation Team at TRU</span>
+      <span>Thompson Rivers University &nbsp;·&nbsp; Internal Use Only</span>
+    </div>
+  </footer>
+
+  <script>
+    // ── Analytics API ────────────────────────────────────────
+    async function fetchAnalytics() {
+      const res = await fetch('/api/analytics');
+      if (!res.ok) throw new Error(`Analytics API: ${res.status}`);
+      return res.json();
+    }
+
+    // ── Utility ─────────────────────────────────────────────
+    function fmt(n) {
+      if (n >= 1000) return (n / 1000).toFixed(1) + 'k';
+      return n.toString();
+    }
+
+    function fmtMs(ms) {
+      if (ms >= 1000) return (ms / 1000).toFixed(2) + 's';
+      return Math.round(ms) + 'ms';
+    }
+
+    function timeAgo(dateStr) {
+      const diff = Date.now() - new Date(dateStr).getTime();
+      const mins = Math.floor(diff / 60000);
+      if (mins < 1) return 'just now';
+      if (mins < 60) return `${mins}m ago`;
+      const hrs = Math.floor(mins / 60);
+      if (hrs < 24) return `${hrs}h ago`;
+      const days = Math.floor(hrs / 24);
+      return `${days}d ago`;
+    }
+
+    const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+    function svgIcon(path, size = 16) {
+      return `<svg width="${size}" height="${size}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
+    }
+
+    // ── Main Load ────────────────────────────────────────────
+    async function loadDashboard() {
+      const root = document.getElementById('dashboard-root');
+      root.innerHTML = '<div class="dash-loading"><div class="spinner"></div><span>Loading analytics data…</span></div>';
+      document.getElementById('banner-timestamp').innerHTML = `
+        ${svgIcon('<circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/>', 13)}
+        Loading…
+      `;
+
+      try {
+        const { sessions, interactions } = await fetchAnalytics();
+
+        const now = new Date();
+        document.getElementById('banner-timestamp').innerHTML = `
+          ${svgIcon('<circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/>', 13)}
+          Last updated: ${now.toLocaleString('en-CA', { dateStyle: 'medium', timeStyle: 'short' })}
+        `;
+
+        renderDashboard(root, sessions, interactions);
+      } catch (err) {
+        root.innerHTML = `
+          <div class="dash-loading" style="color:var(--negative)">
+            <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 8v4m0 4h.01"/>
+            </svg>
+            <span>Failed to load analytics data: ${err.message}</span>
+          </div>`;
+        console.error('[Analytics] Error:', err);
+      }
+    }
+
+    function renderDashboard(root, sessions, interactions) {
+      // ─ Compute KPIs ─
+      const totalSessions = sessions.length;
+      const totalInteractions = interactions.length;
+      const avgLatency = interactions.length
+        ? interactions.reduce((s, i) => s + i.latency_ms, 0) / interactions.length
+        : 0;
+      const positives = interactions.filter(i => i.user_feedback === 1).length;
+      const negatives = interactions.filter(i => i.user_feedback === -1).length;
+      const noFeedback = interactions.filter(i => i.user_feedback === 0).length;
+      const feedbackTotal = positives + negatives;
+      const satisfactionPct = feedbackTotal > 0 ? Math.round((positives / feedbackTotal) * 100) : 0;
+
+      // ─ Build heatmap data ─
+      const heatmap = {};
+      DAYS.forEach(d => { heatmap[d] = new Array(24).fill(0); });
+      sessions.forEach(s => {
+        const dt = new Date(s.started_at);
+        const day = DAYS[dt.getUTCDay()];
+        const hour = dt.getUTCHours();
+        heatmap[day][hour]++;
+      });
+      const maxHeat = Math.max(1, ...Object.values(heatmap).flat());
+
+      // ─ Build daily latency data ─
+      const dailyLatency = {};
+      interactions.forEach(i => {
+        const day = i.created_at.slice(0, 10);
+        if (!dailyLatency[day]) dailyLatency[day] = { sum: 0, count: 0 };
+        dailyLatency[day].sum += i.latency_ms;
+        dailyLatency[day].count++;
+      });
+      const latencyDays = Object.keys(dailyLatency).sort();
+      const latencyAvgs = latencyDays.map(d => Math.round(dailyLatency[d].sum / dailyLatency[d].count));
+
+      // ─ Build daily engagement ─
+      const dailyEngagement = {};
+      sessions.forEach(s => {
+        const day = s.started_at.slice(0, 10);
+        if (!dailyEngagement[day]) dailyEngagement[day] = { sum: 0, count: 0 };
+        dailyEngagement[day].sum += (s.total_messages || 0);
+        dailyEngagement[day].count++;
+      });
+      const engagementDays = Object.keys(dailyEngagement).sort();
+      const engagementAvgs = engagementDays.map(d => +(dailyEngagement[d].sum / dailyEngagement[d].count).toFixed(1));
+
+      // ─ SVG icon paths ─
+      const iconSession   = '<path stroke-linecap="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 3v-3z"/>';
+      const iconInteract  = '<path stroke-linecap="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>';
+      const iconLatency   = '<circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/>';
+      const iconSatisfy   = '<path stroke-linecap="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>';
+      const iconCalendar  = '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>';
+      const iconClock     = '<circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/>';
+      const iconTrend     = '<path stroke-linecap="round" d="M3 3v18h18"/><path d="M7 16l4-4 4 4 4-6"/>';
+      const iconThumb     = '<path stroke-linecap="round" d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/>';
+      const iconEngage    = '<path stroke-linecap="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>';
+      const iconSessions  = '<path stroke-linecap="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 000 4h6a2 2 0 000-4M9 5a2 2 0 012-2h2a2 2 0 012 2"/>';
+
+      // ─ Render HTML ─
+      root.innerHTML = `
+        <!-- ── KPI Cards ── -->
+        <p class="section-label fade-in">Performance Overview</p>
+        <div class="kpi-row fade-in">
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <div class="kpi-label">Total Sessions</div>
+              <div class="kpi-icon">${svgIcon(iconSession, 17)}</div>
+            </div>
+            <div class="kpi-value">${fmt(totalSessions)}</div>
+            <div class="kpi-sub">All time</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <div class="kpi-label">Total Interactions</div>
+              <div class="kpi-icon">${svgIcon(iconInteract, 17)}</div>
+            </div>
+            <div class="kpi-value">${fmt(totalInteractions)}</div>
+            <div class="kpi-sub">${sessions.length ? (totalInteractions / sessions.length).toFixed(1) : 0} per session avg</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <div class="kpi-label">Avg Response Time</div>
+              <div class="kpi-icon">${svgIcon(iconLatency, 17)}</div>
+            </div>
+            <div class="kpi-value">${fmtMs(avgLatency)}</div>
+            <div class="kpi-sub">Response latency</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <div class="kpi-label">Satisfaction Rate</div>
+              <div class="kpi-icon">${svgIcon(iconSatisfy, 17)}</div>
+            </div>
+            <div class="kpi-value">${satisfactionPct}%</div>
+            <div class="kpi-sub">${positives} positive &nbsp;·&nbsp; ${negatives} negative</div>
+          </div>
+        </div>
+
+        <!-- ── Activity Heatmaps ── -->
+        <p class="section-label fade-in" style="animation-delay:0.08s">Activity Patterns</p>
+        <div class="charts-grid fade-in" style="animation-delay:0.10s">
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title-group">
+                <div class="chart-icon">${svgIcon(iconCalendar, 15)}</div>
+                <div>
+                  <div class="chart-title">Daily Activity</div>
+                  <div class="chart-subtitle">Sessions per day — past 6 months</div>
+                </div>
+              </div>
+            </div>
+            <div class="calendar-heatmap" id="calendar-heatmap"></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title-group">
+                <div class="chart-icon">${svgIcon(iconClock, 15)}</div>
+                <div>
+                  <div class="chart-title">Peak Usage Hours</div>
+                  <div class="chart-subtitle">Sessions by day of week &times; hour (UTC)</div>
+                </div>
+              </div>
+            </div>
+            <div class="hourly-heatmap" id="hourly-heatmap"></div>
+          </div>
+        </div>
+
+        <!-- ── Charts Row ── -->
+        <p class="section-label fade-in" style="animation-delay:0.18s">Detailed Analytics</p>
+        <div class="charts-grid fade-in" style="animation-delay:0.20s">
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title-group">
+                <div class="chart-icon">${svgIcon(iconTrend, 15)}</div>
+                <div>
+                  <div class="chart-title">Latency Trend</div>
+                  <div class="chart-subtitle">Average response time per day</div>
+                </div>
+              </div>
+              <div class="period-tabs" id="latency-tabs">
+                <button class="period-tab active" onclick="setPeriod('latency', 14, this)">2 Weeks</button>
+                <button class="period-tab" onclick="setPeriod('latency', 30, this)">Monthly</button>
+                <button class="period-tab" onclick="setPeriod('latency', 90, this)">Quarterly</button>
+                <button class="period-tab" onclick="setPeriod('latency', 180, this)">6 Months</button>
+              </div>
+            </div>
+            <div class="chart-container"><canvas id="latency-chart"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title-group">
+                <div class="chart-icon">${svgIcon(iconThumb, 15)}</div>
+                <div>
+                  <div class="chart-title">Feedback Breakdown</div>
+                  <div class="chart-subtitle">User satisfaction distribution</div>
+                </div>
+              </div>
+            </div>
+            <div class="feedback-wrap">
+              <div class="feedback-chart-area"><canvas id="feedback-chart"></canvas></div>
+              <div class="feedback-legend">
+                <div class="legend-item">
+                  <div class="legend-dot" style="background:var(--positive)"></div>
+                  <span class="legend-label">Positive</span>
+                  <span class="legend-value" style="color:var(--positive)">${positives}</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-dot" style="background:var(--negative)"></div>
+                  <span class="legend-label">Negative</span>
+                  <span class="legend-value" style="color:var(--negative)">${negatives}</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-dot" style="background:var(--neutral)"></div>
+                  <span class="legend-label">No Feedback</span>
+                  <span class="legend-value" style="color:var(--neutral)">${noFeedback}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Engagement + Sessions ── -->
+        <div class="charts-grid fade-in" style="animation-delay:0.28s">
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title-group">
+                <div class="chart-icon">${svgIcon(iconEngage, 15)}</div>
+                <div>
+                  <div class="chart-title">Engagement Depth</div>
+                  <div class="chart-subtitle">Avg messages per session per day</div>
+                </div>
+              </div>
+              <div class="period-tabs" id="engagement-tabs">
+                <button class="period-tab active" onclick="setPeriod('engagement', 14, this)">2 Weeks</button>
+                <button class="period-tab" onclick="setPeriod('engagement', 30, this)">Monthly</button>
+                <button class="period-tab" onclick="setPeriod('engagement', 90, this)">Quarterly</button>
+                <button class="period-tab" onclick="setPeriod('engagement', 180, this)">6 Months</button>
+              </div>
+            </div>
+            <div class="chart-container"><canvas id="engagement-chart"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title-group">
+                <div class="chart-icon">${svgIcon(iconSessions, 15)}</div>
+                <div>
+                  <div class="chart-title">Recent Sessions</div>
+                  <div class="chart-subtitle">Latest 10 user sessions</div>
+                </div>
+              </div>
+            </div>
+            <div style="max-height:290px; overflow-y:auto">
+              <table class="sessions-table">
+                <thead>
+                  <tr>
+                    <th>When</th>
+                    <th>Messages</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="recent-sessions-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // ── Render Calendar Heatmap ──
+      {
+        const calEl = document.getElementById('calendar-heatmap');
+        const dailyCounts = {};
+        sessions.forEach(s => {
+          const day = s.started_at.slice(0, 10);
+          dailyCounts[day] = (dailyCounts[day] || 0) + 1;
+        });
+        const maxDaily = Math.max(1, ...Object.values(dailyCounts));
+
+        const today = new Date();
+        const weeksBack = 26;
+        const startDate = new Date(today);
+        startDate.setDate(startDate.getDate() - (weeksBack * 7) - startDate.getDay());
+
+        const weeks = [];
+        let d = new Date(startDate);
+        let currentWeek = [];
+        while (d <= today) {
+          if (d.getDay() === 0 && currentWeek.length > 0) {
+            weeks.push(currentWeek);
+            currentWeek = [];
+          }
+          currentWeek.push(new Date(d));
+          d.setDate(d.getDate() + 1);
+        }
+        if (currentWeek.length > 0) weeks.push(currentWeek);
+
+        const monthLabels = document.createElement('div');
+        monthLabels.className = 'cal-month-labels';
+        let lastMonth = -1;
+        weeks.forEach(week => {
+          const firstDay = week[0];
+          const m = firstDay.getMonth();
+          const label = document.createElement('span');
+          label.className = 'cal-month-label';
+          label.style.width = '18px';
+          if (m !== lastMonth) {
+            label.textContent = firstDay.toLocaleString('en', { month: 'short' });
+            lastMonth = m;
+          }
+          monthLabels.appendChild(label);
+        });
+        calEl.appendChild(monthLabels);
+
+        const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        for (let dow = 0; dow < 7; dow++) {
+          const row = document.createElement('div');
+          row.className = 'cal-row';
+          const label = document.createElement('span');
+          label.className = 'cal-day-label';
+          label.textContent = (dow % 2 === 1) ? dayNames[dow] : '';
+          row.appendChild(label);
+          weeks.forEach(week => {
+            const dateInWeek = week.find(dt => dt.getDay() === dow);
+            const cell = document.createElement('div');
+            cell.className = 'heatmap-cell cal-cell';
+            if (dateInWeek) {
+              const key = dateInWeek.toISOString().slice(0, 10);
+              const val = dailyCounts[key] || 0;
+              const intensity = val === 0 ? 0 : Math.min(4, Math.ceil((val / maxDaily) * 4));
+              cell.classList.add('heatmap-intensity-' + intensity);
+              cell.title = `${key} — ${val} session${val !== 1 ? 's' : ''}`;
+            } else {
+              cell.style.visibility = 'hidden';
+            }
+            row.appendChild(cell);
+          });
+          calEl.appendChild(row);
+        }
+
+        const legend = document.createElement('div');
+        legend.className = 'cal-legend';
+        legend.innerHTML = 'Less &nbsp;';
+        for (let i = 0; i <= 4; i++) {
+          legend.innerHTML += `<div class="cal-legend-cell heatmap-intensity-${i}"></div>`;
+        }
+        legend.innerHTML += '&nbsp; More';
+        calEl.appendChild(legend);
+      }
+
+      // ── Render Hourly Heatmap ──
+      {
+        const hourlyEl = document.getElementById('hourly-heatmap');
+        hourlyEl.innerHTML = '<div></div>';
+        for (let h = 0; h < 24; h++) {
+          const lbl = h === 0 ? '12a' : h < 12 ? h + 'a' : h === 12 ? '12p' : (h - 12) + 'p';
+          hourlyEl.innerHTML += `<div class="hourly-header">${h % 3 === 0 ? lbl : ''}</div>`;
+        }
+        DAYS.forEach(day => {
+          hourlyEl.innerHTML += `<div class="hourly-day-label">${day}</div>`;
+          for (let h = 0; h < 24; h++) {
+            const val = heatmap[day][h];
+            const intensity = val === 0 ? 0 : Math.min(4, Math.ceil((val / maxHeat) * 4));
+            hourlyEl.innerHTML += `<div class="heatmap-cell hourly-cell heatmap-intensity-${intensity}" title="${day} ${h}:00 — ${val} session${val !== 1 ? 's' : ''}"></div>`;
+          }
+        });
+      }
+
+      // ── Shared chart helpers ──
+      const chartDefaults = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+      };
+      const gridStyle = { color: '#edf0f4', drawBorder: false };
+      const tickStyle = { color: '#8499a8', font: { size: 10, family: 'Roboto' } };
+
+      // Filter last N days from parallel day/value arrays
+      function filterLastDays(days, values, numDays) {
+        const cutoff = new Date();
+        cutoff.setDate(cutoff.getDate() - numDays);
+        const cutStr = cutoff.toISOString().slice(0, 10);
+        const filtered = days.reduce((acc, d, i) => {
+          if (d >= cutStr) { acc.labels.push(d.slice(5)); acc.values.push(values[i]); }
+          return acc;
+        }, { labels: [], values: [] });
+        return filtered;
+      }
+
+      // Global period switcher used by tab buttons
+      window._chartData = {};
+      window.setPeriod = function(chartId, days, btn) {
+        const tabs = btn.closest('.period-tabs');
+        tabs.querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+        const { days: allDays, values: allValues, chart } = window._chartData[chartId];
+        const { labels, values } = filterLastDays(allDays, allValues, days);
+        chart.data.labels = labels;
+        chart.data.datasets[0].data = values;
+        chart.update();
+      };
+
+      // ── Latency Chart ──
+      {
+        const init = filterLastDays(latencyDays, latencyAvgs, 14);
+        const latencyChart = new Chart(document.getElementById('latency-chart').getContext('2d'), {
+          type: 'line',
+          data: {
+            labels: init.labels,
+            datasets: [{
+              label: 'Avg Latency (ms)',
+              data: init.values,
+              borderColor: '#00919a',
+              backgroundColor: 'rgba(0,145,154,0.08)',
+              fill: true,
+              tension: 0.4,
+              pointRadius: 3,
+              pointBackgroundColor: '#00919a',
+              pointBorderColor: '#ffffff',
+              pointBorderWidth: 2,
+              borderWidth: 2,
+            }],
+          },
+          options: {
+            ...chartDefaults,
+            scales: {
+              x: { ticks: tickStyle, grid: gridStyle },
+              y: { ticks: { ...tickStyle, callback: v => v + 'ms' }, grid: gridStyle },
+            },
+          },
+        });
+        window._chartData['latency'] = { days: latencyDays, values: latencyAvgs, chart: latencyChart };
+      }
+
+      // ── Feedback Donut ──
+      new Chart(document.getElementById('feedback-chart').getContext('2d'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Positive', 'Negative', 'No Feedback'],
+          datasets: [{
+            data: [positives, negatives, noFeedback],
+            backgroundColor: ['#1a7a5e', '#c0392b', '#6b7f8c'],
+            borderWidth: 0,
+            hoverOffset: 6,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          cutout: '68%',
+          plugins: { legend: { display: false } },
+        },
+      });
+
+      // ── Engagement Chart ──
+      {
+        const init = filterLastDays(engagementDays, engagementAvgs, 14);
+        const engagementChart = new Chart(document.getElementById('engagement-chart').getContext('2d'), {
+          type: 'bar',
+          data: {
+            labels: init.labels,
+            datasets: [{
+              label: 'Avg Messages',
+              data: init.values,
+              backgroundColor: 'rgba(0,62,81,0.18)',
+              borderColor: '#003e51',
+              borderWidth: 1,
+              borderRadius: 5,
+              borderSkipped: false,
+            }],
+          },
+          options: {
+            ...chartDefaults,
+            scales: {
+              x: { ticks: tickStyle, grid: gridStyle },
+              y: { ticks: tickStyle, grid: gridStyle, beginAtZero: true },
+            },
+          },
+        });
+        window._chartData['engagement'] = { days: engagementDays, values: engagementAvgs, chart: engagementChart };
+      }
+
+      // ── Recent Sessions Table ──
+      const tbody = document.getElementById('recent-sessions-body');
+      sessions.slice(0, 10).forEach(s => {
+        const msgs = s.total_messages || 0;
+        const badgeClass = msgs >= 10 ? 'high' : msgs >= 5 ? 'medium' : 'low';
+        const start = new Date(s.started_at);
+        const end = new Date(s.last_activity_at);
+        const durMins = Math.max(1, Math.round((end - start) / 60000));
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${timeAgo(s.started_at)}</td>
+          <td><span class="msg-badge ${badgeClass}">${msgs}</span></td>
+          <td>${durMins}m</td>
+          <td><span class="status-chip">Complete</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // ── Boot ──
+    loadDashboard();
+  </script>
+</body>
+
+</html>

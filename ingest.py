@@ -31,7 +31,7 @@ log = logging.getLogger("ingest")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Ingest TRU policy PDFs into ChromaDB")
+    parser = argparse.ArgumentParser(description="Ingest TRU Risk & Safety docs into ChromaDB")
     parser.add_argument("--fresh", action="store_true", help="Wipe existing DB and re-ingest everything")
     parser.add_argument("--dry-run", action="store_true", help="Show what would be ingested without writing")
     args = parser.parse_args()
@@ -47,7 +47,7 @@ def main():
     files = list(data_dir.glob("*.pdf")) + list(data_dir.glob("*.txt"))
     if not files:
         log.error("No PDFs or TXT files found in %s", data_dir)
-        log.error("Drop your policy PDFs into the data/ folder and run this again.")
+        log.error("Drop your Risk & Safety docs into the data/ folder and run this again.")
         sys.exit(1)
 
     log.info("═══ INGEST START ═══")
