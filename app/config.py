@@ -33,9 +33,7 @@ def _env(name: str, default):
 class Settings:
     # ── Paths (relative to project root) ─────────────────────────
     DATA_DIR: str          = "data"
-    PERSIST_DIR: str       = "chroma_db"
     FRONTEND_DIR: str      = "frontend"
-    COLLECTION_NAME: str   = "riskandsafety_docs"
 
     # ── Chunking ─────────────────────────────────────────────────
     CHUNK_SIZE: int        = 1000
@@ -50,6 +48,7 @@ class Settings:
     # ── Models (100 % local via Ollama) ──────────────────────────
     EMBEDDING_MODEL: str   = "nomic-embed-text"
     CHAT_MODEL: str        = "qwen3.5:9b"
+    VECTOR_DIM: int        = 768   # nomic-embed-text output dimension
 
     # ── LLM behaviour ───────────────────────────────────────────
     TEMPERATURE: float     = 0.1
@@ -76,10 +75,6 @@ class Settings:
     @property
     def data_path(self) -> Path:
         return PROJECT_ROOT / self.DATA_DIR
-
-    @property
-    def persist_path(self) -> Path:
-        return PROJECT_ROOT / self.PERSIST_DIR
 
     @property
     def frontend_path(self) -> Path:

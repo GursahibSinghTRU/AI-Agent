@@ -9,10 +9,11 @@ Connection is configured via environment variables:
     ORACLE_HOST, ORACLE_PORT, ORACLE_SERVICE, ORACLE_USER, ORACLE_PASSWORD
 """
 
+import array
 import logging
 import uuid
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Set, Tuple
 
 import oracledb
 
@@ -176,6 +177,91 @@ def get_all_sessions() -> List[Dict[str, Any]]:
                 rows.append(d)
     return rows
 
+
+# ── Vector store ──────────────────────────────────────────────────────────────
+
+def store_chunk(
+    chunk_id: str,
+    filename: str,
+    page_num: Optional[int],
+    title: str,
+    chunk_text: str,
+    embedding: List[float],
+) -> None:
+    """Upsert a single document chunk with its vector embedding."""
+    vec = array.array("f", embedding)
+    with _conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                MERGE INTO doc_chunks tgt
+                USING (SELECT :id AS id FROM dual) src
+                ON (tgt.id = src.id)
+                WHEN NOT MATCHED THEN
+                    INSERT (id, filename, page_num, title, chunk_text, embedding)
+                    VALUES (:id, :filename, :page_num, :title, :chunk_text, :embedding)
+                """,
+                id=chunk_id,
+                filename=filename,
+                page_num=page_num,
+                title=title,
+                chunk_text=chunk_text,
+                embedding=vec,
+            )
+            conn.commit()
+
+
+def get_stored_chunk_ids() -> Set[str]:
+    """Return the set of all chunk IDs currently stored (for dedup during ingest)."""
+    with _conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT id FROM doc_chunks")
+            return {row[0] for row in cur}
+
+
+def similarity_search(
+    query_embedding: List[float],
+    k: int = 6,
+) -> List[Tuple[Dict[str, Any], float]]:
+    """
+    Return the top-k chunks ordered by cosine distance (ascending).
+    Each result is (chunk_dict, distance) where distance is in [0, 2]:
+      0 = identical, 1 = perpendicular, 2 = opposite.
+    """
+    vec = array.array("f", query_embedding)
+    with _conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT id, filename, page_num, title, chunk_text,
+                       VECTOR_DISTANCE(embedding, :vec, COSINE) AS dist
+                FROM   doc_chunks
+                ORDER  BY dist
+                FETCH  FIRST :k ROWS ONLY
+                """,
+                vec=vec,
+                k=k,
+            )
+            cols = ["id", "filename", "page_num", "title", "chunk_text", "distance"]
+            results = []
+            for row in cur:
+                d = dict(zip(cols, row))
+                if d["chunk_text"] is not None:
+                    d["chunk_text"] = d["chunk_text"].read() if hasattr(d["chunk_text"], "read") else str(d["chunk_text"])
+                results.append((d, float(d.pop("distance"))))
+    return results
+
+
+def get_chunk_count() -> int:
+    """Return total number of stored chunks (for stats endpoint)."""
+    with _conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT COUNT(*) FROM doc_chunks")
+            row = cur.fetchone()
+            return int(row[0]) if row else 0
+
+
+# ── Analytics reads ───────────────────────────────────────────────────────────
 
 def get_all_interactions() -> List[Dict[str, Any]]:
     """Return all interactions ordered newest-first (for analytics dashboard)."""

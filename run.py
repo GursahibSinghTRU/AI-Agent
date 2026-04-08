@@ -28,12 +28,16 @@ def main():
     parser.add_argument("--reload", action="store_true", help="Auto-reload on code changes (dev)")
     args = parser.parse_args()
 
-    # Preflight check: does the vector DB exist?
-    if not settings.persist_path.exists():
-        log.warning(
-            "Vector DB not found at %s — run 'python ingest.py' first to build it.",
-            settings.persist_path,
-        )
+    # Preflight check: any chunks in Oracle?
+    try:
+        from app.oracle_client import get_chunk_count
+        count = get_chunk_count()
+        if count == 0:
+            log.warning("Oracle doc_chunks table is empty — run 'python ingest.py' first.")
+        else:
+            log.info("Oracle vector store ready: %d chunks indexed.", count)
+    except Exception as e:
+        log.warning("Could not reach Oracle DB: %s", e)
 
     import uvicorn
 

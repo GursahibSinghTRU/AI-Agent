@@ -131,15 +131,23 @@ async def health():
 @app.get("/api/stats")
 def stats():
     """Return basic stats about the loaded knowledge base."""
-    count = 1  # We now use exactly 1 combined context file
     pdf_count = len(list(settings.data_path.glob("*.pdf"))) if settings.data_path.is_dir() else 0
-    txt_count = len(list(settings.data_path.glob("*.txt"))) if settings.data_path.is_dir() else 0
+    txt_count = len(
+        [f for f in settings.data_path.glob("*.txt") if f.name != "combined_context.txt"]
+    ) if settings.data_path.is_dir() else 0
+
+    chunk_count = 0
+    try:
+        from app.oracle_client import get_chunk_count
+        chunk_count = get_chunk_count()
+    except Exception:
+        pass
 
     return {
-        "chunks_indexed": count,
+        "chunks_indexed": chunk_count,
         "pdf_files_found": pdf_count,
         "txt_files_found": txt_count,
-        "collection": "combined_context",
+        "collection": "oracle_doc_chunks",
     }
 
 
