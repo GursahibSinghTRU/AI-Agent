@@ -763,20 +763,96 @@
   flex-shrink: 0;
 }
 
-/* ── Responsive (Mobile) ────────────────────────────────── */
+/* ── Responsive: Tablet (481px – 768px) ─────────────────── */
 
-@media (max-width: 480px) {
+@media (min-width: 481px) and (max-width: 768px) {
   #tru-chat-window {
-    width: calc(100vw - 20px);
-    right: 10px;
-    bottom: 90px;
-    height: calc(100vh - 110px);
-    max-height: none;
-    border-radius: 14px;
+    width: 360px;
+    right: 20px;
+    bottom: 96px;
+    height: 560px;
   }
 
   #tru-chat-fab {
-    bottom: 18px;
-    right: 18px;
+    bottom: 22px;
+    right: 20px;
+  }
+}
+
+/* ── Responsive: Mobile (≤ 480px) ───────────────────────── */
+
+@media (max-width: 480px) {
+  /* Full-screen window — uses dynamic viewport height so the
+     browser address bar / home indicator don't overlap content */
+  #tru-chat-window {
+    width: 100vw;
+    height: 100dvh;
+    right: 0;
+    bottom: 0;
+    border-radius: 0;
+    max-height: none;
+  }
+
+  /* FAB: nudge up on phones with a home bar */
+  #tru-chat-fab {
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    right: 16px;
+    width: 54px;
+    height: 54px;
+  }
+
+  /* Input area: clear the home bar */
+  .tru-chat-input-area {
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Prevent iOS Safari from zooming in when the textarea is tapped
+     (browser zooms whenever font-size < 16px) */
+  .tru-chat-textarea {
+    font-size: 16px;
+  }
+
+  /* Slightly larger send button for touch */
+  .tru-send-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  /* Quick-reply chips: scroll horizontally so they stay on one line
+     and don't push the welcome screen too tall */
+  .tru-quick-replies {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .tru-quick-replies::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tru-quick-reply-chip {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  /* Bubbles: use more width on narrow screens */
+  .tru-message {
+    max-width: 96%;
+  }
+
+  /* Bigger tap target for feedback thumbs */
+  .tru-feedback-btn {
+    padding: 8px;
+  }
+
+  /* Source chips: let the name wrap so it isn't cut off */
+  .tru-source-chip-name {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
   }
 }
