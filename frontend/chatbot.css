@@ -745,6 +745,12 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-decoration: none;
+}
+
+a.tru-source-chip-name:hover {
+  color: var(--tru-teal);
+  text-decoration: underline;
 }
 
 .tru-source-chip-page {

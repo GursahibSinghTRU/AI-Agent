@@ -44,6 +44,10 @@ app.add_middleware(
 if FRONTEND_DIR.is_dir():
     app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="static")
 
+# Mount source documents at /docs so citation chips can link directly to them
+if settings.data_path.is_dir():
+    app.mount("/docs", StaticFiles(directory=str(settings.data_path)), name="docs")
+
 # ── Agent (lazy singleton) ───────────────────────────────────────────────────
 _agent: Optional[RiskandSafetyAgent] = None
 

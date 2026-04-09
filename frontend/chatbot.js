@@ -349,7 +349,7 @@
           try { event = JSON.parse(raw); } catch { continue; }
 
           if (event.type === 'sources') {
-            // Sources display hidden — citations are embedded in the response text
+            renderSources(sourcesEl, event.sources);
           } else if (event.type === 'token') {
             if (firstToken) {
               bubbleEl.innerHTML = '';
@@ -384,6 +384,16 @@
       }
 
       chatHistory.push({ role: 'assistant', content: fullText });
+
+      // Hide sources if the response is primarily follow-up questions
+      // (proactive inquiry phase — no substantive answer yet)
+      const questionCount = (fullText.match(/\?/g) || []).length;
+      const sentenceCount = (fullText.match(/[.!?]/g) || []).length;
+      const isPrimarilyQuestions = questionCount >= 3 && questionCount / Math.max(sentenceCount, 1) > 0.5;
+      if (isPrimarilyQuestions) {
+        sourcesEl.innerHTML = '';
+        sourcesEl.classList.add('tru-sources--hidden');
+      }
 
       // Show feedback actions after streaming is complete
       if (actionsEl) {
@@ -513,16 +523,29 @@
 
     const seen = new Set();
     for (const s of sources) {
-      const key = typeof s === 'string' ? s : (s.risk || s.file || '');
+      const key = typeof s === 'string' ? s : (s.riskandsafetydoc || s.file || '');
       if (seen.has(key)) continue;
       seen.add(key);
 
       const chip = document.createElement('div');
       chip.className = 'tru-source-chip';
 
-      const name = document.createElement('span');
-      name.className = 'tru-source-chip-name';
-      name.textContent = typeof s === 'string' ? s : (s.risk || s.file || 'Document');
+      const label = typeof s === 'string' ? s : (s.riskandsafetydoc || s.file || 'Document');
+      const href  = typeof s === 'string' ? null
+                  : (s.source_url || (s.file ? `/docs/${encodeURIComponent(s.file)}` : null));
+
+      const name = href
+        ? Object.assign(document.createElement('a'), {
+            className: 'tru-source-chip-name',
+            href: href,
+            target: '_blank',
+            rel: 'noopener noreferrer',
+            textContent: label,
+          })
+        : Object.assign(document.createElement('span'), {
+            className: 'tru-source-chip-name',
+            textContent: label,
+          });
       chip.appendChild(name);
 
       if (s.page) {

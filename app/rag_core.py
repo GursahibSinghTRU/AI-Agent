@@ -57,6 +57,17 @@ def _riskandsafety_title_from_filename(fname: str) -> str:
     return stem.replace("_", " ")
 
 
+# Mapping of source filename → canonical SharePoint URL.
+# Update this when new documents are added or URLs change.
+SOURCE_URL_MAP: Dict[str, str] = {
+    "TRU_Onboarding_Policies.txt":   "https://onetru.sharepoint.com/sites/PeopleandCultureWelcome/SitePages/OnboardingNewEmployee.aspx",
+    "TRU_Risk_Safety_Overview.txt":  "https://onetru.sharepoint.com/sites/OSEM",
+    "TRU_Risk_Safety_Services.txt":  "https://onetru.sharepoint.com/sites/OSEM/SitePages/Health%26Safety.aspx",
+    "TRU_Risk_Safety_Training.txt":  "https://onetru.sharepoint.com/sites/OSEM/SitePages/TrainingAndOrientation.aspx",
+    "TRU_Safety_Alerts_App.txt":     "https://onetru.sharepoint.com/sites/OSEM/SitePages/TRUSafeandAlerts.aspx",
+}
+
+
 def load_documents(data_dir: Path):
     docs = []
     if not data_dir.is_dir():
@@ -68,15 +79,18 @@ def load_documents(data_dir: Path):
                 loaded = PyPDFLoader(str(fpath)).load()
             elif fpath.suffix.lower() == ".txt":
                 if fpath.name == "combined_context.txt":
-                    continue  # skip the context-injection artifact
+                    continue
                 loaded = TextLoader(str(fpath), encoding="utf-8").load()
             else:
                 continue
 
             riskandsafety_title = _riskandsafety_title_from_filename(fpath.name)
+            source_url = SOURCE_URL_MAP.get(fpath.name)
             for doc in loaded:
                 doc.metadata["riskandsafety_title"] = riskandsafety_title
                 doc.metadata["filename"] = fpath.name
+                if source_url:
+                    doc.metadata["source_url"] = source_url
             docs.extend(loaded)
 
         except Exception:
@@ -152,6 +166,7 @@ def build_oracle_db(chunks, batch_size: int = 32) -> None:
                 title=chunk.metadata.get("riskandsafety_title", ""),
                 chunk_text=chunk.page_content,
                 embedding=emb,
+                source_url=chunk.metadata.get("source_url"),
             )
 
         log.info("  stored %d / %d", min(start + batch_size, total), total)
@@ -185,6 +200,7 @@ def retrieve_with_threshold(
                 "riskandsafety_title": chunk_dict.get("title", ""),
                 "filename": chunk_dict.get("filename", ""),
                 "page": chunk_dict.get("page_num"),
+                "source_url": chunk_dict.get("source_url"),
             },
         )
         results.append((chunk, distance))
@@ -229,6 +245,7 @@ def format_context(
                 "file": fname,
                 "page": int(page) + 1 if page is not None else None,
                 "relevance": round(max(0.0, 1.0 - score), 3),
+                "source_url": chunk.metadata.get("source_url"),
             })
 
     return "\n\n".join(parts), sources
@@ -308,7 +325,8 @@ physical, environmental, or operational risk. You do not need an explicit safety
 PROCEDURE:
 1. Identify the implied activity or scenario.
 2. Infer which safety-relevant details are missing.
-3. Ask 3–5 concise, neutral follow-up questions before providing any safety guidance.
+3. Ask 3–5 concise, neutral follow-up questions. Do NOT call `search_knowledge_base` at
+   this step — you are only gathering context, not answering yet. Respond directly.
 4. Once the user has answered your follow-up questions, you MUST call `search_knowledge_base`
    with a query based on the activity and their answers before providing any guidance.
    Do NOT skip the tool call — without retrieved context your answer will be ungrounded.

@@ -43,6 +43,7 @@ CREATE TABLE doc_chunks (
     title      VARCHAR2(500),
     chunk_text CLOB                            NOT NULL,
     embedding  VECTOR(768, FLOAT32),
+    source_url VARCHAR2(1000),                             -- canonical SharePoint/TRU URL
     created_at TIMESTAMP WITH TIME ZONE        DEFAULT SYSTIMESTAMP,
     CONSTRAINT pk_doc_chunks PRIMARY KEY (id)
 );

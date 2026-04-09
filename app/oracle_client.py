@@ -187,6 +187,7 @@ def store_chunk(
     title: str,
     chunk_text: str,
     embedding: List[float],
+    source_url: Optional[str] = None,
 ) -> None:
     """Upsert a single document chunk with its vector embedding."""
     vec = array.array("f", embedding)
@@ -198,8 +199,8 @@ def store_chunk(
                 USING (SELECT :id AS id FROM dual) src
                 ON (tgt.id = src.id)
                 WHEN NOT MATCHED THEN
-                    INSERT (id, filename, page_num, title, chunk_text, embedding)
-                    VALUES (:id, :filename, :page_num, :title, :chunk_text, :embedding)
+                    INSERT (id, filename, page_num, title, chunk_text, embedding, source_url)
+                    VALUES (:id, :filename, :page_num, :title, :chunk_text, :embedding, :source_url)
                 """,
                 id=chunk_id,
                 filename=filename,
@@ -207,6 +208,7 @@ def store_chunk(
                 title=title,
                 chunk_text=chunk_text,
                 embedding=vec,
+                source_url=source_url,
             )
             conn.commit()
 
@@ -233,7 +235,7 @@ def similarity_search(
         with conn.cursor() as cur:
             cur.execute(
                 """
-                SELECT id, filename, page_num, title, chunk_text,
+                SELECT id, filename, page_num, title, chunk_text, source_url,
                        VECTOR_DISTANCE(embedding, :vec, COSINE) AS dist
                 FROM   doc_chunks
                 ORDER  BY dist
@@ -242,7 +244,7 @@ def similarity_search(
                 vec=vec,
                 k=k,
             )
-            cols = ["id", "filename", "page_num", "title", "chunk_text", "distance"]
+            cols = ["id", "filename", "page_num", "title", "chunk_text", "source_url", "distance"]
             results = []
             for row in cur:
                 d = dict(zip(cols, row))
