@@ -29,11 +29,11 @@ from app.config import settings
 logging.basicConfig(level=logging.INFO, format="%(levelname)s  %(message)s")
 log = logging.getLogger("migrate")
 
-# ── Supabase source (credentials that were hardcoded in config.py) ───────────
-# These are the confirmed-working credentials from the original config.py.
+# ── Supabase source ───────────────────────────────────────────────────────────
+# Set these via environment variables or in your .env file before running.
 
-SUPA_URL = "https://lrzztpkleysibozjculg.supabase.co"
-SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxyenp0cGtsZXlzaWJvempjdWxnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NTExMzQsImV4cCI6MjA5MDAyNzEzNH0.IMgJ-a4pwPAtfFecsIRlcHlmuj5KwhzywiqsX_FpCbI"
+SUPA_URL = os.environ.get("SUPABASE_URL", "")
+SUPA_KEY = os.environ.get("SUPABASE_KEY", "")
 
 SUPA_HEADERS = {
     "apikey": SUPA_KEY,

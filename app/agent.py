@@ -60,8 +60,8 @@ class RiskandSafetyAgent:
                     "name": "search_knowledge_base",
                     "description": (
                         "Search the TRU Risk & Safety vector knowledge base for information "
-                        "relevant to a query. Call this for any question about policies, "
-                        "procedures, safety guidelines, or factual Risk & Safety topics."
+                        "relevant to a query. Call this for any question about safety "
+                        "procedures, guidelines, incidents, training, or Risk & Safety topics."
                     ),
                     "parameters": {
                         "type": "object",
