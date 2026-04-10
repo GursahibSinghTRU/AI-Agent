@@ -390,7 +390,19 @@
       const questionCount = (fullText.match(/\?/g) || []).length;
       const sentenceCount = (fullText.match(/[.!?]/g) || []).length;
       const isPrimarilyQuestions = questionCount >= 3 && questionCount / Math.max(sentenceCount, 1) > 0.5;
-      if (isPrimarilyQuestions) {
+
+      // Hide sources if the model answered from general knowledge and RAG wasn't useful
+      // (model called the tool but documents weren't relevant to a general activity question)
+      const notFoundPhrases = [
+        'not found in the provided documents',
+        'cannot provide specific',
+        'i cannot find',
+        'no specific information',
+        'not in the documents',
+      ];
+      const isNotFoundAnswer = notFoundPhrases.some(p => fullText.toLowerCase().includes(p));
+
+      if (isPrimarilyQuestions || isNotFoundAnswer) {
         sourcesEl.innerHTML = '';
         sourcesEl.classList.add('tru-sources--hidden');
       }

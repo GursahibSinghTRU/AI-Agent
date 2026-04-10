@@ -2,7 +2,7 @@
 Configuration — all tunables in one place.
 
 Override any value via environment variables (same name, uppercased).
-Example:  CHAT_MODEL=llama3:8b  python run.py
+Example:  CHAT_MODEL=gemma4  python run.py
 """
 
 import os
@@ -47,7 +47,7 @@ class Settings:
 
     # ── Models (100 % local via Ollama) ──────────────────────────
     EMBEDDING_MODEL: str   = "nomic-embed-text"
-    CHAT_MODEL: str        = "qwen3.5:9b"
+    CHAT_MODEL: str        = "gemma4"
     VECTOR_DIM: int        = 768   # nomic-embed-text output dimension
 
     # ── LLM behaviour ───────────────────────────────────────────
