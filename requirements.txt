@@ -22,3 +22,6 @@ ollama>=0.6.0,<1.0
 
 # ── Oracle 23ai (Analytics DB) ────────────────────
 oracledb>=2.0,<3.0
+
+# ── Supabase (legacy analytics client) ────────────
+supabase>=2.0,<3.0

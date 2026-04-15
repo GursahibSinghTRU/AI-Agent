@@ -567,12 +567,6 @@
         chip.appendChild(page);
       }
 
-      if (s.relevance != null) {
-        const rel = document.createElement('span');
-        rel.className = 'tru-source-chip-rel';
-        rel.textContent = `${Math.round(s.relevance * 100)}%`;
-        chip.appendChild(rel);
-      }
 
       list.appendChild(chip);
     }
