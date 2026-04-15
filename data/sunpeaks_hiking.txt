@@ -1,0 +1,23 @@
+```markdown
+# Sun Peaks Resort: Hiking Safety & Risk Protocols
+
+## General Hiking Protocols
+- **Never Hike Alone:** Solo hiking is prohibited; partners or groups required.
+- **Trip Reporting:** Inform someone outside the group of hiking plans and expected return times.
+- **Weather Awareness:** Mountain temperatures are cooler and change rapidly; plan and dress accordingly.
+- **Navigation:** Carry a physical trail map or save it electronically on a mobile device.
+- **Trail Adherence:** Remain on marked hiking trails to protect the alpine ecosystem.
+- **Restricted Areas:** Hiking is strictly prohibited on Bike Park trails.
+
+## Emergency & Communication
+- **Emergency Whistle:** Always pack a whistle.
+- **Distress Signal:** Three short whistle blasts indicate trouble and require assistance.
+- **Situational Awareness:** Continuously scan surroundings and note landmarks for navigation.
+
+## Hazard Mitigation & Prohibitions
+- **Wildlife Interaction:** Never approach or feed animals. Make plenty of noise to avoid surprising wildlife.
+- **Smoke-Free Policy:** Smoking of all types (tobacco, vaping, recreational/prescribed cannabis) is prohibited on the mountain, including lift lines, chairlifts, ski runs, Nordic trails, bike/hike trails, and the Sunburst Lodge.
+- **Drone Policy:** Operation of Unmanned Aerial Vehicles (UAVs)/drones is prohibited for the general public and hobbyists for safety and privacy reasons.
+- **Essential Gear:** Carry water, food, sunscreen, watch, bug spray, and emergency whistle.
+- **Lodging/Access:** Refer to Summer Chairlift Safety page for lift loading/unloading protocols.
+```

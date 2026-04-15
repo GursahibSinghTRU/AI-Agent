@@ -1,0 +1,32 @@
+```markdown
+# Hiking Safety & Risk Mitigation Guidelines
+
+## Core Responsibilities
+*   **Self-Sufficiency:** Individuals are responsible for their own safety. Maintain self-reliance during emergencies.
+*   **Emergency Protocols:** Verify emergency protocols with Parks Canada or the destination site prior to departure.
+
+## Pre-Trip Planning
+*   **Trail Assessment:** Select trails matching group experience and physical ability.
+    *   *Ratings:* Easy (Green Circle), Moderate (Blue Square), Difficult (Black Diamond), Route (Two Black Diamonds).
+*   **Pacing:** Estimate travel time based on beginner speeds (2–2.5 km/hr). Avoid trails with significant elevation gain for novices.
+*   **Conditions:** Review current trail conditions and weather forecasts.
+*   **Trip Plan:** Inform a third party of the route, expected return time, and emergency contacts.
+*   **Communication:** Do not rely solely on phone GPS due to limited cell service in nature areas.
+
+## Gear & Equipment
+*   **Safety Kit:** Pack a first aid kit, multi-tool, flashlight, fire starter, whistle, and navigation tools (map, compass, GPS).
+*   **Footwear:** Wear shoes with support, grip, and protection. Keep feet dry; avoid flip-flops.
+*   **Clothing:** Use lightweight, breathable layers for weather changes. Include sun protection (sunglasses, sunscreen, hat).
+
+## Sustenance & Hydration
+*   **Water:** Plan for ~0.5 liters per hour. Do not wait until thirsty to hydrate.
+*   **Food:** Carry nutritious, high-energy snacks. Pack complete meals for hikes exceeding a few hours.
+
+## Environmental & Wildlife Safety
+*   **Wildlife Distancing:**
+    *   100 meters (10 bus lengths) from bears, bison, cougars, and wolves.
+    *   30 meters (3 bus lengths) from elk, moose, deer, sheep, and goats.
+    *   Never feed, touch, or approach wildlife.
+*   **Trail Etiquette:** Stay on marked trails to protect vegetation and wildlife.
+*   **Waste Management:** Use designated bins or pack out trash/recyclables. Practice Leave No Trace principles.
+```

@@ -1,0 +1,24 @@
+```markdown
+# Canadian Boating Safety & Compliance Guidelines
+
+## Legal Requirements
+- **Pleasure Craft Operator Card (PCOC):** Mandatory proof of competency required for operating most motorized vessels in Canada. Must be carried while boating.
+- **Navigation Rules:** Boaters must understand right-of-way, buoy markers, speed zones, and the Rules of the Road to avoid collisions.
+- **Vessel Capacity:** Adhere strictly to the vessel's capacity plate. Overloading increases capsizing risk and destabilizes the boat.
+
+## Personal Safety & Equipment
+- **Personal Flotation Devices (PFDs):** All occupants must wear or have immediate access to a Transport Canada-approved PFD that fits them.
+- **Safety Gear Inventory:** Boats must carry sound-signaling devices, navigation lights, bailers/bilge pumps, flashlights, and fire extinguishers. Requirements vary by vessel size.
+- **Paddlecraft:** Non-motorized vessels (canoes, kayaks) are vulnerable to capsizing and require PFDs, whistles, and bailers.
+
+## Operational Hazards & Risk Mitigation
+- **Cold Water Awareness:** Hypothermia can occur in minutes even during summer. Dress for water temperature, not air temperature.
+- **Weather Monitoring:** Check marine forecasts before departure. Monitor VHF radio or weather apps. Remain on shore if conditions are doubtful.
+- **Substance Control:** Operating under the influence of alcohol is illegal and dangerous. Designate a sober skipper.
+- **Communication:** Maintain fully charged communication devices (phone, marine radio on VHF Channel 16). Use satellite messengers or PLBs for remote areas.
+
+## Emergency Preparedness
+- **Float Plan:** File a plan detailing destination, passengers, and expected return time. Share with someone on shore.
+- **Self-Rescue:** In remote areas, carry proper communication gear and learn self-rescue techniques.
+- **Equipment Maintenance:** Regularly inspect and maintain all safety equipment to ensure functionality during emergencies.
+```

@@ -1,0 +1,25 @@
+```markdown
+# Safe Boating Guidelines (British Columbia)
+
+## Key Risk Statistics
+- **Drowning:** Over 80% of drowning victims in Canada could swim but were not wearing a flotation device.
+- **Alcohol:** Alcohol is a factor in over 40% of boating fatalities.
+- **Cold Water:** Significant risks exist early in the season or in exposed waters.
+
+## Essential Safety Protocols
+- **Personal Flotation Device (PFD):** Must be Canadian-approved and sized for each passenger. Must be **worn**, not just carried.
+- **Impaired Operation:** Boating under the influence of alcohol or recreational drugs is illegal and prohibited.
+- **Operator Card:** Anyone driving a motorized boat must hold a Pleasure Craft Operator Card.
+- **Float Plan:** Share departure, destination, and return time with a responsible party before each trip.
+- **Vessel Capability:** Ensure safety equipment, fuel, and experience levels match vessel capabilities and weather conditions.
+
+## Shared Waterways Navigation
+- **Vessel Types:** Freighters, BC Ferries, and Tug & Barges are difficult to maneuver and stop.
+- **Safety Margin:** Maintain distance and adhere to rules of the road to accommodate larger, slow-reacting vessels.
+- **Partnership:** Safety initiative involving Boating BC, Vancouver Fraser Port Authority, and BC Ferries.
+
+## Resources
+- **Reference:** Transport Canada’s Safe Boating Guide.
+- **Training:** Online safe boating courses available for certification.
+- **Equipment:** Minimum safety equipment lists available for specific activities (e.g., sailing, fishing, power boating).
+```

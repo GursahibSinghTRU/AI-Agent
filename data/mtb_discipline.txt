@@ -1,0 +1,23 @@
+```markdown
+# Mountain Biking Risk Summary (Cycling BC)
+
+## Terrain & Environment
+- **Off-Road Operations:** Rough terrain including forests, mountains, deserts, fire roads, and singletrack.
+- **Isolation Risk:** Riders frequently operate miles from civilization; immediate help may not be available.
+- **Equipment Characteristics:** Heavier bicycle weight-to-rider ratio due to durability requirements (wide knobby tires, large tubing, suspension systems).
+
+## Operational Hazards
+- **Self-Reliance:** Riders must possess self-reliance skills to repair bikes or fix flats to avoid being stranded.
+- **Group Dynamics:** Club rides and group rides are common, requiring coordination for multiple users.
+- **Competence Verification:** UCI International License categories define ability levels (Novice, Intermediate, Expert, Pro-Elite).
+
+## Safety Controls & Mitigations
+- **Protective Gear:** UCI regulations mandate protective clothing standards for racing.
+- **Trail Design:** Advocacy for "Whistler Standards" (Environmental and Technical Trail Features) to ensure safe planning.
+- **Eligibility:** Riders must hold a UCI license from the last season for upgrades; cannot downgrade mid-season.
+
+## Incident Management & Resources
+- **Reporting:** Accident Report Form available for incident documentation.
+- **Insurance:** Insurance Info & FAQs accessible for rider coverage verification.
+- **Compliance:** Safe Sport, Ride Leader Training, and Club Resources available for liability and safety management.
+```

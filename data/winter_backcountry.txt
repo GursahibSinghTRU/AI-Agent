@@ -1,0 +1,40 @@
+```markdown
+# Winter Backcountry Safety Guidelines (British Columbia)
+
+## Power Line Hazards
+- **Safety Distance:** Maintain a minimum 10-metre clearance from all downed, damaged, or low-hanging power lines.
+- **Live Hazard:** Treat all downed lines as energized, even if sparking or soundless.
+- **Ground Conductivity:** Electricity can spread through the ground up to 10 metres; do not walk within this radius of a grounded line.
+- **Guy Wires:** Be cautious of non-energized guy wires anchoring poles; they can snap and cause severe injury.
+- **Protocol:** Report hazards to 9-1-1 immediately.
+
+## Hypothermia & Cold Weather Management
+- **Symptoms:** Confusion, constant shivering, drowsiness, poor decision-making, shallow breathing.
+- **COLD Protocol:**
+  - **C**over: Wear neck gaiters, hats, mittens. Avoid loose scarves that can snag.
+  - **O**verexertion: Avoid activities causing heavy sweating (wet clothing + cold = rapid heat loss).
+  - **L**ayers: Use loose-fitting, lightweight layers with a water-repellent outer shell.
+  - **D**ry: Remove wet clothing immediately; prioritize keeping hands and feet dry.
+- **Emergency Signaling:** Carry bright clothing and an orange plastic bag (shelter and signaling). Carry a whistle.
+
+## Planning & Navigation
+- **Trip Plan:** File an AdventureSmart plan with a trusted contact detailing route and return time.
+- **Preparation:** Check weather, avalanche alerts, and trail conditions before departure.
+- **Equipment:** Carry fully charged devices, GPS, compass, or personal locator beacon (PLB).
+- **Communication:** Use a radio for group contact; carry first aid kits.
+
+## Vehicle & Ice Safety
+- **Tire Requirements:** Winter tires or chains required in BC (Oct 1 – Apr 30) outside Vancouver Island and Lower Mainland.
+- **Driving:** Avoid cruise control on icy roads; slow down and avoid sudden stops.
+- **Ice Thickness:**
+  - **Solo:** Minimum 15 cm.
+  - **Group:** Minimum 20 cm.
+  - **Indicators:** Clear blue ice is stronger; opaque white/grey is weak.
+  - **Restriction:** Never cross rivers or lakes with snowmobiles.
+
+## Snowmobile Safety
+- **Gear:** Invest in quality riding gear to prevent frostbite.
+- **Avalanche:** Carry probes, shovels, beacons, and consider an airbag vest.
+- **Maintenance:** Carry tool kits for machine repairs and toolkits for overnight readiness.
+- **Communication:** Radio communication is mandatory for groups entering advanced terrain.
+```

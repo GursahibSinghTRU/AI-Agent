@@ -1,0 +1,22 @@
+```markdown
+# River Safety Protocols - Chilliwack Search and Rescue
+
+## High-Risk Statistics & Prevention
+- **Peak Incidents:** Majority of BC drowning incidents occur between July and August.
+- **Primary Activities:** Swimming and fishing are the top two causes of drowning.
+- **Mandatory Gear:** Personal Flotation Device (PFD) must be worn at all times, regardless of swimming ability.
+- **Environmental Hazards:** Wood, logs, rocks, and strong currents.
+
+## Survival: Caught in Swift Moving Water
+1.  **Stay Calm:** Control breathing and locate surroundings immediately.
+2.  **Protect Extremities:** Keep feet up; never place feet down to avoid entanglement with debris (risk of drowning).
+3.  **Swim Angle:** Utilize a **ferry angle** (45 degrees relative to current) to float toward shore.
+    - *Position:* If floating on back, keep feet up and head pointed toward the target shore.
+4.  **Persistence:** Continue maneuvering until reaching shallow water or a calm pool.
+
+## Rescuer & Emergency Procedures
+- **Emergency Contact:** Call **9-1-1** immediately.
+- **Entry Protocol:** Rescuers must assess and analyze potential risks before entering water; do not simply swim for a subject.
+- **Equipment & Training:** Swiftwater rescuers prioritize PFDs and undergo specialized training in river reading and swiftwater maneuvers.
+- **Team Approach:** Rescues are conducted by teams equipped for extreme environments.
+```

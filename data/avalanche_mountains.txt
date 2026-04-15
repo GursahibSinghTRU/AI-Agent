@@ -1,0 +1,32 @@
+```markdown
+# Avalanche Safety Knowledge Base Entry
+
+## Overview
+- **Threat Definition:** Rapid surge of compact snow, rock, and debris. Speed often exceeds 100 km/h.
+- **Primary Context:** Winter mountain activities, specifically off-piste/freeriding.
+- **Critical Safety Note:** Off-piste travel should only be conducted with a professional guide trained in mountain safety.
+
+## Risk Indicators & Warning Signs
+- **Terrain:** Steep slopes and areas with recently accumulated snow.
+- **Snow Conditions:** Fresh snow buildup, unstable accumulations, and rapid temperature changes.
+- **Visual/Auditory Cues:** Cracks in snow, thumping noises, and breaking snow surfaces.
+- **Trigger Factors:** Weight accumulation, temperature shifts, vibrations, or external movement.
+
+## Immediate Action During Avalanche
+- **Evasion:** Move perpendicular to the avalanche path; move above the fracture line if underfoot.
+- **Face Protection:** Keep face above snow to maintain breathing and reduce suffocation risk.
+- **Surface Mobility:** Swim towards the surface to avoid sinking; thrash arms if necessary.
+- **Visibility:** Raise one arm to assist rescue teams.
+- **Breathing:** Create air space in front of face; maintain calm breathing to prevent CO2 buildup.
+- **Post-Avalanche:** Free yourself from snow immediately upon stopping. Seek medical help for hypothermia.
+
+## Essential Equipment
+- **Avalanche Victim Locator (AVL):** Electromagnetic device for locating buried victims.
+- **Probe and Shovel:** Required for searching and freeing victims.
+
+## Prevention & Management
+- **Information:** Consult daily avalanche bulletins from reliable sources (e.g., Avalanche-Report).
+- **Resort Measures:** Follow local authority checks, rules, and controlled avalanche triggering.
+- **Guidance:** Use experienced guides for terrain assessment and risk evaluation.
+- **Emergency Contact:** Use local mountain rescue telephone numbers (e.g., 112).
+```

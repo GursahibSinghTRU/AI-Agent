@@ -1,0 +1,48 @@
+```markdown
+# Revelstoke Mountain Resort (RMR) - Mountain Biking Safety Policy
+
+## Emergency Contact
+- **Patrol/Emergency:** 250.814.5055
+- **Accident Reporting:** Identify yourself immediately if involved in or witness a collision to bike patrol, staff, or local authority.
+
+## Access & Entry Requirements
+- **Credentials:** Valid resort pass and completed waiver mandatory.
+- **Trail Privileges:** Bike Park privileges may be revoked for breach of the Responsibility Code.
+- **Foot Traffic:** Prohibited within the Bike Park, with exception of Stoke Climb.
+- **Uphill Travel:** Restricted to designated up-track (Stoke Climb) only.
+
+## Skill Level & Eligibility
+- **Lift-Accessed Downhill Trails:** Require minimum intermediate to advanced riding skills.
+- **Trail Selection:** Do not attempt advanced trails without necessary skills, experience, and gear.
+- **Rider Control:** Must be able to stop and avoid other people or objects.
+- **Impairment:** Riding prohibited if judgment is impaired by drugs, alcohol, or fatigue.
+
+## Protective Equipment (PPE)
+- **Helmets:** Mandatory on all trails within Bike Parks.
+- **Full-Face Helmets:** Strongly recommended for all downhill trails.
+- **Additional Gear:** Strongly recommended for beginners (gloves, pads, sturdy footwear).
+- **Condition:** Helmets must be undamaged and fit securely.
+- **Rental Availability:** Protective gear available to rent or purchase at resort shops.
+
+## Equipment Inspection Checklist
+Ensure bike is in safe working order before riding:
+- **Structure:** Frame free of cracks, damage, or dents.
+- **Mechanical:** Front/rear brakes adequate, suspension functional, bolts tight.
+- **Components:** Handlebars/grips secured, seat fastened securely.
+- **Tires:** Adequate tread and appropriate inflation pressure.
+- **Assistance:** Consult qualified mechanic if unsure about inspection.
+
+## Minor Supervision Guidelines
+- **RMR Policy:** Does not provide rider supervision.
+- **Age 7 and under:** Must be accompanied by a responsible adult at all times.
+- **Age 8 to 10:** Must be supervised by a responsible individual aged 13 or older.
+- **Parental Responsibility:** Parents/guardians are responsible for their children.
+
+## Mountain Biker's Responsibility Code
+- **Awareness:** Be safety conscious; stay on marked trails; avoid cut switchbacks.
+- **Ride Right:** Yield to other riders when entering a trail.
+- **Visibility:** Do not stop where you obstruct a trail or are not visible from above.
+- **Trail Care:** Inspect trails/features before use and throughout the day.
+- **Lift Safety:** Ensure physical dexterity/ability to load/unload lifts safely.
+- **Cooperation:** Report accidents/collisions to staff.
+```

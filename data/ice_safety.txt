@@ -1,0 +1,37 @@
+# PDF Summary: www_ccohs_ca_oshanswers.txt
+**Source:** https://www.ccohs.ca/oshanswers/hsprograms/work_ice.pdf
+**Word Count:** 1319 words
+**Processing Date:** 2026-04-15 13:21:22
+---
+
+# Safety Summary: Working on Ice-Covered Water
+
+### ⚠️ Key Hazards & Risks
+*   **Primary Risks:** Falling through ice can result in drowning, severe injury, or hypothermia.
+*   **Common Hazard Sources:**
+    *   Damaged or compromised ice strength.
+    *   Overloading the ice sheet.
+    *   Working over areas of thin ice.
+    *   Exposure to cold temperatures.
+
+### 🧊 Ice Characteristics & Strength
+*   **Ice Quality Matters:**
+    *   **Strong:** Solid, clear, blue ice (no air trapped).
+    *   **Weak:** White, opaque "snow ice" (contains trapped air).
+*   **Strength Variables:** Ice integrity is affected by ice quality, color, thickness, cracks, air/water temperatures, wind, water movement, and snow cover.
+*   **Freezing Points:** Fresh water freezes at 0°C; salt water freezes at approximately -2°C.
+*   **Visual Inspection:** Monitor for cracks (dry or wet), snowbanks, and signs of thermal contraction/expansion.
+
+### 🛡️ Safety Guidelines & Load Management
+*   **No Guaranteed Safety:** There is no single "safe" thickness. Safety depends on ice density relative to the load.
+*   **Assess Load Weight:** Safety increases or decreases based on load weight and distribution.
+*   **Watch for Dynamic Factors:** Ice conditions change constantly. Be aware of:
+    *   Unintended stationary loads (objects left on ice).
+    *   Vehicle speed.
+    *   Other traffic or loads.
+    *   Frequency of use (crossings, parking, etc.).
+*   **Distribution:** Ensure weight is distributed properly to avoid breaking the ice.
+
+### 📚 Additional Resources
+*   For detailed emergency preparedness and control measures, consult the **CCOHS Health and Safety Programs** resources.
+*   Review **OSH Answers** on Cold Environments for health effects and first aid.

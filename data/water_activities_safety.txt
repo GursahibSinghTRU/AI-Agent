@@ -1,0 +1,33 @@
+```markdown
+# Water Safety & Drowning Prevention Guidelines
+
+**Overview**
+- Drowning risks peak in summer months; drownings can occur quickly and quietly in lakes, rivers, and pools.
+- **BC Statistics:** Approximately 78 drowning deaths occur annually in B.C. (2013–2023 data). Shuswap and Okanagan lakes rank among the top three lakes in B.C. for drowning deaths.
+
+**At-Risk Demographics**
+- **Children:** Under 5 years are most at risk. 96% of drowning deaths in this age group involve little to no supervision. Children can drown in as little as 2.5 cm (1 inch) of water.
+- **Adults:** 80% of drowning victims are male. Ages 19–29 accounted for 20% of deaths. Ages 30–39 had the highest percentage of deaths involving alcohol/drugs (52%).
+
+**Key Risk Factors**
+- **Substance Impairment:** Alcohol and drugs impair judgment and balance faster on water than land. 40% of drowning deaths involve alcohol or drugs (52% in the 30-39 age group).
+- **Equipment Failure:** 80% of boating-related deaths occurred without a personal floatation device (PFD). A PFD should be worn, not just kept accessible.
+- **Hypothermia:** Canadian waters often drop below 20°C.
+  - Warm water (15–21°C): Hypothermia may occur in 2–3 hours.
+  - Cold water (≤10°C): Hypothermia may occur in 10–15 minutes.
+  - Highest risk for young children, seniors, and those with medical conditions.
+
+**Safety Mitigation Strategies**
+1. **Wear a Lifejacket:** Essential for boating, jet skiing, paddleboarding, kayaking, or if non-swimmers are present.
+2. **Avoid Impairment:** Do not mix drinking or drug use with water activities.
+3. **Constant Supervision:** Keep young children within arms' reach. If out of reach, you have gone too far.
+4. **Know Your Limits:** Always swim with a buddy. Avoid deep water or areas beyond comfort/fatigue levels.
+5. **Temperature Awareness:** Monitor body heat and cold water exposure times to prevent hypothermia.
+
+**Recommended Resources**
+- Lifesaving Society (BC & Yukon)
+- Parachute Canada (Drowning Prevention, Pool Fencing Laws)
+- BC Injury Research and Prevention Unit
+- Transport Canada (Choosing Lifejackets, Office of Boating Safety)
+- Canadian Safe Boating Council
+```

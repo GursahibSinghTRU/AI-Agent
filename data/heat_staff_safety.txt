@@ -1,0 +1,35 @@
+```markdown
+# Safety Knowledge Base: Extreme Heat & Staff Safety
+
+## Source
+SafeCare BC Resources & Safety Huddles
+
+## Objective
+Protect staff and residents/clients in healthcare settings from heat stress and extreme weather hazards.
+
+## Safety Huddle Protocol
+- **Pre-Meeting:** Review organization's written safety procedures (Exposure Control Plan/Emergency Preparedness). Print safety posters for distribution.
+- **During Meeting:** Outline risk factors for heat exhaustion and heat stroke. Review preventative measures and site-specific protocols.
+- **Post-Meeting:** Display safety posters at site to reinforce training.
+
+## Heat Stress Management
+- **Signs:** Staff must recognize and report signs of heat exhaustion and heat stroke immediately.
+- **PPE:** Full PPE (goggles, masks, gowns) may become unsafe in extreme heat. Consult health authority for updated guidance.
+- **Breaks:** Implement micro-breaks for staff wearing full PPE. Provide additional masks to replace soiled/damp units.
+- **Scheduling:** Move procedures to cooler rooms or earlier in the day to reduce thermal exposure.
+- **Refusal:** Follow established processes to report concerns and refuse unsafe work.
+
+## Vulnerable Populations & Environment
+- **Residents:** Prioritize safety for frail residents, those on oxygen, and individuals with mobility challenges.
+- **Air Quality:** Monitor for air quality advisories during wildfires or smoke events (e.g., Air Quality Health Index 10+).
+
+## Documentation & Regulations
+- **Required Plans:** Maintain Exposure Control Plan for communicable diseases and extreme heat.
+- **Regulatory Updates:** Note amendments to OHSR Part 5 (Chemical Agents and Biological Agents – Emergency Planning effective Feb 3, 2025).
+
+## Related Tools & Resources
+- **Posters:** "Summer is here (and so are its hazards)".
+- **Templates:** Exposure Control Plan Template.
+- **Safety Huddles:** Environmental scan, Refusal of unsafe work, Environmental cleaning, De-escalation, Debriefing critical incidents.
+- **Webinars:** Smart nutrition for sustained energy, Fatigue to focus.
+```

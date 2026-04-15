@@ -1,0 +1,31 @@
+```markdown
+# Avalanche Safety Plan: British Columbia Highway Maintenance
+
+## Document Details
+- **Authority:** Province of British Columbia (Highway & Bridge Maintenance)
+- **Season:** November through May (Mountain snowpack assessment)
+- **Primary Audience:** Maintenance contractors, workers, and motorists
+
+## Operational Objectives
+- Ensure safety of all highway users and maintenance workers.
+- Minimize frequency and duration of avalanche-related road closures.
+
+## Key Resources & Documentation
+- **Safety Plan:** Core practices for working in highway operations within avalanche terrain.
+- **Maps & Atlases:** Avalanche Area Codes, Atlases, and Program-specific maps.
+- **Threshold Guidelines:** Safety measure thresholds (Updated Jan 2026).
+- **Maintenance Specifications:** Schedule 1 Section 3 (Winter Maintenance); 3.04 (Snow Avalanche Response).
+- **Risk Assessment:** Backcountry Avalanche Risk Assessment Protocol (Updated Feb 2026).
+- **Emergency Response:** Highway Avalanche Incident Response Plans, Resource Lists, and Vehicle Inserts.
+
+## Personnel Roles
+- District Avalanche Technician
+- District Avalanche Supervisor
+- District Avalanche Assistant
+- Senior Avalanche Officer
+- Incident Commander & Task Force Team Leader
+
+## Contact & Inquiry
+- **Email:** TTWebmaster@gov.bc.ca
+- **Use:** Questions, comments, or suggestions regarding working in avalanche areas.
+```

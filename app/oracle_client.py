@@ -263,6 +263,17 @@ def get_chunk_count() -> int:
             return int(row[0]) if row else 0
 
 
+def clear_chunks() -> int:
+    """Delete all rows from doc_chunks. Returns the number of rows deleted."""
+    with _conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute("DELETE FROM doc_chunks")
+            deleted = cur.rowcount
+            conn.commit()
+    log.info("Cleared %d chunks from doc_chunks", deleted)
+    return deleted
+
+
 # ── Analytics reads ───────────────────────────────────────────────────────────
 
 def get_all_interactions() -> List[Dict[str, Any]]:

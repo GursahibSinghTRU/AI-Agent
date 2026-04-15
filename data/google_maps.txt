@@ -1,0 +1,8 @@
+```markdown
+# File: google_maps.txt
+**Status:** Non-Relevant to Safety
+**Content:** Browser error message indicating missing JavaScript functionality.
+**Risk Assessment:** No hazards, incidents, or policy information present.
+**Action:** Discard from Risk & Safety Knowledge Base.
+**Note:** Document contains only technical troubleshooting text.
+```

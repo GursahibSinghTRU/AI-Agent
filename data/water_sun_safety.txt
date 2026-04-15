@@ -1,0 +1,40 @@
+```markdown
+# BC Water and Heat Safety Protocols
+
+## Drowning Statistics & Risk Factors
+- **BC Incidence:** Average of 78 drowning deaths per year.
+- **Peak Season:** Summer months.
+- **High-Risk Demographics:** Young males, children under 5 years.
+- **Event Nature:** Drownings can occur quickly and quietly; victims may not appear to struggle visibly.
+- **Drowning Risk:** Very small children can drown in as little as 2.5 cm (1 inch) of water.
+
+## Drowning Prevention Strategies
+- **Swim Conditions:** Avoid large waves and strong undertows. Only swim in designated areas with lifeguards present.
+- **Supervision:** 
+  - Actively supervise all children in or around water.
+  - Young children/weak swimmers must be within arms-length for "touch supervision."
+  - Keep supervisors free from distractions (e.g., put phones away).
+- **Equipment:** 
+  - All persons on a boat must wear a PFD (Personal Flotation Device).
+  - **PFD vs. Lifejacket:** PFDs are lighter/recreational; Lifejackets turn unconscious wearers over. Automatic inflatable PFDs approved only for persons over 16.
+- **Substance Use:** Prohibit alcohol or drug use before or during swimming/boating.
+
+## Heat Illness & Sun Safety
+- **Heat Exhaustion Signs:** Headache, dizziness, confusion, unsteadiness, loss of thirst, rapid breathing/heartbeat, nausea, vomiting, decreased urination (dark urine).
+- **Protection:** 
+  - Apply sunscreen (SPF 50+) and reapply frequently, especially after water contact.
+  - Wear sun hats, sunglasses, and lightweight, breathable clothing.
+  - Children should wear long sleeves for extra sun protection.
+- **Hydration:** Drink water before feeling thirsty. Consume cooling foods (e.g., watermelon, cucumber).
+- **Timing:** Schedule outdoor activities for cooler parts of the day; avoid peak heat (~5 PM).
+- **Vulnerable Monitoring:** Check on older adults, pregnant individuals, those with limited mobility, or individuals living alone.
+
+## Child Play Safety & Resilience
+- **Resilience Building:** Support children in learning to cope with failure and overcome fear without immediate intervention.
+- **Safety Boundaries:** Enforce play restrictions near busy streets, unsupervised large water bodies, firearms, trampolines, and motorized vehicles (e.g., ATVs).
+- **Safety Equipment:** Use helmets for biking and other activities.
+- **Parental Approach:** 
+  - Let children lead on play preferences.
+  - Encourage participation in challenging activities using safety equipment.
+  - Sit on hands to prevent instinctive rescue during minor falls, allowing child to attempt recovery.
+```

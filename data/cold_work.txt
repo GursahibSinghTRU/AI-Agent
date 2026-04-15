@@ -1,0 +1,55 @@
+```markdown
+# Cold Environment Safety Control Measures (CCOHS)
+
+## 1. Key Risk Factors
+- **Air Temperature:** Measured in °C/°F.
+- **Wind Speed:** Accelerates heat loss; measured in m/s, km/h, or mph.
+- **Humidity (Wetness):** Moisture absorption by clothing reduces insulation; evaporating moisture accelerates heat loss.
+- **Physical Activity:** Metabolic heat production varies by workload.
+- **Work/Rest Schedule:** Critical for heat regulation and preventing excessive sweating.
+
+## 2. Wind Chill & Exposure Guidelines (ACGIH/Environment Canada)
+- **Definition:** Combined effect of temperature and wind speed (Wind Chill Index).
+- **-7°C (19.4°F) and Below:**
+  - Implement work-warming regimen.
+  - Provide heated warming shelters (tents, cabins).
+  - Return to shelter immediately if cold stress symptoms appear.
+- **-12°C (10.4°F) and Below:**
+  - Constant observation (buddy system).
+  - Adjust work pace to prevent sweating/wet clothing.
+  - Allow time for new employee acclimatization.
+  - Arrange to minimize prolonged sitting/standing.
+- **Environment Canada Risk Levels:**
+  - **0 to -9°C:** Low risk.
+  - **-10 to -27°C:** Moderate risk (Hypothermia/Frostbite risk increases).
+  - **-28 to -39°C:** High risk (Exposed skin freezes in 10-30 minutes).
+  - **-40 to -47°C:** Very high risk (Skin freezes in 5-10 minutes).
+  - **-48 to -54°C:** Severe risk (Skin freezes in 2-5 minutes).
+  - **-55°C+:** Extreme risk (Cancel outdoor activities).
+
+## 3. Control Measures
+- **Engineering:** Radiant heaters, wind shields, insulating equipment handles, heated shelters.
+- **Administrative:** Work/rest schedules, buddy system, task rotation, warm break areas for drying clothes.
+- **Education:** Training on cold stress symptoms, proper clothing habits, emergency procedures.
+- **Emergency Procedures:** Outline first aid/medical care; assign responsible personnel per shift.
+
+## 4. Personal Protective Equipment (PPE)
+- **Clothing System:**
+  - **Layers:** Multiple layers allow heat/perspiration regulation. Air between layers provides insulation.
+  - **Inner Layer:** Must wick moisture away (wool, polyester, or polypropylene). Avoid cotton (loses insulation when wet).
+  - **Outer Layer:** Wind-resistant and waterproof if working in precipitation.
+- **Footwear:**
+  - Felt-lined, rubber-bottomed leather boots (breathable) for heavy work.
+  - Waterproof boots for slush/water environments.
+  - **Socks:** Liner socks (polypropylene) + thick outer socks. Ensure boots fit properly to maintain circulation.
+- **Face/Eye Protection:**
+  - Face masks, scarves, or neck tubes for covering exposed skin.
+  - Eye protection with anti-fogging features, shielded from wind/snow glare.
+
+## 5. Prevention & Recovery Tips
+- **Hydration:** Drink warm, non-alcoholic fluids frequently.
+- **Nutrition:** Balanced meals; cold work requires more energy.
+- **Alcohol Policy:** **Do not consume alcohol.** Produces deceptive warmth and increases heat loss.
+- **Recovery Order:** When warming up, remove gloves/mittens first, then headgear, then open jacket waist/wrists. Remove outer layers in warm areas to let moisture evaporate. Reverse process when returning to cold.
+- **General:** Keep clothing clean (dirt destroys insulation) and dry.
+```

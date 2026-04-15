@@ -1,0 +1,25 @@
+```markdown
+# Winter Power Sports Safety Guidelines
+**Source:** Canadian Boilermakers (2021)
+**Context:** Winter recreational vehicle safety (snowmobiles, sleds)
+
+## General Operational Safety
+- **Speed:** Maintain realistic speeds to reduce accident risk and injury.
+- **Tethers:** Use safety tethers that shut off the motor upon separation. Mandatory for sledding.
+- **Ice Safety:** Verify ice depth and strength before crossing. Stagger snowmobiles while crossing frozen water. Avoid gray or slushy ice.
+- **Buddy System:** Never ride alone. Stay together regardless of skill level.
+- **Skill Matching:** Ensure trip plans match individual abilities. Do not assign high-horsepower machines to young or inexperienced operators.
+- **PPE:** Always wear a helmet and dress appropriately for weather conditions.
+- **Sobriety:** Operating a snow machine while impaired carries penalties equivalent to motor vehicle offenses.
+- **Emergency Kit:** Carry first aid supplies, signaling flares, and fire-starting materials.
+
+## Avalanche Country Protocols
+- **Gear:** Every rider must carry and know how to use an avalanche transceiver, shovel, and probe.
+- **Training:** Complete an avalanche safety course before entering backcountry terrain.
+- **Forecast:** Plan routes based on current avalanche and weather forecasts.
+- **Terrain Awareness:** Recent avalanche activity indicates unstable snow. Avoid riding on or underneath slopes.
+- **Group Protocol:**
+  - Pass avalanche zones one at a time.
+  - Do not group up in runout zones.
+  - Do not rush to rescue a stuck friend; wait for the team to arrive or call professionals.
+```

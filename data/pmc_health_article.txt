@@ -1,0 +1,10 @@
+```markdown
+# Document Status: Access Barrier
+
+**File:** pmc_articles_PMC2724131.txt
+**Content Type:** Browser Security Verification (reCAPTCHA)
+**Target Resource:** pmc.ncbi.nlm.nih.gov
+**Access Status:** Blocked by security prompt
+**Substantive Data:** None
+**Summary:** Document consists entirely of reCAPTCHA verification text. No research content, safety data, or risk analysis is available for extraction. File is unsuitable for knowledge base ingestion.
+```

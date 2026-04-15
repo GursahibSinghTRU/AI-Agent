@@ -1,0 +1,21 @@
+```markdown
+# Mountain Biking Injury Prevention Guidelines
+
+## Risk Profile
+- **Injury Types:** Broken bones, organ damage, spinal injury.
+- **Hazard Zones:** Gravel, rocks, logs, steep descents (e.g., Sea to Sky corridor).
+- **Authority Warnings:** Vancouver Coastal Health reports an increase in mountain biking-related injuries.
+
+## Protective Equipment Requirements
+- **Essential:** Properly fitted helmet.
+- **Standard PPE:** Elbow pads, knee pads, body armour.
+- **Advanced PPE:** Neck brace (recommended for serious riders to prevent spinal injury).
+- **Additional:** Protective backpack.
+
+## Operational Safety Protocols
+- **Risk Assessment:** Riders must know their ability level and limits.
+- **Trail Selection:** Stay within safe zones appropriate for current skill set.
+- **Behavioral Controls:** Do not attempt maneuvers due to peer pressure or social media influence.
+- **Training:** Seek professional instruction before attempting jumps or increasing difficulty.
+- **Mindset:** Focus on risk management and balance rather than avoidance.
+```

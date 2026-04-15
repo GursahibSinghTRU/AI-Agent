@@ -1,0 +1,42 @@
+```markdown
+# BC Bike & E-bike Safety & Regulations (Risk & Safety Knowledge Base)
+
+## General Requirements
+- **Road Rules:** Cyclists must obey all traffic signs, signals, and lights; yield to pedestrians.
+- **Roadside Position:** Ride as far right as practicable on paved roadways. Sidewalk riding prohibited unless signed otherwise.
+- **Formation:** Ride single file; do not ride beside another device unless passing.
+- **Communication:** Use hand signals for turns, slowing, or stopping.
+- **Visibility:** Mandatory white front light and red rear reflector/light between sunset and sunrise. High-visibility clothing recommended.
+- **Impaired Riding:** Prohibited while under the influence of alcohol/drugs or distracted by electronic devices (e.g., cellphones).
+- **Safety:** Watch for obstacles such as potholes, debris, and rumble strips.
+
+## Helmet Regulations
+- **Requirement:** Mandatory for all ages when riding on public roads.
+- **Supervision:** Parents/guardians must ensure children under 16 wear helmets.
+- **Standards:** Helmets must meet *Bicycle Safety Helmet Standards Regulation*.
+- **Penalties:** Violation may result in a $29 fine (subject to exemption regulations).
+
+## Restricted Highways
+Cycling is prohibited on specific segments of the following provincial highways unless signage permits otherwise:
+- **Highway 1:** Specific segments in Hope, Abbotsford, Kamloops (e.g., Coquihalla Highway junction).
+- **Highway 3:** Hope to Coquihalla Highway junction.
+- **Highway 5:** Coquihalla Highway segment between Hope and Kamloops.
+- **Highway 19:** Segments south of Parksville and around Nanaimo.
+- **Highway 91 & 91A:** Specific approach routes to Annacis and Queensborough Bridges.
+- **Highway 97C:** Junction with Highway 5A to Highway 97.
+- **Highway 99:** 1st Avenue in Surrey to Oak Street Bridge approach.
+- **Note:** Check DriveBC for closures due to weather or construction.
+
+## Prohibited Bridges & Tunnels
+Cyclists are prohibited from riding on the road portion or over/through:
+- **Tunnels:** George Massey Tunnel, Cassiar Connector Tunnel, Port Mann Bridge approaches.
+- **Bridges:** Ironworkers Memorial Second Narrows Bridge, Oak Street Bridge, Knight Street Bridge, William R. Bennett Bridge, Annacis Bridge, East Channel Bridge, Queensborough Bridge, Pattullo Bridge.
+- **Permitted:** Nelson Bridge (Highway 3A) and Agassiz-Rosedale Bridge (narrow roads apply).
+- **Instruction:** Use designated shuttles where required (e.g., George Massey Tunnel).
+
+## Legislation & Resources
+- **Key Laws:** Motor Vehicle Act, Traffic Regulations, Low-Powered Vehicles.
+- **Specific Regulations:** Bicycle Safety Helmets Regulation, Bicycle Safety Helmet Exemption Regulation.
+- **Resources:** DriveBC (conditions/weather), BC Cycling Coalition (Bike Sense), BC Parks (Cycling), Municipal rules for shared paths.
+- **Transit:** Contact TransLink or BC Transit for bike/e-bike transit restrictions.
+```

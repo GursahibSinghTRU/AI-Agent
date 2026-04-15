@@ -1,0 +1,31 @@
+```markdown
+# Canadian Pleasure Craft Operator Card (PCOC) Compliance Summary
+
+## Legal Requirements & Validity
+- **Proof of Competency:** Mandatory for operating any engine-powered pleasure craft in Canada.
+- **Valid Document:** Pleasure Craft Operator Card (PCOC). Not technically a license but proof of competency.
+- **Expiration:** Valid for life across all Canadian provinces and territories. No renewal fees or age limits.
+- **Exemptions:** Pre-April 1999 course certificates, specific marine safety certificates, or a valid Boat Rental Safety Checklist (for rental periods).
+
+## Certification Process
+- **Accreditation:** Must be completed through a Transport Canada accredited provider.
+- **Online Course Structure:**
+  - 5 Chapters with 10-question quizzes each.
+  - **Chapter Pass Mark:** 80%.
+  - **Minimum Completion Time:** 3 hours.
+- **Final Assessment:**
+  - **Format:** 50 multiple-choice questions.
+  - **Pass Mark:** 75%.
+  - **Retries:** Unlimited attempts (24-hour cooldown); repeat course only required after two failures.
+- **Delivery:** Immediate temporary digital certificate; permanent card mailed within weeks.
+
+## Operational Safety Guidelines
+- **Personal Protection:** Operators must wear proper life jackets and learn to swim.
+- **Vessel Management:** Do not overload with passengers or equipment; follow proper anchoring techniques.
+- **Pre-Departure:** Utilize Pleasure Craft Courtesy Check (PCCC) for safety verification.
+
+## Administrative Information
+- **Registration Validity:** 1 full year to complete course and test.
+- **Lost Card:** Order replacements via accredited provider or Transport Canada database.
+- **Registration Deadline:** Registration expires one year from payment date.
+```

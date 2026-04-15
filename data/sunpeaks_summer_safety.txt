@@ -1,0 +1,30 @@
+```markdown
+# Sun Peaks Resort: Summer Safety & Risk Awareness
+
+## Emergency Contact
+- **On-Mountain Emergency:** Call Patrol/Dispatch at **250.578.5521**.
+
+## Legal & Liability
+- **Waivers:** Guests must review and sign release agreements/activity waivers before participation.
+- **Terms:** Exclusion of liability and assumption of risk apply based on waiver terms.
+
+## Activity Specific Safety
+### Bike Park
+- **Trail Markings:** Orange oval markers designate freeride trails with man-made features requiring jumping skills.
+- **Equipment:** Use appropriate bike types and protective gear.
+- **Conduct:** Adhere to code of conduct and show courtesy to others.
+
+### Lifts
+- **Equipment Status:** Chairlifts are heavy machinery.
+- **Protocol:** Follow specific safety rules for loading, riding, and unloading.
+
+### Hiking
+- **Environment:** Safety tips and rules apply to alpine hiking areas.
+
+## Environmental Hazards
+- **Wildlife:** Black bears are free-roaming; guests must remain aware of animal presence.
+- **Fire Risk:** Resort measures exist to minimize interface and structural fire risks; exercise extreme caution.
+
+## General Safety
+- **Risk Mitigation:** Common sense and personal awareness are required to reduce risk elements.
+```

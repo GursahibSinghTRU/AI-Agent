@@ -1,0 +1,31 @@
+```markdown
+# Kamloops, BC Weather Risk Summary
+
+**Source:** Environment Canada (Government of Canada)
+**Station:** Kamloops Airport
+**Last Updated:** 5:19 PM, Wed 15 Apr 2026 (Local Time)
+
+## Current Conditions
+- **Temperature:** 6.0°C
+- **Condition:** Partly Cloudy
+- **Wind:** WNW 26 km/h
+- **Visibility:** 64 km
+- **Pressure:** 100.7 kPa (Rising)
+- **Alerts:** None in effect
+
+## Key Risk Indicators (7-Day Forecast)
+- **Thunderstorms:** Risk late afternoon (Wednesday).
+- **Wind Gusts:** Up to 40 km/h expected (Wednesday).
+- **Precipitation:** 30% chance of showers; flurries possible near valley bottom.
+- **Snow:** Local accumulation of 2 cm reported in western sections.
+- **UV Index:** 4 (Moderate).
+- **Temperature Range:** Highs 10°C–22°C; Lows -3°C–8°C.
+
+## Safety Resources Available
+- **Public Alerts:** Canadian Weather Alerts monitoring.
+- **Hazardous Weather:** Dedicated hazardous weather section.
+- **Air Quality:** Real-time air quality data available.
+- **Radar/Satellite:** Real-time radar and satellite imagery.
+- **Historical Data:** Available for climate baseline comparisons.
+- **Wind Chill/Humidex:** Calculators available for health assessment.
+```

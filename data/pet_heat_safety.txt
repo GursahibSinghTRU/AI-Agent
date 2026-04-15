@@ -1,0 +1,24 @@
+```markdown
+# Summer Pet Safety & Heat Risk Guidelines
+
+## Critical Hazards
+- **Vehicle Exposure:** Leaving pets in a parked vehicle on a hot day is lethal; death can occur within 10 minutes. Never leave pets unattended in vehicles.
+- **Brachycephalic Breeds:** Dogs with shortened noses (bulldogs, boxers, pugs, shih tzus) are highly susceptible to overheating due to compromised panting ability.
+- **Toxic Substances:** Monitor pets at gatherings for ingestion of raisins, grapes, onions, chocolate, and xylitol-containing products. Alcohol exposure causes intoxication and coma.
+
+## Home Environment Safety
+- **Windows:** Ensure open windows have secure, locking screens to prevent escape or accidental falls.
+- **Comfort Zones:** Maintain access to cooler areas (e.g., basement, bathrooms). Place crates in cool rooms.
+- **Hydration:** Provide an ample, continuous supply of fresh water.
+- **Cooling:** Use cooling mats inside crates; mats activate via body pressure.
+- **Identification:** Keep ID tags updated. Label indoor cats as 'indoor cat' to prevent unauthorized wandering.
+
+## Outdoor Activity Protocols
+- **Timing:** Schedule exercise during early morning or late evening to avoid midday heat.
+- **Cooling:** Utilize dog-friendly recreational water areas to lower body temperature.
+- **Heatstroke Indicators:** Monitor for distressed breathing, labored panting, vomiting, glazed eyes, difficulty walking, or constant snorting.
+
+## Grooming Guidelines
+- **Shaving:** Shaving fur can increase risk by removing insulating properties and sun protection.
+- **Recommendation:** Opt for trimming and regular brushing to improve air circulation. Consult a veterinarian for breed-specific grooming advice.
+```

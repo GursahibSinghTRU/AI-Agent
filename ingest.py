@@ -31,6 +31,7 @@ log = logging.getLogger("ingest")
 def main():
     parser = argparse.ArgumentParser(description="Ingest TRU Risk & Safety docs into Oracle vector DB")
     parser.add_argument("--dry-run", action="store_true", help="Show what would be ingested without writing")
+    parser.add_argument("--wipe", action="store_true", help="Delete all existing chunks before ingesting")
     args = parser.parse_args()
 
     data_dir = settings.data_path
@@ -67,6 +68,12 @@ def main():
     if args.dry_run:
         log.info("[DRY RUN] Would embed %d chunks — exiting.", len(chunks))
         return
+
+    # ── Wipe ─────────────────────────────────────────────────────────
+    if args.wipe:
+        from app.oracle_client import clear_chunks
+        deleted = clear_chunks()
+        log.info("Wiped %d existing chunks from Oracle DB", deleted)
 
     # ── Embed + Store ────────────────────────────────────────────────
     t2 = time.time()

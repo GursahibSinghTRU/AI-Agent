@@ -1,0 +1,21 @@
+```markdown
+# Winter Sport & Recreation Safety Resources
+
+**Region:** Northern BC (Northern Health)
+**Source:** Northern Health Official Website
+**Context:** Winter weather safety for public and recreational activities.
+
+## Key Safety Partners & Resources
+- **Avalanche Safety:** Avalanche Canada (Interactive map of forecasts and advisories)
+- **Concussion Prevention:** Hockey Canada (Concussion Prevention Resource Centre)
+- **Injury Prevention:** BC Injury Research and Prevention Unit (BCIRPU) / Active and Safe Central
+- **Outdoor Safety:** Parachute, AdventureSmart
+- **Sports Medicine:** SportMedBC (Resource library)
+- **Youth Specific:** Canadian Paediatric Society (Skiing and snowboarding safety tips)
+- **Policy/Guidance:** Government of BC (Sport safety)
+
+## Emergency & Operational Status
+- **Emergency Departments:** May be closed due to temporary service interruptions.
+- **Required Action:** Check Emergency Department status prior to travel or seeking medical care.
+- **Service Availability:** Verify ED status before initiating winter travel plans.
+```

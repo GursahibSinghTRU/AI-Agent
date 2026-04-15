@@ -1,0 +1,27 @@
+```markdown
+# Winter Safety Guidelines (BC Parks)
+
+## Core Principles
+- **AdventureSmart 3 Ts**: Plan trips using Trip Planning, Training, and Taking the Essentials.
+- **Skill Matching**: Ensure trip plans match the experience and skill level of all party members.
+- **Remote Awareness**: Extra planning is required for mountainous/remote areas and backcountry visits.
+- **Resource Limitation**: Do not rely on cell phones; many areas lack service.
+
+## Pre-Trip Preparation
+- **Information Checks**: Consult park webpages for closures/updates, WeatherCAN app for weather/light, Drive BC for road conditions, Avalanche Canada for avalanche risk.
+- **Documentation**: File an AdventureSmart trip plan and leave a copy with a trusted contact.
+- **Essential Gear**: First aid kit, navigation/communication aids, flashlight with spares, fire kit, signaling device (whistle/mirror), extra food/water, extra clothing (including rain/wind protection), emergency shelter.
+- **Avalanche Specifics**: Each party member must have a transceiver, probe, and shovel if entering avalanche zones. Know how to use them. Consider Avalanche Skills Training (AST).
+
+## Hazards During Visit
+- **Ice Safety**: Hiking or skating on frozen ponds/lakes is not recommended and is at visitor's own risk. Ice thickness is not monitored within BC Parks.
+- **Wildlife**: Animals remain active; bears may leave dens. Follow standard wildlife safety procedures. Drive slowly at dusk/dawn.
+- **Hypothermia**: Monitor party comfort regularly. Watch for: pale/blue skin or lips, confusion, difficulty thinking, trouble walking, shivering, numbness, rapid breathing.
+- **Weather Changes**: Monitor conditions closely as they can change quickly.
+
+## Emergency Procedures
+- **Immediate Response**: Stay calm, assess situation, seek sheltered/dry place.
+- **Signaling**: Use 3 sets of whistle blows, mirror flashes, or horn blasts. Use sticks/branches to spell "S.O.S." (minimum 3 meters wide) on the ground if stranded.
+- **Communication**: Call 911 if cellphone or satellite service is available.
+- **Location**: Stay where you are to facilitate rescue.
+```

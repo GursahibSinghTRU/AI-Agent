@@ -1,0 +1,32 @@
+```markdown
+# Hiking Safety Protocols (Vancouver/BC Region)
+
+## Communication & Emergency Prep
+- **Itinerary:** Always inform others of the specific trail, location, and expected return time.
+- **Cell Service:** Do not rely on cellphones. Reception is unreliable in remote BC forests/mountains.
+
+## Essential Gear (The 10 Essentials + Safety)
+- **Navigation:** Compass and maps (waterproofed). GPS is supplementary only.
+- **Lighting:** Headlamp/flashlight with spare batteries for pre-sunset travel.
+- **Signaling:** Loud whistle (e.g., Fox 40).
+- **Fire:** Waterproof matches/lighter in a plastic bag.
+- **Shelter:** Thermal tarp or bright-colored emergency plastic bag.
+- **Sustenance:** Extra high-energy food bars and ample water. **Do not** drink from running rivers/glaciers (bacterial risk).
+- **Clothing:** Extra layers (jacket, gloves) for overnight weather changes.
+- **First Aid:** Kit including bandages, gauze, blister dressings, gloves.
+- **Tools:** Quality pocket knife for shelter/fire construction.
+- **Sun Protection:** Sunscreen, sunglasses, hat.
+
+## Hiking Conduct
+- **Group Size:** Never hike alone. Hike with a friend or group.
+- **Footwear:** Wear sturdy, comfortable shoes for rocky/muddy terrain.
+- **Timing:** Complete hike before darkness.
+- **Weather:** Check forecasts; rain creates slip hazards on steep/rocky trails.
+
+## Wildlife Safety (Bears)
+- **Habitat:** Black bears common; Grizzly bears present.
+- **Protocol:** Make noise to alert bears of presence.
+- **Encounter:** Calmly turn the other direction and walk away.
+- **Defense:** Carry and use bear spray/mace.
+- **Reference:** Consult Get Bear Smart Society guidelines.
+```

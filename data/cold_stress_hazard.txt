@@ -1,0 +1,27 @@
+```markdown
+# Cold Stress Hazard Summary (WorkSafeBC)
+
+**Definition**
+- Severe cold stress leads to hypothermia, a gradual process that can be fatal.
+- Affects workers in cold or wet environments.
+- **Key Warning:** Feeling cold indicates the body is losing heat faster than it can produce it.
+
+**Exposure Factors**
+- Naturally or artificially cooled environments
+- Wind (draws heat from the body)
+- Wet clothing (sweat or water)
+- Cold water immersion (cools the body 25 times faster than cold air)
+- Fatigue (reduces body's ability to create heat)
+
+**Symptoms & Stages of Hypothermia**
+- **Mild:** Shivering, grogginess, poor judgment or confusion.
+- **Moderate:** Violent shivering, inability to think, slurred speech, slow/shallow breathing, poor coordination.
+- **Severe:** Loss of consciousness, little to no breathing, weak or non-existent pulse.
+
+**Risk Control Hierarchy**
+1.  **Elimination or Substitution:** Change the work environment or process (e.g., warmer location, less cold/water generating process).
+2.  **Engineering Controls:** Physical modifications (e.g., heated warming shelters, heated tools, equipment designed for use with gloves).
+3.  **Administrative Controls:** Exposure control plans, training, work rotation to decrease exposure, warning signs, safe work procedures, pacing work to prevent sweating.
+4.  **Personal Protective Equipment (PPE):** Heated clothing/chemical pads, layered clothing, warm head covering, dry hand/foot protection.
+    - *Constraint:* PPE is the least effective control and must be used in combination with other controls.
+```

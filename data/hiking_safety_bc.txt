@@ -1,0 +1,36 @@
+```markdown
+# BC Hiking Safety Guidelines
+
+## The 10 Essentials
+All hikers must carry the following items on outings:
+- **Navigation & Light:** Map & compass, headlamp or flashlight.
+- **Supplies:** Extra water, extra food, extra clothes.
+- **Safety:** First-aid supplies, fire starter supplies, repair kit & tools.
+- **Emergency:** Emergency shelter (blanket).
+- **Sun Protection:** Sunscreen/hat/sunglasses.
+
+## Trip Planning & Communication
+- **Research:** Use guidebooks/websites to match trail difficulty with experience and fitness. Check weather and avalanche risk (www.avalanche.ca).
+- **Trip Plan:** Leave detailed itinerary with a contact person; notify them of arrival. Complete trailhead registration if available.
+- **Resources:** www.mountainclubs.org, www.adventuresmart.ca.
+
+## Group Safety
+- **Group Composition:** Inexperienced hikers must never hike alone. Join clubs (e.g., BCMC) to access experienced groups.
+- **Group Discipline:** Do not race ahead or leave slower members behind.
+
+## Gear Recommendations
+- **Clothing:** Synthetic/multiple thin layers, waterproof breathable outer shell, lug-soled boots.
+- **Stability:** Trekking poles are recommended for knee/back stability, balance, and creek crossings.
+- **Communication:** Cell phone (verify coverage), satellite phone, or Spot Tracker (carry per group).
+- **Signaling:** Flares, bright colored sheet, mirror, whistle.
+- **Snow:** Avalanche beacon, probe, and shovel required.
+
+## Wildlife & Conduct
+- **Bear Safety:** Make noise in bear country, keep camp clean, hang food, carry bear spray & bear bangers.
+- **Etiquette:** Do not crowd others, slow down when passing, keep noise down, no littering.
+
+## Skill Development
+- **Navigation:** Learn to use map, compass, GPS, and create waypoints.
+- **Training:** Take courses on avalanche assessment, rescue, mountaineering, or survival (www.mountainclubs.org).
+- **Orienteering:** Utilize resources from Federation of Mountain Clubs of B.C. (www.mountainclubs.org).
+```

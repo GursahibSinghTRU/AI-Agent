@@ -1,0 +1,32 @@
+```markdown
+# Extreme Heat Risk & Safety Summary (Interior Health/BC Context)
+
+## Risk Overview
+- **Definition**: Extreme heat events (heat waves) involve high temperatures and high humidity.
+- **Impact**: The 2021 heat wave in BC was attributed to 619 deaths by the BC Coroners Service. Events are projected to become hotter, longer, and more frequent due to climate change.
+- **Alert System**: BC Provincial Heat Alert Response System (HARS) provides a 2-tiered response system.
+  - **Heat Warning**: Moderate public health risk (~5% increase in mortality).
+  - **Extreme Heat Emergency**: Very high public health risk (20%+ increase in mortality).
+  - **Southeast Interior Criteria**: Day/night/day temps (35°C - 18°C - 35°C).
+  - **Alert Issuing**: Environment Canada (ECCC) statements; Alert Ready for emergencies.
+
+## Vulnerable Populations
+- **Demographics**: Seniors (65+), infants/young children, socially isolated individuals, low income, living alone.
+- **Health Status**: Chronic conditions (heart, diabetes, respiratory), pregnancy, mental health/substance use disorders, limited mobility.
+- **Working Conditions**: Outdoor workers, manual labor, PPE usage in non-controlled temps.
+- **Living Conditions**: Poor home temp control, lack of green space access, unsheltered.
+
+## Prevention & Preparation
+- **Home**: Identify cool sleeping space; use digital thermometer; use fans/AC; open windows at night, close during day; avoid oven use.
+- **Health**: Review medications with a doctor; monitor hydration; wear damp towel/shirt; use personal mister.
+- **Social**: Establish a "buddy system" for high-risk individuals (check mornings/evenings).
+- **Environment**: Sign up for Environment Canada/WeatherCAN alerts. Note: Fans do not lower body temperature for older adults over 35°C.
+
+## Response & Symptoms
+- **Cooling Methods**: Cool bath/shower, ice trays in front of fans, wet towels, migrate to AC spaces.
+- **Air Quality vs Heat**: If extreme heat coincides with wildfire smoke, prioritize cooling down over air quality concerns.
+- **Symptoms - Mild to Moderate**: Headache, weakness, dizziness, temp >38°C (100°F), increased heart rate.
+- **Symptoms - Severe (Emergency)**: Nausea/vomiting, fainting, confusion, no sweating, temp >39°C (102°F), rapid breathing. **Call 9-1-1**.
+- **Power Outages**: Use specific toolkits for rural/remote safety; ensure food, medicine, and cooling safety.
+- **Resources**: WorkSafe BC (Workplace), BC CDC, HealthLink BC (8-1-1), PreparedBC.
+```

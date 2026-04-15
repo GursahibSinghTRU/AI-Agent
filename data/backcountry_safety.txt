@@ -1,0 +1,32 @@
+```markdown
+# Hiking and Backcountry Safety Guidelines (Alberta Parks)
+
+## Pre-Trip Preparation
+- **Route Planning:** Research via official guidebooks, topo maps, and AlbertaParks.ca. Do not rely solely on apps or social media; cell service is often unavailable.
+- **Itinerary:** Leave detailed plan with trusted person (route, return time, party list, emergency contacts, vehicle details, staging area).
+- **Weather:** Check forecasts before departure. Prepare for sudden changes; wet/cold conditions increase hypothermia risk.
+- **Essential Gear:** Proper footwear, extra layers (including hat/toque), sun/insect protection, headlamp/flashlight, food/water, and emergency shelter (e.g., tarp/rope).
+- **Bear Safety:** Carry bear spray in a belt holster for quick access.
+
+## Field Safety Protocols
+- **Wildlife:** Avoid areas with recent bear activity (fresh digging, scat, claw marks). Dead/scavenged animal sites are especially dangerous.
+- **Canines:** Dogs must be leashed at all times. Treat dog waste like human waste; pack it out.
+- **Navigation:** Use well-defined trails. Avoid shortcuts across switchbacks to prevent erosion.
+- **Group Travel:** Do not travel alone. Keep the group together at all times; supervise children closely.
+- **Awareness:** Make noise (shout) at blind corners, dense shrubs, and streams. Do not wear earphones.
+
+## Water Safety
+- Waterways in Alberta are very cold even in mid-summer. Crossing streams and rivers is a significant risk; exercise caution.
+
+## Emergency Response
+- **Calling for Help:** Dial 9-1-1 (cell or pay phone). Coverage is limited in backcountry areas.
+- **Kananaskis Country:** If using a satellite phone, dial 403-591-7767. 9-1-1 on satellite phones may transfer you to an unfamiliar center.
+- **Information to Provide:** Exact location, injury nature/seriousness, contact name/number, time of accident.
+- **Helicopter Rescue:** 
+  - Keep phone line open with dispatch while helicopter approaches.
+  - Use standard visual signals to communicate with rescue staff (who cannot communicate verbally).
+
+## Leave No Trace
+- Pack out all waste, including food, garbage, and animal waste.
+- Follow Backcountry Camping Rules and Hanging a Bear Bag guidelines.
+```

@@ -1,0 +1,52 @@
+```markdown
+# Wilderness Safety & Emergency Preparedness Guidelines
+**Source:** British Columbia Ministry of Transportation and Infrastructure / Emergency Management BC (EMBC)
+**Document Type:** Information Bulletin
+**Publication Date:** December 17, 2016 (Historical Guidelines)
+**Relevance:** General backcountry safety for fieldwork/recreation in BC wilderness.
+
+## Core Safety Protocols
+*   **Never Hike Alone:** Travel in groups.
+*   **Trip Planning:** Leave a trip plan (destination, route, expected return time) with friends or family. Adhere strictly to the plan.
+*   **Stay On Trail:** Do not venture out of bounds or off marked trails.
+*   **Monitor Time:** Track distance traveled and sunset times. Turn back before darkness; carry a flashlight (darkness comes early in winter).
+*   **If Lost:**
+    *   Do not keep moving.
+    *   Stay put and wait for help.
+    *   Do not move downhill (dangerous terrain risk).
+*   **Communication:** Carry a signaling device (whistle), fully charged cellphone, personal locator beacon (PLB), compass, or GPS unit.
+
+## Equipment Essentials
+*   **Water:** Carry extra water.
+*   **Clothing:** Loose-fitting, layered, lightweight clothing.
+    *   *Materials:* Wool and silk preferred.
+    *   *Outer Layer:* Tightly woven, water-repellent material for wind protection.
+*   **Survival Gear:** Shelter and fire-starting materials for overnight warmth.
+
+## Hypothermia Prevention (COLD Acronym)
+| Letter | Action | Detail |
+| :--- | :--- | :--- |
+| **C** | **Cover** | Wear scarf, hat, mittens, gloves, balaclava. |
+| **O** | **Overexertion** | Avoid excessive sweating; wet clothing + cold = rapid heat loss. |
+| **L** | **Layers** | Wear loose-fitting, layered clothing. |
+| **D** | **Dry** | Get out of wet clothing immediately. Keep hands/feet dry. |
+
+## Hypothermia Warning Signs
+*   Constant shivering
+*   Confusion
+*   Poor decision-making (e.g., removing warm clothes)
+*   Drowsiness
+*   Shallow breathing
+
+## External Resources
+*   **Trip Planning:** `adventuresmart.ca/trip_safety/planning.htm`
+*   **Survival Essentials:** `adventuresmart.ca/land/survive-essentials.htm`
+*   **Avalanche Safety:** `avalanche.ca`
+*   **Emergency Preparedness:** `PreparedBC` (`gov.bc.ca/PreparedBC`)
+*   **Winter Driving:** `drivebc.ca`
+*   **General Emergencies:** `www.adventurebc.ca` (via BC.gov links)
+
+## Emergency Contacts
+*   **EMBC Media/Info:** 250-356-8241
+*   **Follow:** @EmergencyInfoBC (Twitter)
+```

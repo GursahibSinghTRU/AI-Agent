@@ -1,0 +1,29 @@
+```markdown
+# Cold Water Immersion Safety Guidelines
+
+**The 1–10–1 Rule of Cold Water Immersion**
+*   **1 Minute: Cold Shock**
+    *   Initial deep gasp followed by severe hyperventilation (600–1000% increase in breathing).
+    *   Primary Risk: Airway obstruction leading to drowning.
+    *   Action: Control breathing, avoid panic. Critical to wear a lifejacket to stay afloat.
+*   **10 Minutes: Cold Incapacitation**
+    *   Loss of motor function in fingers, arms, and legs.
+    *   Swim failure occurs within this window.
+    *   Action: Maintain airway clearance; prepare for rescue if self-rescue is impossible.
+*   **1 Hour: Hypothermia**
+    *   Risk of unconsciousness and loss of consciousness.
+    *   Action: Utilize rescue techniques and heat conservation to delay onset.
+
+**Physiological Factors**
+*   **Heat Loss Rate:** Body heat is lost 25 times faster in water than air at similar temperatures.
+*   **Movement Impact:** Swimming or moving in water can increase heat loss by up to 10 times.
+
+**Prevention and Equipment**
+*   **Essential Gear:** Wear a Coast Guard-approved lifejacket. Use thermal protection (floater jacket/pants or survival suit) for maximum insulation.
+*   **Risk Reduction:** Prevent overloading boats, avoid situations prone to falling overboard, and do not operate when water is cold without proper gear.
+
+**Survival Techniques**
+*   **Heat Conservation:** Draw legs to chest, wrap arms around them (tuck position).
+*   **Group Survival:** Huddle together as close as possible to conserve heat.
+*   **Priority:** Focus on maintaining flotation and airway clearance rather than swimming.
+```

@@ -24,3 +24,4 @@ Thumbs.db
 
 # MCP config (contains secrets)
 .mcp.json
+.aider*

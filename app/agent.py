@@ -26,7 +26,6 @@ log = logging.getLogger("agent")
 def _build_messages(
     question: str,
     chat_history: Optional[List[Dict[str, str]]],
-    weather_url: Optional[str] = None,
 ) -> List[Dict[str, str]]:
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
 
@@ -34,12 +33,7 @@ def _build_messages(
         for msg in chat_history[-10:]:
             messages.append({"role": msg.get("role", "user"), "content": msg.get("content", "")})
 
-    if weather_url:
-        user_content = f"{question}\n\n[WEATHER_LINK]: {weather_url}"
-    else:
-        user_content = question
-
-    messages.append({"role": "user", "content": user_content})
+    messages.append({"role": "user", "content": question})
     return messages
 
 
@@ -104,13 +98,12 @@ class RiskandSafetyAgent:
         self,
         question: str,
         chat_history: Optional[List[Dict[str, str]]] = None,
-        weather_url: Optional[str] = None,
     ) -> Dict[str, Any]:
         """Return a complete answer dict (non-streaming fallback)."""
         answer_text = ""
         sources = []
         timing = {}
-        for event in self.stream(question, chat_history, weather_url=weather_url):
+        for event in self.stream(question, chat_history):
             if event["type"] == "token":
                 answer_text += event["token"]
             elif event["type"] == "sources":
@@ -126,7 +119,6 @@ class RiskandSafetyAgent:
         self,
         question: str,
         chat_history: Optional[List[Dict[str, str]]] = None,
-        weather_url: Optional[str] = None,
     ) -> Generator[Dict[str, Any], None, None]:
         """
         Yield incremental dicts suitable for Server-Sent Events:
@@ -135,7 +127,7 @@ class RiskandSafetyAgent:
           {"type": "done",    "timing": {...}, "prompt_tokens": N, "completion_tokens": N}
         """
         t_start = time.perf_counter()
-        messages = _build_messages(question, chat_history, weather_url=weather_url)
+        messages = _build_messages(question, chat_history)
 
         try:
             with httpx.Client(timeout=120.0) as client:

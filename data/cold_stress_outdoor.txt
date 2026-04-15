@@ -1,0 +1,39 @@
+```markdown
+# Cold Stress and Outdoor Workers Safety
+**Source:** British Columbia Medical Journal (BCMJ) / WorkSafeBC  
+**Publication:** Nov 2024 (Vol. 66, No. 9)  
+**Disclaimer:** WorkSafeBC opinion; not peer-reviewed by BCMJ Editorial Board.
+
+## High-Risk Industries
+- Construction
+- Utilities
+- Transport
+- Emergency Response
+
+## Environmental Risk Thresholds
+- **Windchill:** Frostbite risk increases when windchill is below -27°C.
+- **Factors:** Temperature, wind speed, and humidity combined.
+- **Core Temperature:** Hypothermia defined as sustained core temperature below 35°C.
+
+## Injury Management Protocols
+### Frostbite
+- **Symptoms:** Skin appears waxy, hard, numb; underlying tissues frozen.
+- **Contraindications:** Do not rub, massage, or apply direct heat.
+- **Treatment:** Use body heat or warm water (40–42°C) if refreezing can be avoided.
+- **Warning:** Auto-amputation is a potential outcome.
+
+### Hypothermia
+- **Symptoms:** Shivering, confusion, difficulty walking/talking, unconsciousness, cardiac arrest.
+- **Immediate Action:** Move indoors, obtain medical assistance.
+- **Treatment:** Remove wet clothing; re-warm cautiously.
+
+## Safety Guidelines & Resources
+- **Regulatory Reference:** WorkSafeBC OHS Guidelines Part 7 (Noise, vibration, radiation and temperature).
+- **Work/Warm-up Schedule:** Refer to guideline G7.35-3 (Work/warm-up schedule for a 4-hour shift).
+- **Website:** www.worksafebc.com/en/health-safety/hazards-exposures/cold-stress
+- **Prevention Line:** 1 888 621-7233
+- **Medical Advisory:** Submit RACE request for work-related illness/injury inquiries.
+
+## Citation
+Maheswaran C, Somerville J, Sampson O. Cold stress and outdoor workers: Safety considerations for your patients. BCMJ, Vol. 66, No. 9, November 2024, 349-351.
+```

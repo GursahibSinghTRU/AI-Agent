@@ -1,0 +1,22 @@
+```markdown
+## Human-Powered Watercraft Operational Safety (Transport Canada)
+
+**Scope**
+Applies to human-powered pleasure craft including kayaks, canoes, paddleboards, rowboats, and sailboats.
+
+**Competency Requirements**
+- **Unpowered:** Proof of competency is not required.
+- **Fitted with Motor:** Proof of competency is required if a motor is installed, even if the motor is turned off.
+
+**Safety Equipment**
+- Mandatory safety equipment required per *Small Vessel Regulations* and *Safe Boating Guide*.
+- **Pre-Trip Action:** Schedule a Pleasure Craft Courtesy Check before first use.
+
+**Visibility and Signaling**
+- **Vessel Color:** Use bright colors (red, yellow, orange) as unpowered vessels are difficult to spot.
+- **Signaling:** Keep signalling devices within hand’s reach for emergency use.
+
+**Environmental Awareness**
+- Continuously monitor conditions: water temperature, tides, currents, wind, and maritime traffic.
+- Special attention required for sea kayaking due to increased environmental hazards.
+```

@@ -1,0 +1,25 @@
+```markdown
+# Banff National Park: Mountain Biking Safety & Regulations
+
+**Season & Scope**
+- **Operating Period:** May to October.
+- **Infrastructure:** 360+ km of trails available.
+- **Skill Levels:** Ranges from easy to difficult.
+
+**Activity Restrictions**
+- **Prohibited in Park:** Freeriding and downhilling are discouraged.
+- **Designated High-Risk Zones:** Direct users to areas for downhill/freeriding:
+  - Golden, BC
+  - Fernie, BC
+  - Canada Olympic Park, Calgary
+
+**Safety Requirements**
+- **Hazard Awareness:** Consult Trail Condition Reports prior to riding.
+- **Compliance:** Adhere to all rules, regulations, and trail etiquette.
+- **Specific Gear:** Guidelines provided for E-bikes and Fat bikes.
+- **Environment:** Riders must maintain pristine natural environment (wildlife and people safety).
+
+**Resource Locations**
+- **Sections:** Banff Area, Lake Louise Area.
+- **Source:** Government of Canada (Date Modified: 2025-09-17).
+```

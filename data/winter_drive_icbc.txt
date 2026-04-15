@@ -1,0 +1,28 @@
+```markdown
+# Winter Driving Safety Guidelines (ICBC)
+
+## Operational Safety Measures
+- **Speed Control:** Reduce speed on slippery highways to mitigate ice and snow hazards.
+- **Tire Maintenance:** Use winter tires; monitor tire pressure regularly as cold temperatures reduce it.
+- **Vehicle Readiness:** Carry a winter emergency kit to handle situations where the vehicle is stranded or stuck.
+
+## Essential Emergency Kit Inventory
+- First aid kit
+- Emergency food and water supplies
+- Spare warm clothing
+- Light sources: Flares, matches, lighter, or candles
+- Recovery tools: Shovel, traction mat, sand, or non-clumping kitty litter
+- Electrical aid: Battery jumper cables
+
+## Additional Safety Resources
+- **Highway Regulations:** Information on routes requiring winter tires or chains (DriveBC).
+- **Educational Programs:** Winter Driving Safety Alliance (Shift Into Winter).
+- **Specific Safety Contexts:** Child seat safety in winter, driving in poor conditions, and winter tire tips.
+
+## Service Support Locations
+- Driver licensing offices
+- Autoplan brokers and claim centres
+- Health care providers
+- Repair facilities: Collision, glass, commercial, and service centres
+- Emergency service locators
+```

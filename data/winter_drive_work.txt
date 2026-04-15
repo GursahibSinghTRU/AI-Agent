@@ -1,0 +1,27 @@
+```markdown
+# Winter Driving Safety & Risk Management (BC Context)
+
+## Hazard Assessment
+- **Classification:** Winter driving is a confirmed work hazard.
+- **Risk Requirements:** Risk assessments must include winter driving conditions.
+- **Environmental Factors:** Snow, ice, rain, and fog can arrive suddenly; planning must begin year-round.
+
+## Employer Legal Responsibilities
+- **Duty of Care:** Employers must assess and reduce risks for employees driving on the job.
+- **Preparation:** Use provided templates to plan ahead for winter.
+- **Scope:** Applies to employers, supervisors, and commercial carriers.
+
+## Vehicle & Driver Specifications
+- **Tire Regulations:** Adherence to BC winter tire regulations required for wet, snowy, or icy roads.
+- **Vehicle Maintenance:** Check tires, top up fluids, and verify general vehicle readiness before winter.
+- **Emergency Kit:** Drivers must pack a winter emergency kit.
+
+## Training & Resources
+- **Workplace Program:** "Making Winter Driving Safer for Your Employees" Online Course.
+- **Individual Driver Training:** "Become a Safer Winter Driver" Online Course.
+- **Guides & Tools:**
+  - Winter Driving Safety Planning Tool Kit.
+  - Tailgate Meeting Guides (covers tire specs, weather conditions, etc.).
+  - Winter Driving Safety Tip Sheets.
+- **Supporting Organization:** Road Safety at Work Alliance (provides resources for roadside worker protection).
+```

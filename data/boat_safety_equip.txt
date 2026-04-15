@@ -1,0 +1,39 @@
+```markdown
+# Canadian Boating Safety Equipment Requirements (Summary)
+
+## Regulatory Basis
+Equipment requirements align with:
+*   Small Vessel Regulations (SOR/2010-91)
+*   Navigation Safety Regulations (SOR/2020-216)
+*   Collision Regulations (C.R.C., c. 1416)
+
+## General Equipment Categories
+*   **Personal Lifesaving:** PFD for each person, buoyant heaving line (min 15m), reboarding device (if freeboard > 0.5m).
+*   **Vessel Safety:** Manual propelling device or anchor, bailer/bilge pump.
+*   **Visual Signals:** Watertight flashlight, distress pyrotechnics (count varies by size), dive flags (if required).
+*   **Navigation:** Sound-signalling device, navigation lights, magnetic compass, radar reflector.
+*   **Fire Fighting:** Extinguishers (BC rating varies), fire pump/hose (vessels >24m), axes, buckets.
+
+## Requirements by Vessel Size & Type
+
+### 1. Human-Powered Pleasure Craft
+*   *Exceptions:* Paddleboats, watercycles, stand-up paddleboards, sealed-hull sit-on-top kayaks require only PFD, sound device, and watertight flashlight.
+*   *Standard:* PFD, heaving line, reboarding device, bailer, flashlight, 6 distress signals (unless <1nm from shore), sound device, navigation lights.
+
+### 2. Power-Driven and Sailing Vessels
+| Length | Distress Signals | Anchor Length | Fire Extinguisher | Additional Requirements |
+| :--- | :--- | :--- | :--- | :--- |
+| **Up to 6m** | 3 (non-smoke) | 15m | 5BC (if engine/fuel/galley) | Compass exempt if <8m/daylight |
+| **6m – 9m** | 6 (non-smoke) | 15m | 5BC (if engine/fuel/galley) | Same as above |
+| **9m – 12m** | 12 (max 6 smoke) | 30m | 10BC (if engine/fuel/galley) | Compass required |
+| **12m – 24m** | 12 (max 6 smoke) | 50m | 10BC (Fuel/Accommodation/Machinery) | 1 or 2 Sound appliances (+Bell if >20m). 1 Axe, 2 Buckets (10+L). |
+| **Over 24m** | 12 (max 6 smoke) | 50m | 10BC (Fuel/Accommodation/Machinery) | SOLAS Lifebuoy (lighted + line). 2 Axes, 4 Buckets (10+L). Fire pump required. |
+
+## Conditions & Exceptions
+*   **Navigation Lights:** Required only after sunset, before sunrise, or in restricted visibility (fog, snow).
+*   **Radar Reflectors:** Required on non-metallic vessels under 20m (unless impractical or safe in limited traffic/daylight).
+*   **Competition Exemption:** Vessels may be exempt from equipment requirements if participating in a race with accompanying vessels carrying appropriate gear.
+*   **Location Exemption:** Some equipment (e.g., pyrotechnic signals) exempt if vessel never exceeds 1 nautical mile from shore.
+*   **Bilge Pump:** Not required for vessels incapable of capsizing or with watertight sealed compartments.
+*   **PFD Sizing:** Must be appropriate size for each person on board.
+```

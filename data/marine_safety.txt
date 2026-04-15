@@ -1,0 +1,23 @@
+```markdown
+# Boating Safety Standards & Guidelines (Transport Canada)
+
+## Regulatory Requirements
+- **Pleasure Craft License:** Mandatory application required before purchasing a pleasure craft.
+- **Operator Certification:** A Pleasure Craft Operator Card (PCOC) is required for operation.
+- **Vessel Classification:** Distinguish between pleasure craft and non-pleasure craft to determine applicable regulations.
+- **Vessel Operation Restrictions:** Apply for restrictions where applicable (e.g., seasonal or location-based limits).
+
+## Safety Protocols & Best Practices
+- **Equipment:** Must carry appropriate Personal Floatation Devices (PFDs) for adults and children.
+- **Pre-Departure:** Verify weather and water conditions; complete pre-departure checklists and courtesy checks.
+- **Impairment:** Zero tolerance for alcohol or substances; operators must remain alert.
+- **Trip Planning:** Development of trip plans is recommended for safety.
+- **Navigation:** Use the *Discover Boating* app for access to rules, guidelines, and alerts.
+
+## Risk Management & Resources
+- **Recalls & Alerts:** Monitor Transport Canada for product recalls and safety notices affecting equipment.
+- **External Sources:** Content from third-party sources is not subject to official language, privacy, or accessibility requirements; Government of Canada does not guarantee accuracy of external information.
+- **Enforcement:** Reference CSA 2001 sources for police enforcement authorities and acceptance of electronic distress signals.
+- **Support:** Contact the Office of Boating Safety for concerns, complaints, or licensing assistance.
+- **Related Topics:** Flood condition navigation, abandoned boats/wrecks, and marine safety equipment initiatives.
+```

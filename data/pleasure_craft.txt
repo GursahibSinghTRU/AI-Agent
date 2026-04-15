@@ -1,0 +1,31 @@
+```markdown
+# Canadian Pleasure Craft Operator Card (PCOC) & Safety Regulations
+
+## Proof of Competency Requirements
+- **Mandatory:** Required for operating motorized recreational pleasure crafts in Canada (includes electric trolling motors).
+- **Required:** Even when motor is not in use (e.g., sailing).
+- **Accepted Documents:**
+  - Pleasure Craft Operator Card (PCOC)
+    - *Note:* A paper or electronic copy of a PCOC is NOT acceptable.
+  - Certificate from Canadian course completed before April 1, 1999.
+  - Professional marine certificate or equivalent (verified against Transport Canada list).
+  - Completed Rental Boat Safety Checklist (valid for rental period only).
+  - Visitor's home state/country operator card (if meeting requirements).
+- **Exemptions:**
+  - Waters of Nunavut or Northwest Territories.
+  - Visitors operating their own craft for less than 45 consecutive days.
+
+## Obtaining & Replacing PCOC
+- **Issuance:** Pass a boating safety test delivered by accredited Transport Canada course providers.
+- **Course Content:** Operator responsibilities, safety equipment, emergency procedures, waterway sharing, emergency response.
+- **Validity:** Valid for life.
+- **Replacement:** Lost/destroyed cards can be replaced from the course provider (fee applies).
+- **Inquiries:** Contact Office of Boating Safety or use Course Provider Lookup tool.
+
+## Youth Restrictions (Operators Under 16)
+- **Under 12 Years (Unsupervised):** Max 10 hp / 7.5 kW.
+- **Ages 12–15 Years (Unsupervised):** Max 40 hp / 30 kW.
+- **Under 16 Years:** No Personal Watercraft (PWC) permitted.
+- **Direct Supervision:** Requires a person 16+ years of age in the boat.
+- **Territory Exceptions:** Restrictions do not apply in Nunavut or Northwest Territories.
+```

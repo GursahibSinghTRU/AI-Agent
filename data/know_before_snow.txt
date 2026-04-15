@@ -1,0 +1,32 @@
+```markdown
+# Campaign: Know Before You SNOW
+**Organizations:** BC Search and Rescue Association (BCSARA), BC AdventureSmart, North Shore Rescue, Partners (Ski Areas, Land Managers, Schools)
+**Region:** British Columbia (North Shore)
+**Duration:** November through March (Winter Season)
+**Objective:** Reduce SAR impacts, promote informed winter travel, and strengthen safety culture.
+
+## Risk Statistics (2023–2025)
+- **Winter Hiking:** Accounts for approximately 74% of all winter incidents.
+- **Winter Sports:** Combined skiing, snowboarding, and snowshoeing incidents rose to 13.5%.
+- **Terrain Risk:** Leaving ski resort boundaries automatically enters avalanche terrain.
+
+## Safety Protocols
+- **The 3Ts:** Plan (Trip Plan), Train (Skills), Take the Essentials (Gear).
+- **Alpine Responsibility Code (ARC):** Mandatory compliance; do not bypass lift lines or resort boundaries.
+- **Backcountry Requirements:** Travel via designated entry points requires self-sufficiency (24-hour survival gear, satellite device, training).
+- **Visibility:** Wear bright clothing for SAR detection.
+- **Decision Making:** Turn around early if weather or conditions deteriorate.
+- **Solo Travel:** Never travel alone in hazardous terrain.
+
+## Emergency Procedures
+- **Activation:** Call 911 or Emergency Coordination Centre (1-800-663-3456) for satellite devices.
+- **Reporting:** Do **not** wait 24 hours to report overdue or missing persons.
+- **Cost:** Search and Rescue services in BC are provided free of charge.
+- **Activation Authority:** SAR teams are activated by requesting agencies (Police, EHS) only.
+
+## Key Resources
+- **Snow Safety Program:** https://www.adventuresmart.ca/programs/snow-safety-education/
+- **Alpine Responsibility Code:** https://old.adventuresmart.ca/winter/alpinecode.htm
+- **Avalanche Canada Map:** https://avalanche.ca/map
+- **Avalanche Gear Video:** https://youtu.be/IVgDsOB_1M4?si=3jI7QhQw0To32q2L
+```

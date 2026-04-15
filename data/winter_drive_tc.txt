@@ -1,0 +1,31 @@
+```markdown
+# Winter Driving & Snowmobile Safety Guidelines (Transport Canada)
+
+## Vehicle Preparation
+- **Snow Clearance:** Remove all snow from vehicle, roof, hood, windows, and lights before driving.
+- **Tires:** Transport Canada recommends winter tires on all wheels for cold, snowy, or icy conditions (better traction due to softer rubber/tread design).
+- **Emergency Kit:** Keep phone charged with a cable; carry emergency supplies.
+
+## Driving Protocols
+- **Attire:** Wear seat belts at all times, even with bulky coats. Ensure child car seat compatibility with winter clothing per manual.
+- **Substances:** Do not drive after consuming alcohol or cannabis.
+- **Visibility:** Turn on headlights in poor visibility conditions.
+- **Speed:** Match speed to road/weather; avoid passing or lane changes in poor conditions.
+- **Technology:** Avoid cruise control in extreme weather; do not rely on driver assistance systems (blind spot, lane keep) in bad weather.
+
+## Braking & Skid Management
+- **Following Distance:** Increase gap between vehicles for longer stopping distances.
+- **Braking:** Maintain brake pressure if vehicle is out of control; do not release pedal.
+- **Skid Prevention:** Slow down, avoid sudden wheel movement or forceful braking.
+- **ESC:** Electronic Stability Control is standard (2012+); allows intervention to prevent skidding. Turn off only if stuck.
+
+## Snowmobile Safety
+- **Preparation:** Maintain vehicle, learn controls, take safety training, and study route/hazards.
+- **Gear & Rules:** Wear proper safety gear (helmet); follow local trail rules and etiquette.
+- **Environment:** Check weather, understand avalanche/ice safety, and carry first aid.
+- **Sobriety:** Ride sober; ride in a group if possible.
+
+## Emergency Response
+- **Contact:** Call 911 in emergencies.
+- **Shelter:** If driving becomes unsafe, pull over to rest areas or buildings.
+```

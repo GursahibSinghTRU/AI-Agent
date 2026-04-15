@@ -1,0 +1,38 @@
+```markdown
+# Heat Stress: Risk & Safety Guide (WorkSafeBC)
+
+## Definition & Responsibility
+- **Condition:** Heat stress occurs when the body heats up faster than it cools down.
+- **Risk:** Can lead to serious health effects, reduced physical/mental ability, and increased risk of workplace incidents.
+- **Responsibility:** Employers are responsible for managing heat stress risk in the workplace.
+
+## Exposure Factors
+- **Environment:** Direct/indirect sunlight, radiant heat from equipment (ovens, boilers), high air temperature, high humidity.
+- **Work:** Physical exertion generating metabolic heat.
+- **Worker:** Health conditions affecting heat response, dehydration, heat-trapping protective clothing.
+
+## Signs & Symptoms
+- **Early Warning:** Excess sweating, muscle cramps, weakness, fatigue, dizziness, nausea.
+- **Severe/Heat Disorders:** Agitation, confusion, increased/irregular heart rate, decreased consciousness, seizures.
+- **Consequence:** Untreated early signs can progress to heat exhaustion or heat stroke.
+
+## Risk Assessment Methods
+Assess potential for heat stress if workers are exposed to heat conditions.
+- **Humidex Method**
+- **Wet Bulb Globe Thermometer (WBGT) Method**
+- **Body Temperature Measurement**
+- **Heart Rate Measurement**
+- **Guidance:** Use a heat stress screening tool to select the appropriate method based on workplace conditions.
+
+## Control Measures (Hierarchy of Controls)
+1.  **Elimination/Substitution:** Cancel/postpone work, move to cooler environment, replace strenuous work with less strenuous activities.
+2.  **Engineering:** Install air conditioning, improve ventilation, insulate/cover hot surfaces, install shields/barriers, automate work, reduce humidity.
+3.  **Administrative:** Reschedule work (avoid hottest times), implement work-rest cycles, rotate work between hot/cool environments, provide cool-down areas with access to cool water.
+4.  **PPE:** Generally ineffective and can increase heat stress (e.g., heavy clothing). Heat-reflective or cooling suits may be appropriate in specific situations.
+
+## Regulatory Guidance & Resources
+- **Control Plan:** Required heat stress exposure control plan if workers are at risk.
+- **Reference:** OHS Guidelines G7.29-5.
+- **Tools:** Heat stress screening tool, publication on methods for measuring heat strain or stress, prevention booklet.
+- **Additional:** Sun Safety at Work resources for outdoor workers.
+```

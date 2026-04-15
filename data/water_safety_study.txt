@@ -1,0 +1,29 @@
+```markdown
+# Document: BC Government Summer Water Safety Tips
+**Source:** Ministry of Public Safety and Solicitor General (BC Coroners Service, Lifesaving Society)  
+**Date:** June 22, 2018  
+**Region:** British Columbia, Canada  
+**Topic:** Drowning Prevention and Water Recreation Safety  
+
+## Key Statistics
+- **Seasonal Risk:** Drowning deaths consistently spike during summer months (May–August).
+- **Accidental Drownings:** 2016 saw 47 accidental drownings (lowest in the past decade); >33% occurred in the Southern Interior.
+- **Alcohol Impact:** Blood-alcohol level of 0.10 increases drowning risk during boating by approximately 10 times compared to sober individuals.
+
+## Safety Protocols & Risk Mitigation
+### Personal Flotation Devices (PFD)
+- **Requirement:** Wear a properly fitted PFD at all times while on water in any small craft.
+- **Common Error:** Storing a PFD in the boat is insufficient; 70% of boating incidents involve separation from the vessel.
+- **Vulnerable Persons:** Children, non-swimmers, and weak swimmers must wear PFDs when wading or playing near shore.
+
+### Supervision & Behavior
+- **Child Safety:** Preschool-aged children can drown in centimetres of water; drowning is often silent. Maintain arm's reach of a responsible adult. Swim lessons do not replace active supervision.
+- **Buddy System:** Never swim alone; keep visual contact with a partner.
+- **Substance Policy:** Do not mix alcohol with swimming, boating, or water-based activities.
+
+### Environmental Hazards
+- **Visitor Awareness:** Warn visitors of local hazards including sudden drop-offs, underwater obstacles, slippery rock edges, and unexpectedly cold water temperatures.
+- **Pre-Activity Checks:** Review weather forecasts and downstream river conditions. Obey all posted warning signs.
+- **Diving:** Never dive into unknown waters due to risks of shallow depth or hidden obstacles.
+- **Alcohol/Impairment:** Impairment is illegal for drivers and increases risk for passengers falling from shore or vessels.
+```

@@ -1,0 +1,228 @@
+
+Preventing-Drowning-WHO : https://www.lifesaving.bc.ca/wp-content/uploads/2024/09/Preventing-Drowning-WHO.pdf
+
+# TRU Risk & Safety Agent:
+
+## Knowledge Base Evaluation & Condensed Summary
+
+Document: "Preventing drowning: Practical guidance for the provision of day-care, basic swimming and water safety skills, and safe rescue and resuscitation training" (WHO, 2022)
+
+---
+
+## Relevance Assessment for Thompson Rivers University
+
+High Relevance
+- Outdoor recreation programming (Thompson River, Kamloops Lake, backcountry trips)
+- Student field courses in environmental science, nursing, education, outdoor leadership
+- International student orientation (many from regions with limited water safety infrastructure)
+- Campus event planning near water features
+- Student parent support services (day-care guidance)
+- Mental health crisis response protocols near water
+
+Moderate Relevance
+- Community outreach programming
+- Education faculty curriculum development
+- Research partnerships in injury prevention
+
+Low Relevance
+- Pre-school day-care operational details (unless supporting student-parent services)
+- Rural low-resource setting implementation specifics
+
+---
+
+## Condensed Knowledge Base Entries
+
+### 1. Water Activity Risk Assessment Checklist
+
+## Pre-Activity Site Safety Assessment
+- [ ] Water depth is known and appropriate (max: chest-depth for shortest participant)
+- [ ] Water visibility is clear enough for underwater observation
+- [ ] Flow speed is low (<= half adult walking speed for rivers)
+- [ ] Boundaries are secure and highly visible
+- [ ] No sharp objects, dangerous animals, or microbial hazards present
+- [ ] Water temperature is safe for planned activity duration
+- [ ] Emergency exit routes are identified and accessible
+- [ ] Rescue equipment (throw ropes, buoyancy aids) is on-site and functional
+- [ ] Communication method for emergency services is confirmed
+- [ ] Weather forecast reviewed; contingency plan for sudden changes
+
+### 2. Supervision Ratios for Student-Led Water Activities
+
+| Activity Type | Max Participant:Supervisor Ratio | Notes |
+|--------------|----------------------------------|-------|
+| Basic swimming instruction | 5:1 | In-water supervision required |
+| Land-based water safety training | 10:1 | Classroom or shoreline setting |
+| Open water recreation (calm) | 8:1 | Participants must demonstrate basic swimming competency |
+| Moving water/whitewater | 4:1 | Additional certified rescue personnel required |
+| Participants with disclosed medical conditions | 2:1 or 1:1 | Individual risk assessment required |
+
+### 3. Emergency Action Plan Template (Adapted for Campus Use)
+
+## TRU Water Activity Emergency Protocol
+
+### Immediate Response Sequence
+1. Recognize: Identify distress signals (vertical position, inability to call for help, gasping)
+2. Alert: Activate emergency response (campus security: 250-828-5000; 911 if off-campus)
+3. Rescue: Use "Reach-Throw-Row-Go" hierarchy:
+   - Reach: Extend pole, branch, or clothing from stable position
+   - Throw: Toss buoyant object with attached line
+   - Row: Use boat only if trained and conditions permit
+   - Go: Enter water ONLY as last resort with proper PPE and backup
+4. Resuscitate: Begin CPR if victim is unresponsive and not breathing normally
+   - Compression rate: 100-120/min; depth: 5-6 cm (adults)
+   - Ratio: 30 compressions : 2 rescue breaths
+   - Continue until professional help arrives or victim recovers
+5. Report: Document incident via TRU Safety Reporting System within 24 hours
+
+### Roles and Responsibilities
+- Activity Leader: Primary decision-maker; maintains headcount; initiates emergency protocol
+- Designated Responder: Trained in water rescue/CPR; positioned for optimal observation
+- Communications Lead: Manages emergency calls; provides location coordinates; liaises with responders
+- Student Support: Assists with crowd control; provides comfort to other participants
+
+### 4. Participant Screening Guidelines
+
+## Pre-Enrollment Health and Risk Screening Questions
+(To be completed confidentially by participants or guardians)
+
+1. Do you have any medical conditions that could affect your safety in or near water? 
+   (e.g., epilepsy, asthma, heart conditions, seizures, diabetes)
+2. Have you ever experienced a loss of consciousness, seizure, or blackout?
+3. Do you have difficulty with mobility, balance, hearing, or vision that could impact water safety?
+4. Are you currently taking medications that may cause drowsiness, dizziness, or impaired judgment?
+5. Do you have any concerns about your ability to follow safety instructions in a group setting?
+
+If "Yes" to any question: 
+- Schedule confidential consultation with campus health services
+- Develop individualized accommodation plan
+- Determine if modified participation or alternative activities are appropriate
+- Document accommodations and obtain informed consent
+
+### 5. Training Competency Standards for Student Leaders
+
+## Minimum Certification Requirements for Student Activity Leaders
+
+### Core Competencies (All Water-Adjacent Activities)
+- [ ] Valid Standard First Aid and CPR Level C (or equivalent)
+- [ ] Completion of TRU Water Safety Orientation Module
+- [ ] Demonstrated ability to conduct pre-activity risk assessments
+- [ ] Knowledge of local water hazards (Thompson River currents, cold water shock, etc.)
+
+### Additional Requirements (Swimming Instruction or High-Risk Activities)
+- [ ] Lifesaving Society Bronze Medallion or equivalent
+- [ ] Completed "Train-the-Trainer" module for peer education
+- [ ] Annual refresher training on rescue techniques and CPR
+- [ ] Documented supervised practice hours (minimum 10 hours)
+
+### Refresher Schedule
+- CPR skills: Review every 6 months; formal recertification every 12 months
+- Rescue techniques: Annual practical assessment
+- Risk assessment protocols: Biannual review with campus safety office
+
+### 6. Cultural and Accessibility Considerations
+
+## Inclusive Water Safety Programming
+
+### Addressing Sociocultural Barriers
+- Offer gender-segregated training sessions where requested
+- Provide modest swimwear options and private changing areas
+- Use visual aids and multilingual materials for international students
+- Engage cultural liaisons when introducing water safety concepts to communities with limited water exposure
+
+### Accommodations for Disabilities
+- Use flotation aids to enable participation for students with mobility limitations
+- Adapt skill assessments: focus on "any method to reach safety" vs. specific stroke techniques
+- Ensure communication methods accommodate hearing/vision impairments
+- Train staff on disability-inclusive rescue techniques (e.g., safe transfer methods)
+
+### Consent and Communication
+- Obtain informed consent in participant's preferred language/format
+- Clearly explain inherent risks without causing undue alarm
+- Provide opt-out alternatives that maintain educational value
+
+### 7. Incident Reporting and Quality Improvement
+
+## Post-Incident Documentation Requirements
+
+### Mandatory Data Fields
+- Date, time, location, and environmental conditions
+- Participant demographics (age, skill level, disclosed conditions)
+- Activity type and supervision ratio at time of incident
+- Sequence of events (timeline with witness statements)
+- Response actions taken and timing
+- Outcome (injury severity, medical treatment, follow-up)
+- Contributing factors identified
+
+### Continuous Improvement Cycle
+1. Quarterly review of incident reports by Campus Safety Committee
+2. Annual audit of training site assessments and emergency plans
+3. Feedback loop: Update training materials based on near-miss analysis
+4. Share de-identified learnings with partner institutions via BC Safety Network
+
+---
+
+## Implementation Recommendations for RAG Pipeline
+
+### Suggested Metadata Tags
+#water-safety #outdoor-recreation #emergency-response 
+#risk-assessment #student-leadership #inclusive-practice 
+#TRU-campus #Thompson-River #Kamloops-Lake
+
+### Query Optimization Tips
+- Prioritize retrieval of checklists and ratio tables for operational queries
+- Flag emergency protocol content for high-priority response in crisis scenarios
+- Link screening guidelines to student registration workflows
+- Cross-reference with TRU-specific policies (e.g., Field Trip Safety Policy, Student Code of Conduct)
+
+### Content Gaps to Address Locally
+- [ ] TRU-specific emergency contact protocols and campus security procedures
+- [ ] Local water body hazard maps (Thompson River rapids, Kamloops Lake drop-offs)
+- [ ] Campus health services referral pathways for medical screening follow-up
+- [ ] Integration with TRU's existing risk management software/platforms
+
+---
+
+Next Steps: Please share the next batch of documents. Recommended priorities: campus-specific emergency protocols, local environmental hazards, and student mental health crisis response to build a comprehensive, context-aware knowledge base.
+
+## Key Evidence-Based Standards from WHO Document
+
+### Target Populations
+- School-age children aged 6 years and older for swimming instruction
+- Pre-school children aged 1-4 years for day-care supervision
+- Bystanders aged 10 years and older for rescue/resuscitation training
+
+### Critical Ratios
+- Swimming instruction: maximum 1 instructor per 5 participants
+- Day-care (ages 1-4): maximum 1 caregiver per 13 children
+- Day-care (under 12 months): maximum 1 caregiver per 3 infants
+- Rescue training (land-based): maximum 1 instructor per 10 trainees
+- Rescue training (water-based): maximum 1 instructor per 5 trainees
+
+### Curriculum Requirements
+- Swimming skills: ability to swim 25 metres using any method
+- Floating competency: maintain airway above water for minimum 30 seconds
+- Rescue techniques: non-contact methods only (reach, throw) for untrained rescuers
+- CPR training: include both rescue breathing and chest compressions; refresher every 12 months
+
+### Site Safety Standards
+- Water depth: shallow enough that shortest participant stands with water below armpits
+- Water visibility: clear enough for underwater observation of participants
+- Flow characteristics: river current no faster than half adult walking speed
+- Boundaries: secure, highly visible, and physically enforced where needed
+- Temperature: safe for planned activity duration and participant vulnerability
+
+### Documentation Requirements
+- Written emergency action plan integrated into instructor training
+- Incident reporting system capturing adverse events, activations, and outcomes
+- Site safety audits conducted regularly by qualified personnel
+- Participant records including consent, screening results, and skill progression
+- Instructor qualifications, training dates, and ongoing competency assessments
+
+### Safeguarding Measures
+- Community involvement in staff selection where formal background checks unavailable
+- Written policies for reporting and investigating abuse or neglect concerns
+- Ongoing monitoring of instructor-participant interactions
+- Training for all staff on recognizing signs of abuse, neglect, or exploitation
+- Clear protocols for managing disclosures and engaging statutory authorities
+
+

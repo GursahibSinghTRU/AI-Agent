@@ -1,0 +1,23 @@
+```markdown
+# Winter Driving Safety Guidelines (B.C. Roads)
+
+## Risk Indicators
+- **Speed-Related Crashes:** Crashes due to driving too fast for conditions rise by 79% in December and 64% in January compared to October averages.
+- **Pedestrian Incidents:** Nearly 50% of pedestrian crashes involving drivers occur between October and January.
+
+## Vehicle Specifications
+- **Tires:** Winter tires recommended below 7°C. Required on specific highways.
+  - **Markings:** Look for Mountain Snowflake or M+S symbol.
+  - **Tread Depth:** Minimum 3.5 mm.
+- **Maintenance:** Check lights, wipers, and top up washer fluid before trips.
+
+## Operational Safety Protocols
+- **Speed Control:** Gears down; slow down for conditions. Avoid cruise control on slippery roads.
+- **Maneuvering:** Increase following distance; avoid sudden acceleration, braking, or sharp turns.
+- **Environment:** Check drivebc.ca for road conditions/closures. Allow extra travel time or avoid driving in poor conditions.
+- **Visibility:** Keep phone out of sight; scan for pedestrians at intersections and transit stops.
+- **Emergency Kit:** Include food, water, warm clothes, ice scraper, brush, shovel, and traction mats.
+
+## Authority
+- Safety advisories issued by ICBC and BC Highway Patrol.
+```

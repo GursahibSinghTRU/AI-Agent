@@ -1,0 +1,28 @@
+```markdown
+# Boating Safety Guidelines (Transport Canada)
+
+## Regulatory Authority
+- **Office of Boating Safety**: Oversees regulations, standards, enforcement, and technical services for recreational vessels.
+- **Responsibility**: Operator is responsible for the safety of guests and others using the waterway.
+
+## Mandatory Compliance
+- **Pleasure Craft License**: Required application before purchase.
+- **Operator Certification**: Valid Pleasure Craft Operator Card (PCOC) mandatory.
+  - *Replacement*: Use Course Provider Lookup tool for lost/destroyed cards.
+- **Restractions**: Adherence to Vessel Operation Restriction Regulations.
+
+## Operational Safety Protocols
+- **Impairment**: Zero tolerance for alcohol and other substances while operating a vessel.
+- **Safety Gear**: Proper selection of Personal Floatation Devices (PFDs) for adults and children.
+- **Pre-Departure Checks**:
+  - Verify water and weather conditions.
+  - Prepare trip plans.
+  - Conduct courtesy and pre-departure inspections.
+- **Speed**: Manage speed appropriately for conditions and safety.
+
+## Resources & Alerts
+- **Mobile Tool**: Discover Boating app (rules, guidelines, best practices).
+- **Information**: Marine Safety Publications (TPs), recall notices, and flood navigation warnings.
+- **Liability**: Government of Canada not responsible for accuracy or currency of external source information.
+- **Contact**: Office of Boating Safety for concerns or feedback.
+```

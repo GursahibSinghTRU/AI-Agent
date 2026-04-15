@@ -1,0 +1,46 @@
+# PDF Summary: www_actsafe_ca_wp-content.txt
+**Source:** https://www.actsafe.ca/wp-content/uploads/2023/10/Preventing-Cold-Related-Illness-Safety-Bulletin-34.pdf
+**Word Count:** 1640 words
+**Processing Date:** 2026-04-15 13:20:51
+---
+
+# Safety Summary: Preventing Cold-Related Illness
+**Target Audience:** TRU Students in Motion Picture/Film Production
+**Document Source:** ACTSAFE SAFETY BULLETIN #341
+
+## 1. Hazard Overview
+Working in cold, wet, or windy conditions poses severe risks to performers and crew members.
+*   **Potential Consequences:** Cold-related illness can lead to permanent tissue damage, gangrene, amputation, or death.
+*   **When it Occurs:** Illness can happen at any time of year, particularly with prolonged exposure.
+*   **High-Risk Scenarios:** Risks increase during practices such as:
+    *   Working near manufactured wind or rain towers.
+    *   Wearing costumes inappropriate for the temperature conditions.
+    *   Emergency situations involving water submersion (e.g., falling into water).
+*   **Physiology:** Illness (cold stress) occurs when skin temperature drops and the body cannot warm itself. Normal body temperature is ~37°C.
+
+## 2. Responsibilities
+*   **Employers:** Must maintain an overall health and safety program specific to the workplace.
+*   **Workers & Supervisors:** Must recognize individual risk factors and understand signs of cold stress.
+
+## 3. Individual Risk Factors
+Workers should assess personal risk before starting in cold environments. Factors include:
+*   Underlying health conditions.
+*   Poor physical conditioning.
+*   Previous cold injuries.
+*   Fatigue.
+*   Medications.
+*   Age (specifically for children/elderly).
+
+## 4. Signs of Cold-Related Illness
+
+| Condition | Description | Key Symptoms |
+| :--- | :--- | :--- |
+| **Chilblains** | Painful, non-freezing injury (hands/feet). <br> *Risk:* Infection/severe damage if untreated. | • Small, red, swollen skin areas<br>• Tingling, burning, itching<br>• Tender blue bumps (after rewarming) |
+| **Trench Foot** | Non-freezing injury of feet caused by wet/cold exposure. | • Tingling, burning, then numbness<br>• Heavy or "wooden" feet; difficulty walking<br>• Red, swollen skin that turns pale and clammy |
+| **Frostbite** | Serious condition where skin/tissues freeze (extremities). <br> *Risk:* Gangrene, amputation, permanent damage. | • Pins and needles, throbbing<br>• Skin turns pale/blue; feels hard/frozen<br>• Clumsiness from joint stiffness<br>• Painful blisters/scabs upon rewarming |
+| **Hypothermia** | **Medical Emergency:** Body temp falls below 35ºC. <br>Can occur in warmer temps if chilled by water/sweat. | • Shivering stops (once moderate/severe)<br>• Clumsiness, lack of coordination<br>• Drowsiness, slurred speech, confusion<br>• Slow, shallow breathing; weak pulse<br>• Loss of consciousness |
+
+## 5. Emergency Response
+If hypothermia is suspected or a severe cold injury occurs:
+1.  Contact **First Aid**.
+2.  Call **911**.

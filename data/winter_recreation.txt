@@ -1,0 +1,26 @@
+```markdown
+# Winter Sports and Recreation Safety Guidelines
+
+## General Safety Protocols
+- **Protective Equipment:** Wear sport-certified helmets. Supplement with wrist guards, goggles, gloves, and padding.
+- **Attire:** Dress in layers to prevent frostbite/hypothermia. Use neck warmers instead of scarves. Remove drawstrings from clothing.
+- **Skin & Hydration:** Apply sunscreen for UV protection (required even on cloudy days). Hydrate before and during activity.
+- **Supervision:** Actively monitor young children during outdoor activities.
+- **Clothing Maintenance:** Change wet clothing immediately to prevent cold injury.
+
+## Ice Safety (Skating)
+- **Thickness Requirements:** Minimum 15 cm (6 in) for solo skating; 20 cm (8 in) for groups.
+- **Inspection:** Verify ice thickness each session; conditions change rapidly.
+- **Restricted Areas:** Avoid open water pockets and storm water management ponds. Consult local experts on area hazards.
+
+## Sledding/Tobogganing Safety
+- **Body Position:** Kneel or sit upright.
+- **Prohibited Positions:** Do not sled headfirst (risk of head injury) or lie flat on back (risk of spinal injury).
+- **Location:** Use designated sledding areas. Avoid roads, parking lots, rocks, trees, goal posts, and fences.
+
+## Skiing and Snowboarding Safety
+- **Equipment Check:** Inspect gear condition and fit before each use.
+- **Professional Service:** Have bindings checked annually by a professional.
+- **Snowboard Specifics:** Ensure full-length steel edges, sturdy bindings, and a securely attached board leash.
+- **Eye Protection:** Use sunglasses or goggles with UV protection against snow glare.
+```

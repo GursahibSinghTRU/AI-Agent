@@ -1,0 +1,50 @@
+```markdown
+# Cold Water and Ice Safety Summary
+**Source:** The Lifesaving Society (Ontario Branch)
+**Topic:** Ice Safety, Cold Water Survival, and Drowning Prevention
+
+## Key Statistics
+- **Seasonality:** Approximately 35% of drownings in Canada occur from October to April.
+- **Temperature Risk:** Even in summer, Canadian lakes/rivers are usually below 20°C. Hypothermia can set in within 1 hour.
+- **Demographics:** Males account for 80% of unintentional ice-related fatalities; almost all fatalities occur among adults.
+- **Activity Risk:** Nearly half of fatalities occur during recreational activity. ~40% occur while snowmobiling.
+- **Location:** ~50% on lakes/ponds; ~33% on flowing water.
+- **Alcohol:** Contributing factor in 1 in 3 fatalities.
+- **Socio-Factor:** 50% of fatalities occur when the individual is alone.
+
+## Minimum Ice Thickness Requirements
+| Activity | Minimum Thickness |
+| :--- | :--- |
+| Single Person | 4 inches (10 cm) |
+| Snowmobile / ATV | 5 inches (12 cm) |
+| Single Car | 8-12 inches (20-30 cm) |
+| Full-Size Pickup | 12-15 inches (30-38 cm) |
+
+## Safety Protocols
+- **Equipment:** Wear a thermal protection buoyant suit or lifejacket/PFD. Carry a safety kit (lighter, ice picks, rope, phone, whistle).
+- **Planning:** Never go on the ice alone. Inform someone of destination and return time. Avoid travel at night or low visibility.
+- **Avoid:** Unfamiliar paths, slushy/thawed/refrozen ice, layered/rotten ice, and ice near moving water.
+- **Behavior:** Stay sober. Do not attempt to rescue dogs falling into cold water.
+- **Myths Debunked:**
+    - Snow insulates and weakens ice.
+    - Thick ice can be fragile ("rotten").
+    - Clothing traps air and aids buoyancy initially.
+    - Swimming ability is secondary in cold water survival.
+
+## Emergency Procedure: If Ice Breaks
+**1-10-1 Rule:**
+1. **Minute:** Control breathing.
+2. **10 Minutes:** Attempt to get out of the water before losing mobility.
+3. **1 Hour:** Survival window before hypothermia (with PFD).
+
+**Actions:**
+- Do not panic.
+- Turn toward the unbroken ice immediately.
+- Disperse weight; do not stand up.
+- Swim/crawl on your stomach to shore.
+- Roll, crawl, or shimmy away from the break.
+
+## Policy & Training
+- **Swim to Survive:** Defines minimum skills needed to survive an unexpected deep water fall.
+- **Lifejackets:** Mandatory wearing of functional lifejackets/PFDs is advocated for watercraft less than 5.5m without a cabin.
+```

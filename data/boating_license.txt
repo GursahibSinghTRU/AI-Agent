@@ -1,0 +1,32 @@
+```markdown
+# British Columbia Boating Safety & Legal Requirements
+
+## Certification Requirement
+- **Mandatory Card:** A Pleasure Craft Operator Card (PCOC) is legally required to operate any motorized vessel on Canadian/BC waters.
+- **Driver's Licence:** A standard BC driver's licence is **not** a valid substitute for a boating licence.
+- **Validity:** The PCOC is valid for life and does not expire.
+
+## Age & Engine Power Restrictions
+- **Under 12 Years:** Maximum 10 horsepower (unsupervised operation allowed).
+- **Ages 12–16:** Maximum 40 horsepower (unsupervised operation allowed).
+- **Under 16 Years:** Personal Watercraft (PWC) operation is strictly prohibited.
+- **Minimum Age:** No minimum age requirement to obtain the PCOC.
+
+## Prohibited Conduct
+- **Alcohol:** Operating a vessel while under the influence of alcohol is illegal and mirrors standard drinking-and-driving laws.
+- **Proof of Competency:** Must be carried on board at all times while operating a motorized vessel.
+
+## Penalties & Enforcement
+- **Fines:** Operators caught without proof of competency may face fines of $250 or more.
+
+## Exemptions from PCOC Requirement
+- Completed boating safety course prior to April 1, 1999.
+- Rentals equipped with a completed and signed safety checklist (valid only for rental duration).
+- Holders of recognized marine certificates or equivalencies approved by Transport Canada.
+- Non-residents operating unregistered pleasure craft in BC waters for less than 45 consecutive days.
+- Members of First Nations engaged in daily living or subsistence activities (e.g., hunting/fishing).
+
+## Additional Licensing Notes
+- **Fishing:** A separate recreational fishing licence is required based on freshwater or saltwater location.
+- **Commercial:** PCOC does not suffice for commercial chartering or tour operations; additional certifications are necessary.
+```

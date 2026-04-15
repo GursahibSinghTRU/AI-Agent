@@ -1,0 +1,30 @@
+```markdown
+# Hiking Safety & Preparation Guidelines
+**Source:** Parks Canada (2024)
+**Scope:** Outdoor risk management for hiking activities.
+
+## Core Responsibilities
+*   **Self-Sufficiency:** Individuals are responsible for their own safety and must remain self-sufficient during all conditions and emergencies.
+*   **Emergency Protocols:** Review visitor safety and emergency procedures for the specific location prior to departure.
+
+## Pre-Hike Planning
+*   **Trail Selection:** Match trail difficulty (Green Circle/Easy, Blue Square/Moderate, Black Diamond/Difficult, Double Diamond/Route) to group experience and physical ability.
+*   **Pacing:** Estimate travel time conservatively. Average beginner speed is 2–2.5 km/h.
+*   **Navigation:** Carry physical maps, compass, and GPS tools. Do not rely solely on smartphone GPS due to limited cell service.
+*   **Trip Plan:** Inform a contact of location, expected return time, and emergency contacts before departure.
+
+## Safety Equipment & Gear
+*   **Essentials:** First aid kit, whistle, flashlight, fire starter, multi-tool.
+*   **Footwear:** Waterproof, supportive shoes with grip for roots/rocks. Avoid flip-flops.
+*   **Clothing:** Lightweight, breathable layers for changing weather. Include sun protection (sunglasses, sunscreen, hat).
+
+## During the Hike
+*   **Hydration:** Consume ~0.5 L water per hour. Do not wait until thirsty.
+*   **Nutrition:** Bring high-energy snacks; pack complete meals for hikes exceeding a few hours.
+*   **Wildlife:** Maintain distance (100m for bears/cougars, 30m for moose/elk/deer). Do not feed or approach wildlife.
+*   **Environment:** Stay on marked trails to protect vegetation and wildlife. Dispose of all trash and recyclables.
+*   **Group Safety:** Avoid solo hiking unless experienced or on easy, popular trails.
+
+## Post-Hike
+*   **Leave No Trace:** Remove all waste from the site or use designated bins.
+```

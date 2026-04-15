@@ -1,0 +1,32 @@
+# Avalanche Safety Guidelines
+
+## Avalanche Terrain
+- **Slope Angle:** Most avalanches occur on slopes between 30° and 45°.
+- **Terrain Features:**
+  - **Steep Slopes:** Slopes larger than 10m x 10m (tennis court size) are at risk.
+  - **Convex Rolls & Cornices:** Act as trigger points; areas under or on these features are high-risk.
+  - **Avalanche Paths:** Identified by forest openings (tree gaps) or alpine slope shape. Remain aware of slopes above your location even on flat terrain.
+- **Terrain Traps:** Features that increase consequence severity if caught include gullies, creek beds, ditches, cliffs, trees/rocks in slide paths, and flat areas under steep slopes.
+
+## Environmental Conditions
+- **Heavy Snowfall:** ≥30cm in 48 hours or ≥2cm per hour for several hours.
+- **Wind:** Creates dangerous wind slabs on the lee or downwind side of ridges and high features. Surface lines indicate drifting.
+- **Warming:** Strong sunshine, warm temperatures, and rain destabilize snowpack. Warming close to 0°C after a storm is a common trigger window.
+
+## Signs of Snowpack Instability
+- **Shooting Cracks:** Cracks shooting from under weight indicate unstable snow.
+- **Recent Avalanches:** Witnessed activity or physical signs of recent sliding.
+- **Whumpf:** Audible sound of snowpack collapse indicating layer instability.
+- *Note:* Absence of signs does not guarantee safety.
+
+## Avalanche Forecast
+- **Danger Rating:** Primary indicator found at the top of the forecast.
+  - Categories: Low, Moderate, Considerable, High, Extreme.
+- **Coverage:** Provided per elevation band for a specific region.
+- **Validity:** Covers the current day and the next two days.
+
+## Recommended Actions
+- Always check trailhead signs regarding avalanche terrain.
+- Complete the **Avy Savvy** online tutorial.
+- Enroll in an **Avalanche Canada Training** course.
+- Monitor forecasts before planning trips.

@@ -1,0 +1,24 @@
+```markdown
+# Boating Safety & Risk Guidelines (Canada)
+
+## Legal Mandates
+- **Pleasure Craft Operator Card (PCOC):** Mandatory for operating any motorized pleasure craft. Must be carried on board. Lifetime validity.
+- **Boating Under the Influence (BUI):** Classified as a Criminal Code offense. Alcohol consumption on board requires anchoring and permanent sleeping/kitchen facilities in most provinces.
+- **Personal Flotation Devices (PFDs):** Required for all onboard personnel. Majority of drowning victims were not wearing PFDs.
+
+## Operational Protocols
+- **Pre-Departure:** Complete maintenance and safety checklists; verify weather conditions (TV/radio forecasts).
+- **Float Plan:** Inform a shore contact of the trip itinerary, trip leader details, passenger list, and communication equipment onboard.
+- **Crew Readiness:** Designate a valid PCOC-holding Assistant Skipper to ensure navigation capability if primary operator is incapacitated.
+- **Skill Requirements:** Operators and crew should possess swimming ability. Encourage additional safety courses beyond mandatory PCOC.
+
+## Safety Resources
+- **Vessel Safety Check:** Free courtesy examinations available via Canadian Power and Sail Squadron (CPS-ECP) in partnership with the Office of Boating Safety.
+- **Regulatory Compliance:** Verify provincial carriage restrictions (e.g., OPP, SQ, RCMP).
+
+## Immediate Risk Mitigation
+- **Speed Management:** Operate at safe speeds at all times, especially in crowded areas.
+- **Vessel Awareness:** Maintain distance from large vessels with restricted maneuverability.
+- **Navigational Aids:** Respect buoys and aids placed to ensure safety.
+- **Emergency Prep:** Ensure all safety equipment is functional and accessible before departure.
+```

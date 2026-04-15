@@ -1,0 +1,36 @@
+```markdown
+# Avalanche Safety Fundamentals (Risk Mitigation)
+
+**Risk Context**
+- **Definition:** Avalanches are masses of snow moving down a slope.
+- **Statistics:** Approximately 27 U.S. fatalities annually; risk applies to all winter backcountry activities (skiing, snowboarding, hiking, climbing).
+- **Disclaimer:** Education is required; internet content is supplemental only.
+
+**The Avalanche Triangle**
+An avalanche requires three specific factors; removing any eliminates the risk:
+1. **Unstable Snow:** Influenced by weather, precipitation, and wind. Consult forecasts for unstable layers.
+2. **Avalanche Terrain:** Slopes between 30° and 45° where snow can slide.
+   - **Terrain Traps:** Gullies, cliffs, crevasses, rocks, and trees increase injury severity and entrapment depth.
+   - **Connected Slopes:** Gentle terrain connected to unstable slopes above retains risk.
+3. **Trigger:** Human weight (travelers) or natural forces (wind, rain). Note: Noise/shouting does not trigger avalanches.
+
+**Pre-Trip Protocols**
+- **Forecast Check:** Review daily avalanche danger ratings (Low, Moderate, Considerable, High, Extreme) via regional backcountry avalanche centers.
+- **Mandatory Gear (Per Person):**
+  - Avalanche Transceiver (Beacon)
+  - Snow Probe
+  - Snow Shovel
+- **Training:** Complete an avalanche awareness course before entering the backcountry. Practice rescue skills regularly.
+
+**Field Warning Signs (Red Flags)**
+Avoid activity in areas exhibiting:
+- **Recent Avalanches:** Visible debris or crown lines indicating recent slides.
+- **Shooting Cracks:** Visual signs of snowpack collapse.
+- **Whumpfing:** Audible noise caused by air release from collapsing snow.
+- **Weather Events:** Recent rain, heavy snowfall, strong winds, or rapid temperature changes.
+- **Persistent Slabs:** Unstable layers buried under newer snow, often fatal long after storms.
+
+**Risk Management Strategy**
+- **Prevention:** Education and decision-making are primary tools; rescue gear is a last-ditch measure.
+- **Decision Making:** If unstable snow is present, avoid avalanche terrain. If avalanche terrain is necessary, wait for stable snow or reduce triggers.
+```

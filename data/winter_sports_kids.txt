@@ -1,0 +1,34 @@
+```markdown
+# Winter Sports Safety Guidelines
+**Child Injury Prevention Alliance Reference**
+
+## Common Hazards & Risks
+- **Injury Types:** Cuts, bruises, broken bones, and brain injuries from falls or crashes.
+- **Sled Speeds:** Can reach 25 miles per hour.
+- **Ice Hazards:** Thin patches on frozen bodies of water can break.
+- **Environment:** Avoid sledding near trees, fences, ponds, light poles, or streets.
+
+## Personal Protective Equipment (PPE)
+- **Clothing:** Warm winter coat, hat, gloves, and slip-resistant snow boots.
+- **Helmets:** Mandatory for skiing, snowboarding, and snowmobiling. Multi-sport or bicycle helmets acceptable for ice skating or sledding if a ski helmet is unavailable.
+- **Additional Gear:** 
+  - Goggles (skiing, snowboarding, snowmobiling).
+  - Knee and elbow pads (ice skating).
+  - Wrist guards with gloves (snowboarding).
+
+## Age Recommendations (American Academy of Pediatrics)
+- **Sledding:** Children under 5 years must sled with an adult.
+- **Snowboarding:** Recommended for children 7 years or older.
+- **Snowmobiling:**
+  - Ride as passenger: 6 years or older.
+  - Operate vehicle: 16 years or older.
+
+## Safety Rules
+- **Sledding:**
+  - One person per sled unless an adult is supervising a young child.
+  - Always sit upright and face forward.
+  - Never sled head first.
+  - Prefer steerable sleds over snow disks or inner tubes.
+  - Never ride while being pulled by a motorized vehicle (car, ATV, snowmobile).
+- **Ice Skating:** Use designated areas only. Avoid river ice or thawed/refrozen ice.
+```

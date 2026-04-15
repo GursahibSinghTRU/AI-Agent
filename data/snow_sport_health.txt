@@ -1,0 +1,33 @@
+```markdown
+# Winter Sport Safety Guidelines (Source: ACEP)
+
+## General Outdoor Safety
+*   **Clothing:** Dress in layers to adjust to temperature changes. Protect frostbite-prone areas (fingers, nose).
+*   **Hydration:** Maintain fluid intake even in cold weather.
+*   **Sun Protection:** Apply sunscreen; snow reflects UV rays, increasing burn risk.
+*   **Supervision:** Adults must supervise younger children.
+
+## Sledding
+*   **Equipment Inspection:** Check sleds for sharp edges, jagged surfaces, or protruding rivets.
+*   **Terrain Check:** Inspect the sliding area before descent; teach children how to stop or bail off the sled in an emergency.
+*   **Prohibited Action:** Never hook sleds onto motorized vehicles.
+
+## Snowmobiling
+*   **Operation:** Know how to operate the specific model before driving; always ensure a full tank of gas.
+*   **PPE:** Wear goggles, helmets with chin straps, and protective clothing.
+*   **Pre-Ride:** Conduct a safety check before each ride.
+*   **Terrain:** Identify hidden hazards (fences, gullies, rocks, open water, thin ice).
+*   **Protocol:** Never ride alone or attempt stunts. Inform others of intended plans (location and return time). Remain alert to noise masking other traffic.
+
+## Skiing & Snowboarding
+*   **Head Protection:** Wear a helmet; head injuries are the leading cause of death and serious injury.
+*   **Wrist Protection:** Wear wrist guards; falls are the most common cause of wrist fractures.
+*   **Footwear:** Use hard-shell boots. Snowboarders are at higher risk for ankle injuries with soft-shell boots.
+*   **Training:** Take lessons from a qualified instructor. Avoid stunts without proper instruction, practice, and protection.
+
+## Skating
+*   **Gear:** Wear skates that fit comfortably and provide adequate ankle support. Sharpen blades professionally at the start of each season.
+*   **Environment:** Skate only on specially prepared areas where ice strength is verified. Never skate on frozen ponds without safety signage. Check for cracks, holes, and debris.
+*   **Skills:** Learn basic skills including how to stop and fall safely.
+*   **Supervision:** Do not skate alone. Younger and less experienced skaters require appropriate safety gear and adult supervision.
+```

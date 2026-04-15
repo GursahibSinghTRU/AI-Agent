@@ -1,0 +1,34 @@
+```markdown
+# Water Safety Knowledge Base: Open Water Swimming (BC Context)
+
+## Key Risk Factors
+- **Open Water vs. Pool:** Swimming skills in pools do not directly translate to open water. Open water involves variables including tides, currents, and cold temperatures.
+- **Cold Water:** Ocean water temperatures are often cold and can affect movement and equilibrium.
+- **Underwater Hazards:** Underwater currents may differ from surface appearance; debris, objects, and vessels can appear quickly.
+- **Visibility Risks:** Swimmers are "invisible" to boats, kayakers, and other water users.
+- **Sobriety:** Alcohol and drugs significantly impair water safety.
+
+## Safety Protocols
+- **Swim Buddy Rule:** Never swim alone.
+- **Lifeguard Presence:** Always swim in open water locations where lifeguards are present.
+- **Visibility:** Wear bright-colored bathing suits and personal flotation devices (PFDs) to ensure visibility.
+- **Skill Development:** Learn basic swimming skills in a pool before attempting open water.
+
+## Drowning Statistics (BC)
+- **2023 Data:** 101 accidental drowning deaths reported in B.C.
+- **Residency:** 85% of accidental drowning victims in recent years were known to reside in B.C.
+- **Newcomer Trend:** There is an observed increase in non-fatal drowning rescues involving newcomers to the province, indicating a lack of local water safety training.
+
+## Recommended Resources
+- **Swim to Survive:** Lifesaving Society of B.C. program.
+  - **Format:** National standard teaching minimum survival skills.
+  - **Cost:** Free sessions.
+  - **Language:** Offered in multiple languages with translators.
+  - **Locations:** Metro Vancouver (Delta, Surrey, Richmond).
+  - **Audience:** All ages, family-friendly, includes women-only sessions.
+- **Vancouver Openwater Swim Association (VOWSA):**
+  - Offers 90-minute supervised practice swims.
+  - Lifeguard supervision via boats in specific areas.
+  - Requires sign-in/out procedures.
+- **Training Location Note:** Learning to swim is recommended in a pool environment rather than open water.
+```

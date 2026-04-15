@@ -1,0 +1,22 @@
+```markdown
+### Water Vessel Safety Guidelines (Motorized & Non-Motorized)
+
+**Core Safety Protocols**
+- **Personal Flotation Devices (PFDs):** Mandatory for all occupants on all vessels. Must be properly fitted.
+- **Substance Use:** Operating vessels under the influence of alcohol or drugs is illegal and strictly prohibited.
+- **Weather Monitoring:** Check forecasts before and during trips.
+- **Pre-Departure Checklist:** Conduct safety checks and file a float plan with a contact ashore including route and estimated return time.
+- **Vessel Limits:** Do not exceed vessel capacity or operational limits.
+
+**Required Safety Equipment**
+- **Motorized Vessels:** Fire extinguisher, flares, towing gear, radio, first aid kit, life jackets.
+- **Non-Motorized Vessels (Kayak/SUP):** Life jackets, whistle, bailer, tow rope.
+
+**Licensing & Training**
+- **Motorized:** Pleasure Craft Operator Card (PCOC) via Boating BC is required for all operators.
+- **Non-Motorized:** Operator certification is recommended for navigation safety.
+- **Recommended Courses:** BoaterSmart! (Boating) and PaddlerSmart! (Paddling).
+
+**Reference Authority**
+- Transport Canada Safe Boating Guide.
+```

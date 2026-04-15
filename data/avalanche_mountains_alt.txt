@@ -1,0 +1,37 @@
+```markdown
+# Avalanche Safety Guide
+
+## Definition & Hazards
+- **Event:** Mass of compact snow or rock suddenly breaking away from a steep slope.
+- **Velocity:** Often exceeds 100 km/h.
+- **Triggers:** Spontaneous (weight, temperature changes) or External (human movement, vibrations).
+- **Risks:** Engulfs path, heavy weight (tonnes), high casualty potential.
+
+## Risk Indicators
+- **Terrain:** Steep slopes, rapidly accumulated fresh snow.
+- **Signs:** Cracks in snow surface, thumping noises, breaking up of snow surface.
+
+## Survival Protocol (If Caught)
+- **Evade:** Run perpendicular (to the side) to the path; avoid outrunning the avalanche.
+- **Hold On:** Grip sturdy objects (boulder, large tree) if possible.
+- **Breathe:** Keep face above surface. Create an air space by spreading arms in front of the mouth.
+- **Mobility:** "Swim" toward the surface to stay in open air; thrash arms to avoid sinking if necessary.
+- **Visibility:** Raise one arm to signal rescue teams.
+- **Physiology:** Remain calm; avoid hyperventilation to preserve oxygen levels.
+- **Post-Risk:** Seek immediate medical help after extraction due to hypothermia and air deprivation risks.
+
+## Required Equipment
+- **Transceiver:** Avalanche Victim Locator (AVL) for locating buried victims.
+- **Tools:** Shovel and probe for extraction.
+- **Recommendation:** Carry all equipment when in avalanche terrain.
+
+## Prevention & Risk Management
+- **Guidelines:** Do not venture off-piste without a professional guide.
+- **Information:** Consult daily avalanche bulletins from local authorities.
+- **Compliance:** Adhere to rules and recommendations from local authorities and ski resorts.
+- **Mitigation:** Resorts may trigger controlled avalanches and conduct slope patrols to manage risk.
+
+## Emergency Contact
+- **Number:** 112 (Mountain Rescue).
+- **Action:** Keep emergency numbers accessible at all times.
+```

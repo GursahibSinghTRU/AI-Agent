@@ -1,0 +1,23 @@
+```markdown
+# Snowmobiling Risk & Safety Guidelines
+
+## Incident Statistics
+- **Annual Impact:** Over 14,000 injuries and 200 deaths reported globally per year.
+- **Common Injuries:** Fractures, dislocations, and concussions.
+
+## Operational Safety Best Practices
+- **Personal Protective Equipment (PPE):** Mandatory use of helmets, goggles, gloves, and appropriate winter clothing.
+- **Terrain Management:** Avoid unfamiliar terrain and frozen water bodies (lakes/rivers) due to structural failure risks.
+- **Regulatory Compliance:** Adhere strictly to posted trail signs, speed limits, and local access laws.
+- **Riding Techniques:**
+  - Slow down during turns; avoid sudden braking on icy surfaces.
+  - Maintain safe speeds to allow adequate reaction time for obstacles.
+  - Verify jump safety before attempting; land with knees bent to absorb impact.
+
+## Training and Preparedness
+- **Courses:** Enroll in snowmobile safety courses to learn maintenance, emergency preparedness, and terrain navigation.
+- **Emergency Protocol:**
+  - Remain calm to prevent rash decisions.
+  - Call emergency services (911/local) or signal for help using a whistle/shouting if mobile signal is unavailable.
+  - Stay in place unless the path to safety is verified and secure.
+```

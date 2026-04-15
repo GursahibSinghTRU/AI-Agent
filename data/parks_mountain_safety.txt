@@ -1,0 +1,34 @@
+```markdown
+# Avalanche Safety & Risk Management Summary
+
+## Overview
+- **Primary Threat:** Avalanches are the most significant safety threat in uncontrolled mountain backcountry.
+- **Seasonality:** Occurs Nov–Apr for most parks; possible year-round if snowpack exists.
+- **Scope:** Risk management is the personal responsibility of backcountry travellers.
+
+## Hazard Characteristics
+- **Minimum Steepness:** Avalanches can occur on slopes as shallow as 15°.
+- **Types:**
+  - *Loose Snow:* Originates from a single point, gathers snow while descending.
+  - *Slab:* Large cohesive area slides simultaneously.
+- **Dangers:** Small avalanches can bury victims, shove skiers/climbers off cliffs, or into crevasses. Snow settles into a cement-like state.
+- **Trigger Sources:** Natural weather changes or human/animal/vehicle activity.
+
+## Incident Statistics & Reality
+- **Annual Fatalities (Canada):** ~11 deaths/year on average.
+- **Cause of Death:** Majority of victims trigger the avalanche that injures or kills them.
+- **Survival Window:** Burial survival chance drops to 50% after 30 minutes and decreases thereafter. Professional rescue often cannot reach victims within the survival timeframe.
+
+## Mitigation & Equipment
+- **Critical Tool:** Informed decision-making ("your brain") is prioritized over gear technology.
+- **Essential Gear:** Avalanche transceiver, shovel, probe (never leave home without).
+- **Forecasts:**
+  - **Frequency:** Daily (Nov–Apr) for most parks; twice/week for Waterton Lakes.
+  - **Coverage:** Regional danger ratings for alpine, treeline, and below terrain (2-day outlook).
+  - **Limitations:** Conditions change; small anomalies may exist within forecast regions.
+
+## Training & Planning
+- **Recommended Course:** Avalanche Skills Training (AST) Level 1 & 2 (curriculum by Avalanche Canada).
+- **Course Content:** Terrain identification, risk factors, trip planning, forecast interpretation, companion rescue, travel techniques.
+- **Consultation:** Contact Mountain National Park Visitor Information Centres for trip suitability assessment if unsure.
+```

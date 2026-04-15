@@ -1,0 +1,45 @@
+# Water Safety & Drowning Prevention Data (British Columbia)
+
+## Overview
+- **Incidence:** Drowning is a leading cause of death for children; near-drowning can result in lifelong health effects (e.g., brain damage).
+- **B.C. Fatalities:** Average of 76 drowning deaths annually; males constitute 78% of these fatalities.
+- **Seasonality:** The majority of incidents occur during the summer months.
+- **Economic Impact:** Total 2023 costs were estimated at $19 million ($17 million indirect/lost productivity, $1.9 million direct/healthcare).
+
+## Demographic Vulnerabilities
+- **Locations:** Almost 1/4 of all Canadian drownings occur in bathtubs and pools.
+- **At-Risk Groups:**
+  - Young children (can drown in 2.5 cm/1 inch of water in seconds).
+  - Adults aged 65+ years.
+  - Almost half of child drownings occur in backyard swimming pools.
+- **Supervision:** 92% of child drownings occur when no parent or supervisor is present, or when present but distracted.
+
+## Risk Factors
+- Failure to wear a lifejacket or Personal Floatation Device (PFD) when appropriate.
+- Being alone or swimming alone.
+- Alcohol consumption during water activities or while supervising.
+- Being a weak or non-swimmer.
+- Ignoring cold water shock risks.
+
+## Prevention Strategies
+
+### Home & Residential
+- **Supervision:** An adult must be within arms-reach of young children at all times near or in water.
+- **Pool Fencing:** Install a 4-sided fence (minimum 4 ft tall) with a self-closing, self-latching gate. Fencing can prevent 7 out of 10 drownings among children.
+- **Access Control:** Pools should not be accessible directly from the house.
+- **Emergency Preparedness:** Maintain a first aid kit and phone in the immediate pool area.
+
+### Recreational & Boating
+- **Equipment:** Ensure everyone wears an approved lifejacket or PFD on boats, at beaches, or near lakes.
+  - *Lifejacket vs. PFD:* Lifejackets provide more floatation and turn the body to keep the face out of water; PFDs are lighter for recreational use.
+- **Licensing:** A Boating License/Pleasure Craft Operating Card is required for operating powered watercraft in B.C.
+- **Alcohol Policy:** Do not consume alcohol before or during swimming or boating, or when responsible for supervising children.
+- **Education:** Enroll in swimming lessons, CPR, and lifesaving techniques training.
+- **Hiking/Swim Caution:** Stay on trails; avoid fast-flowing rivers and dangerous currents.
+
+## Resources & Partnerships
+- **Primary Source:** BC Injury Research and Prevention Unit (BCIRPU).
+- **Related Campaign:** Preventable (Boating safety social marketing).
+- **Contact:** bcinjury@bcchr.ca
+- **Website:** www.bcirpu.ca
+- **Copyright:** © 2026 BCIRPU. All Rights Reserved.

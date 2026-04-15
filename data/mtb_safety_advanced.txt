@@ -1,0 +1,28 @@
+```markdown
+# Retallack Mountain Safety Operations Summary
+
+## Risk Management & Compliance
+- **Liability:** Mandatory "Release of Liability, Waiver of Claims, Assumption of Risks and Indemnity Agreement" required from all guests prior to trip.
+- **Audits:** Undergo external safety audits every five years (most recent: full marks).
+- **Protocols:** Infectious disease management and safety plans available; evidence-based medical protocols tailored to backcountry environment.
+
+## Personnel & Training
+- **Staff Qualifications:** Guides trained in wildlife risk management, advanced first aid, and advanced rescue. Many staff are certified Non-Urban Outdoor Emergency Care Technicians operating under Medical Directors.
+- **Continued Development:** Training via Association of Canadian Mountain Guides, Canadian Ski Guide Association, Canadian Avalanche Association, and Peak Emergency Training.
+- **Team Structure:** Each group includes van driver, guide, tail guide, and pilot (helicopter). Daily observations shared among Mountain Safety Team members.
+
+## Equipment & Safety Gear
+- **Guest Equipment:** BCA Tracker DTS avalanche transceiver, shovel, probe, and radio (mandatory carriage and usage training provided).
+- **Guide/Vehicle Gear:** Avalanche safety gear, rescue equipment, first aid kits, bike repair gear. Vehicles equipped with medical gear, stretchers, ropes, and backup satellite phones.
+- **Medical Assets:** Doctor's kits, defibrillators, and mountain extrication gear (stretchers, ropes).
+
+## Communication Systems
+- **Redundancy:** Two separate satellite communication networks, VHF radio, Internet (WIFI/Ethernet), and backup satellite phones.
+- **Monitoring:** Lodge monitors radio channels and vehicle locations. Drivers maintain regular contact regarding trail and rider numbers.
+- **Emergency Comms:** Access to E-Comm (911 call centre) for dispatch and support systems for southwest B.C. residents.
+
+## Emergency Response & Partnerships
+- **Partnerships:** Integrated with Royal Canadian Mounted Police (RCMP), British Columbia Ambulance Service, and local hospitals.
+- **Evacuation:** Established helicopter evacuation agreements.
+- **Contact:** 1-800-330-1433.
+```

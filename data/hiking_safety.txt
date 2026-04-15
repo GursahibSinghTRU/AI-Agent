@@ -1,0 +1,26 @@
+```markdown
+# Hiking Safety Guidelines (BC RCMP)
+## Preparation & Planning
+- **Route Knowledge:** Study maps, guidebooks, and local weather forecasts before departure.
+- **Emergency Contact:** Always leave destination and schedule details with a trusted contact.
+- **Group Rule:** Never hike alone in forests, canyons, or hazardous areas. Partners provide assistance, morale, and help if one is injured.
+
+## Gear & Attire
+- **Clothing:** Layered clothing for changing conditions. Avoid cotton when wet/cold as it insulates poorly.
+- **Footwear:** Appropriate hiking shoes or boots are mandatory.
+- **Day Pack Contents:** Rain gear, extra warm layers, high-energy food, water, first aid kit, pocket knife, waterproof matches, insect repellent.
+- **Navigation:** Carry a flashlight/pen light and a GPS unit.
+
+## Emergency Protocols
+- **If Lost:** Remain calm, stay dry, stay warm, and stay put.
+- **Overnight Stuck:** Build a campfire for warmth and smoke signaling (aids search aircraft). Construct a small shelter from dead branches/boughs if weather is severe.
+- **Exit Strategy:** If unsure, follow a stream downhill to reach inhabited areas.
+
+## Search and Rescue (SAR) Context
+- **Volume:** BC SAR responds to nearly 1000 incidents/year.
+- **Efficiency:** 95% of missing/injured subjects located within 24 hours of activation.
+- **Volunteers:** 2500 unpaid professionals across 80+ communities donate over 100,000 hours annually.
+
+**Source:** Royal Canadian Mounted Police (BC Section)  
+**Last Updated:** 2024-08-27
+```

@@ -1,0 +1,34 @@
+```markdown
+# Winter Driving Risk Mitigation Guidelines (BC Context)
+
+## Overview
+**Scope:** Winter and wet conditions in British Columbia.
+**Objective:** Prevent accidents, vehicle breakdowns, and ensure compliance with BC winter tire laws.
+
+## Vehicle Requirements & Maintenance
+- **Tires:** Must meet BC winter tire laws (Mountain Peak and Snowflake symbol or M+S). Worn treads are hazardous.
+- **Battery:** Cold weather weakens batteries; check before winter to prevent failure.
+- **Pre-Winter Inspection:** Verify battery, wipers, lights, fluids, belts, hoses, and defrosters.
+- **Tire Pressure:** Cold temperatures lower pressure; check frequently.
+- **Snow Removal:** Clear roof, trunk, hood, and mirrors before driving to prevent projectiles on other vehicles.
+- **Driveway:** Shovel snow promptly to prevent ice buildup and getting stranded.
+
+## Safe Driving Protocols
+- **Speed Control:** Drive for conditions, not the speed limit. Reduce speed to match traction capabilities.
+- **Following Distance:** Maintain minimum of 4 car lengths (double normal distance) to allow reaction time.
+- **Vehicle Systems:** ABS, ESC, and 4WD improve performance but are not foolproof against skidding.
+- **Trip Necessity:** Minimize driving when possible. Combine errands and check road conditions via DriveBC.ca.
+- **Inexperience:** Plan alternative transportation (transit, ride-share) if unseasoned in winter conditions.
+
+## Pre-Drive Checklist
+1. Defrost and clear all windows.
+2. Remove snow and ice from roof/trunk/mirrors.
+3. Verify tire pressure.
+4. Review weather and street conditions.
+
+## Emergency Response
+- **Roadside Assistance:** Available 24/7 for stranded vehicles or battery failure.
+- **Contact Numbers:** 1-888-268-2222 (BC), 1-800-222-4357 (North America).
+- **Requirements:** Membership card number and photo ID required for assistance.
+- **Alternative:** Mobile app available for faster dispatch.
+```

@@ -1,0 +1,57 @@
+```markdown
+# Outdoor Winter Safety Guidelines (Risk & Safety Knowledge Base)
+
+## General Conditions & Weather
+*   **Forecast Check:** Always review weather forecasts before outdoor activities.
+*   **Temperature Limits:**
+    *   **Stay Indoors:** When temperature (with/without wind chill) is below -27°C (-16°F).
+    *   **Limit Time:** When temperature is below -15°C (5°F).
+*   **Hydration & Sun Protection:** Drink warm fluids (or water) to prevent dehydration; use sunscreen even on cloudy days.
+*   **Vigilance:** Monitor for shivering or signs of hypothermia/frostbite. Children cannot communicate discomfort effectively.
+
+## Ice Thickness Standards
+*   **Walking/Individuals:** Minimum 15 cm (6 in.).
+*   **Groups:** Minimum 20 cm (8 in.).
+*   **Sleds/Snowmobiles:** Minimum 25 cm (10 in.).
+*   **Ice Integrity:**
+    *   **Safe:** Clear blue ice (strongest).
+    *   **Caution:** White opaque/snow ice (half strength of blue).
+    *   **Unsafe:** Grey ice.
+*   **Hazards:** Avoid areas under dams (downstream weakening), near banks during spring thaw, or where surface snow blankets ice (insulation effect).
+
+## Clothing & Gear
+*   **Layering System:**
+    1.  **Base:** Thin moisture-wicking material (e.g., polyester).
+    2.  **Mid:** Insulating layer (wool or fleece).
+    3.  **Outer:** Waterproof/windproof layer (nylon or Gore-Tex).
+*   **Accoutrements:** Include hat, mitts, tube scarf, and waterproof boots.
+*   **Ski/Snowboard Bindings:** Check annually by a qualified technician; ensure proper fit.
+*   **Boots:** Skates should give ankle support and fit snugly.
+*   **Helmets:**
+    *   **Required:** Skating, Skiing, Snowboarding.
+    *   **Standard:** CSA stamped for Canada; replace every 5 years.
+    *   **Sledding:** Recommended (Ski helmet preferred over bicycle helmet).
+
+## Activity-Specific Safety Rules
+### Skiing & Snowboarding
+*   **Ages:** Snowboarding not recommended for children under 7 years.
+*   **Supervision:** Always use the buddy system; never alone.
+*   **Hazards:** Watch for other skiers, obstacles, rocks, and changing visibility.
+*   **Timing:** Quit before getting tired or dark; do not ski after using drugs/alcohol.
+
+### Tobogganing & Sledding
+*   **Supervision:** Young children must be supervised by an adult; never toboggan alone or at night.
+*   **Positioning:** Safest is kneeling. Avoid stomach (head) first or lying flat on back (spine risk).
+*   **Equipment:**
+    *   Do not use inner tubes or plastic discs (hard to control).
+    *   Avoid sleds with steering wheels (unstable).
+    *   Ensure no loose clothing or long scarves.
+*   **Motorized Vehicles:** **NEVER** pull children on a toboggan by motorized vehicles (ORVs, snowmobiles); collision risk if vehicle stops abruptly.
+
+### Snowmobiling
+*   **Rider Age:** Children under 16 should not drive.
+*   **Passenger Age:** Children under 6 should not ride as passengers.
+*   **PPE:** Every rider must wear a snowmobile helmet.
+*   **Training:** Drivers must receive instruction from an instructor/association.
+*   **Prohibitions:** Do not tow persons behind snowmobiles. Avoid road/rail crossings without caution.
+```

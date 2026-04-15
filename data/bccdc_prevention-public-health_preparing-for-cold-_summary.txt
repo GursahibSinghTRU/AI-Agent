@@ -1,0 +1,46 @@
+```markdown
+# Cold Weather Safety & Risk Mitigation Guidelines
+
+## Risk Monitoring & Alerts
+- **Alert Sources:** Environment and Climate Change Canada (ECCC) and WeatherCAN app.
+- **Alert Types:** Arctic outflow warnings (Coastal B.C.), Extreme cold warnings, Snow/freezing rain alerts.
+- **Risk Reality:** Individuals are at risk even without official alerts, particularly vulnerable populations.
+
+## High-Risk Vulnerable Populations
+- People experiencing homelessness.
+- Individuals with poverty-related heating challenges (inadequate insulation/heat sources).
+- People using substances (especially opioids).
+- Outdoor workers or participants in winter activities.
+- Individuals with limited mobility, disabilities, or medical conditions restricting blood flow.
+- Older adults, infants, and young children.
+
+## Safety Precautions & Prevention
+- **Carbon Monoxide Warning:** Never use gas-burning appliances (barbeques, outdoor patio heaters, generators) indoors.
+- **Disruption Planning:** Prepare for transportation delays and power outages.
+- **Personal Protection:** Wear loose-fitting, dry layers. Keep head and neck covered.
+
+## Hypothermia Response
+- **Definition:** Core body temperature below 37°C; organs cannot function properly.
+- **Key Symptoms:**
+  - Cold skin, fumbling hands.
+  - Shivering (may be absent in infants).
+  - Exhaustion, slurred speech, confusion, memory loss.
+  - Slow/shallow breathing, clumsiness, drowsiness, weak pulse, unconsciousness.
+- **Action Plan:**
+  - **Severe/Unconscious:** Call **911** immediately. Assume hypothermia until checked.
+  - **Alert/Conscious:** Call **811** for guidance or seek medical care.
+  - **Warming Protocol:** Move to warmer location, remove wet clothing, warm center of body first (chest, neck, head, groin). Use electric blankets, warm water bottles, or reflective blankets.
+  - **Fluids:** Warm beverages only for conscious individuals; avoid alcohol. Do not give liquids to unconscious persons.
+  - **Note:** Some overdose cases present with hypothermia symptoms; assume both conditions may exist.
+
+## Frostbite Response
+- **Symptoms:** White/grayish-yellow skin, waxy/firm texture, numbness.
+- **Immediate Action:** Move indoors or protect exposed skin immediately.
+- **Medical Care:** Consult a health care provider.
+- **Warming Warning:** Only warm the affected area if the person can stay warm for a significant period to avoid further tissue damage.
+
+## External Resources
+- HealthLinkBC: Carbon Monoxide Poisoning, Cold Temperature Exposure.
+- Canadian Red Cross: Cold-Related Emergencies.
+- Prepared B.C.: Severe Winter Weather Preparedness.
+```

@@ -1,0 +1,49 @@
+```markdown
+# Heat Safety Guidelines (Island Health Reference)
+
+## 🚨 Severe Symptoms Requiring 9-1-1
+- **Temperature:** Core body temp >39°C (102°F)
+- **Physical Signs:** Hot/pale skin, light-headedness, fainting, confusion, disorientation, seizures, unconsciousness, not sweating.
+- **Vital Signs:** Rapid breathing, rapid heart rate.
+- **Immediate Action:** Call 9-1-1, move to cool place, cool with water and fanning.
+
+## ⚠️ Mild to Moderate Symptoms
+- **Signs:** Heavy sweating, severe headache, muscle cramps, extreme thirst, dark urine.
+- **Action:** Move to cooler environment, hydrate, wear wet shirt or apply damp towels.
+
+## 🌡 Indoor Temperature Thresholds
+| Indoor Temp | Risk Level | Recommended Action |
+| :--- | :--- | :--- |
+| **≤ 26°C** | Generally Safe | Standard precautions. |
+| **26°C – 31°C** | Moderate Risk | Monitor susceptible populations. |
+| **> 31°C** | High Risk | Leave for cooler location if possible. |
+
+## 👥 At-Risk Populations
+- Age 60 or older
+- Living alone
+- Pre-existing conditions (Diabetes, Heart, Respiratory, Mental Health, Substance Use)
+- Pregnant individuals
+- Infants and young children
+- Limited mobility or marginally housed individuals
+- Outdoor/Hot environment workers
+
+## 🔒 Mitigation Strategies
+- **Hydration:** Drink fluids proactively; avoid alcohol, caffeine, and excess sugar.
+- **Indoor Management:** 
+  - Close windows/doors during peak heat; open only when outdoors is cooler.
+  - Sleep in coolest room/basement; use AC for sleeping areas.
+  - Fans help move air but do not lower core body temperature alone.
+- **Vehicle Safety:** NEVER leave children or pets in parked cars.
+- **Social Support:** Establish "hot weather buddy" check-ins (more than once per day during events).
+
+## 🌫 Smoke and Heat Co-occurrence
+- **Priority:** Prioritize cooling over smoke inhalation risks (overheating is a greater immediate threat).
+- **Indoor Air:** Keep windows closed if possible; use AC for filtered air.
+- **Locations:** Seek cooling centers, malls, or libraries if home is too hot.
+
+## 📞 Resources & Contacts
+- **Emergency Info BC:** EmergencyInfoBC
+- **HealthLine BC:** 8-1-1
+- **EmergencyMapBC:** For cooling/misting centers
+- **External Guides:** Gov of Canada Extreme Heat Events, HealthLink BC "Beat the Heat"
+```

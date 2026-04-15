@@ -1,0 +1,28 @@
+```markdown
+# Water Safety Risk Factors & Regulations (RCMP Guidelines)
+**Source:** Royal Canadian Mounted Police (BC) | **Date Modified:** 2024-08-23
+**Scope:** Summer Water Safety, Boating, Swimming Operations
+
+## Statistical Risk Factors (BC Coroners Service 2008-2012)
+- **Seasonality:** 58.7% of drowning deaths occur between May and August.
+- **Demographics:** 81.1% of drowning victims were male; highest risk age group 20-29 years.
+- **Contributing Factors:** Alcohol/drugs were contributing factors in 40.2% of drowning deaths.
+- **Incident Distribution:** 397 deaths total (200 recreational activities, 175 falls/vehicle water incidents, 220 occupational).
+
+## Critical Safety Protocols
+- **PFDs:** Mandatory use of personal flotation devices. Do not assume time to put on a lifejacket; tragedy can strike instantly.
+- **Alcohol Policy:** Impaired driving laws apply strictly to boat operation. Never operate watercraft under the influence.
+- **Swimming:** Non-swimmers must remain out of the water and seek shade.
+- **Current Management:** Avoid placing feet in fast-moving water deeper than arm length (entanglement/face-down submersion risk).
+- **Speed:** Reduce speed on waterways and roadways leading to them to prevent incidents.
+- **Planning:** Inform others of destination and expected return time when visiting less-traveled areas.
+
+## Regulatory Requirements (Power-Driven Craft)
+- **Proof of Competency:** Required for all operators. Acceptable proofs include:
+    - Pleasure Craft Operator Card
+    - Course completed before April 1, 1999
+    - Specified marine certificate (List of Certificates of Competency)
+    - Completed rental-boat safety checklist (rental period only)
+- **Applicability:** Safety equipment rules apply to all watercraft types (canoes to yachts).
+- **Enforcement:** RCMP West Coast Marine Services conduct patrols for regulation compliance.
+```

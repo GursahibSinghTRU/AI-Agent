@@ -1,0 +1,22 @@
+```markdown
+# Boating Safety & Regulations Summary (Lifesaving Society Canada)
+
+## Legal Requirements
+- **Proof of Competency:** All Canadian operators of pleasure craft fitted with motors must carry a Pleasure Craft Operator (PCO) card.
+- **Exceptions:** Proof of competency is not currently required in Nunavut or Northwest Territories.
+- **Regulations:** Operators must abide by local bylaws and obey all signs and buoys (especially around dams and hydroelectric facilities).
+
+## Personal Flotation Device (PFD) Statistics
+- **Drowning Risk:** Approximately 80% of people who died in boating-related drownings were not wearing a lifejacket/PFD.
+- **Fatality Attribution:** Not wearing a PFD accounts for 79% of boating deaths (for which PFD data was available).
+- **Fishing Risk:** 34% of recreational boating fatalities involved fishing; PFDs are required even when trolling or stationary.
+- **Vessel Risk:** Powerboats account for over 50% of recreational boating fatalities (canoeing 23%, kayaking 7%).
+
+## Operational Safety Guidelines
+- **Wear Requirement:** PFDs must be worn at all times; attempting to put one on after a capsize is often impossible.
+- **Environmental Awareness:** Check forecasts and return to shore in bad weather or rough water.
+- **Communication:** Carry a cell phone or VHF radio; inform others of destination and return time.
+- **Boat Maintenance:** Check boat condition and ensure sufficient fuel before departure.
+- **Behavior:** Do not speed; stay seated in small boats to prevent capsizing.
+- **Equipment:** Do not rely solely on having a PFD on board; wearing is mandatory for survival.
+```

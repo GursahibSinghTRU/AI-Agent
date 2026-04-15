@@ -1,0 +1,26 @@
+```markdown
+# Avalanche Safety Fundamentals
+
+**Definition**
+- An avalanche is a mass of snow moving down a slope.
+
+**Risk Profile (US Data)**
+- Annual Fatalities: 25-30 deaths per winter.
+- Annual Injuries: Numerous non-fatal incidents reported.
+
+**Core Safety Requirements**
+Safe backcountry operations require adherence to the "Three G's":
+1. Get the Forecast
+2. Get the Gear
+3. Get the Training
+
+**Education Philosophy**
+- Avalanche education is a life-long process.
+- Knowledge enables decision-making regarding timing, location, and method of backcountry travel.
+
+**Knowledge Resources**
+- Interactive Tutorials
+- Awareness Video: Know Before You Go
+- Avalanche Encyclopedia
+- Course Provider Directory
+```

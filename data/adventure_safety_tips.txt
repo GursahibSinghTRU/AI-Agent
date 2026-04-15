@@ -1,0 +1,21 @@
+```markdown
+# Backcountry Safety Guidelines (BC Energy Regulator)
+
+## Preparation & Packing
+- **Balanced Load:** Maintain a balance between gear bulk and necessary preparedness to ensure mobility.
+- **Industry Standards:** C&E Officers utilize coveralls, safety glasses, hard hats, ear plugs, gloves, steel-toed boots, gas monitors, and first aid kits.
+- **Footwear Maintenance:** Break in new hiking shoes and backpacks on shorter outings to prevent blisters and mobility restrictions before long journeys.
+
+## Communication Protocols
+- **Trip Notification:** Inform a contact of the planned route and expected return time prior to departure.
+- **Remote Connectivity:** Account for potential lack of cell service in remote areas.
+- **Check-in Frequency:** Establish regular check-ins (e.g., every 4 hours) or upon changing sites/roads using GPS, cell phones, or satellite devices.
+
+## Group & Team Safety
+- **Travel Pairs/Groups:** Avoid solo travel in unfamiliar areas; utilize safety in numbers for high-risk situations.
+- **Group Pacing:** Maintain group integrity by traveling at the speed of the slowest member to prevent separation.
+
+## Fitness & Capability Assessment
+- **Terrain/Distance:** Verify personal fitness levels match the specific distance and terrain requirements.
+- **Progression:** Begin with shorter outings before attempting longer distances or more difficult terrain to mitigate injury risk.
+```
