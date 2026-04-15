@@ -310,6 +310,37 @@
     let firstToken = true;
     let currentInteractionId = null;
 
+    // Typewriter queue — tokens arrive from SSE, characters are animated one by one
+    const twQueue = [];
+    let twRunning = false;
+    const TW_DELAY = 12; // ms per character
+
+    function twFlush() {
+      if (!twQueue.length) { twRunning = false; return; }
+      const char = twQueue.shift();
+      if (firstToken) {
+        bubbleEl.innerHTML = '';
+        firstToken = false;
+      }
+      fullText += char;
+      bubbleEl.innerHTML = renderMarkdown(fullText);
+      bubbleEl.querySelectorAll('a').forEach(a => {
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener noreferrer');
+      });
+      scrollToBottom();
+      setTimeout(twFlush, TW_DELAY);
+    }
+
+    // receivedText tracks the full response as tokens arrive (used for heuristics)
+    let receivedText = '';
+
+    function twEnqueue(token) {
+      receivedText += token;
+      for (const char of token) twQueue.push(char);
+      if (!twRunning) { twRunning = true; twFlush(); }
+    }
+
     try {
       const controller = new AbortController();
       const tid = setTimeout(() => controller.abort(), CONFIG.timeoutMs);
@@ -351,21 +382,7 @@
           if (event.type === 'sources') {
             renderSources(sourcesEl, event.sources);
           } else if (event.type === 'token') {
-            if (firstToken) {
-              bubbleEl.innerHTML = '';
-              firstToken = false;
-            }
-            fullText += event.token;
-            console.log('[TRU Chat] Received token:', event.token);
-            console.log('[TRU Chat] Full response so far:', fullText);
-            bubbleEl.innerHTML = renderMarkdown(fullText);
-            // Make all links open in a new tab
-            const links = bubbleEl.querySelectorAll('a');
-            links.forEach(link => {
-              link.setAttribute('target', '_blank');
-              link.setAttribute('rel', 'noopener noreferrer');
-            });
-            scrollToBottom();
+            twEnqueue(event.token);
           } else if (event.type === 'done') {
             // Capture interaction_id from analytics pipeline
             if (event.interaction_id) {
@@ -379,16 +396,16 @@
         }
       }
 
-      if (firstToken && fullText === '') {
+      if (firstToken && receivedText === '') {
         bubbleEl.innerHTML = renderMarkdown('No response received from the Risk & Safety documents.');
       }
 
-      chatHistory.push({ role: 'assistant', content: fullText });
+      chatHistory.push({ role: 'assistant', content: receivedText });
 
       // Hide sources if the response is primarily follow-up questions
       // (proactive inquiry phase — no substantive answer yet)
-      const questionCount = (fullText.match(/\?/g) || []).length;
-      const sentenceCount = (fullText.match(/[.!?]/g) || []).length;
+      const questionCount = (receivedText.match(/\?/g) || []).length;
+      const sentenceCount = (receivedText.match(/[.!?]/g) || []).length;
       const isPrimarilyQuestions = questionCount >= 3 && questionCount / Math.max(sentenceCount, 1) > 0.5;
 
       // Hide sources if the model answered from general knowledge and RAG wasn't useful
@@ -400,7 +417,7 @@
         'no specific information',
         'not in the documents',
       ];
-      const isNotFoundAnswer = notFoundPhrases.some(p => fullText.toLowerCase().includes(p));
+      const isNotFoundAnswer = notFoundPhrases.some(p => receivedText.toLowerCase().includes(p));
 
       if (isPrimarilyQuestions || isNotFoundAnswer) {
         sourcesEl.innerHTML = '';
