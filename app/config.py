@@ -40,8 +40,8 @@ class Settings:
     CHUNK_OVERLAP: int     = 200
 
     # ── Retrieval ────────────────────────────────────────────────
-    K: int                 = 6
-    SCORE_THRESHOLD: float = 1.0
+    K: int                 = 10
+    SCORE_THRESHOLD: float = 0.65
     MAX_CONTEXT_CHARS: int = 8000
     RERANK_TOP_N: int      = 4
 
@@ -52,7 +52,7 @@ class Settings:
 
     # ── LLM behaviour ───────────────────────────────────────────
     TEMPERATURE: float     = 0.1
-    NUM_PREDICT: int       = 256
+    NUM_PREDICT: int       = 512
     KEEP_ALIVE: str        = "5m"
 
     # ── Server ───────────────────────────────────────────────────

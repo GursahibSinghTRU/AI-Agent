@@ -13,13 +13,39 @@
     if (window.marked) {
       marked.setOptions({ breaks: true, gfm: true });
       const html = marked.parse(text);
-      console.log('[TRU Chat] Rendered markdown HTML:', html);
       return html;
     }
     // Fallback: escape HTML, preserve newlines
     return text
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
       .replace(/\n/g, '<br>');
+  }
+
+  /**
+   * Replace inline citations like (source name) with markdown links
+   * when the citation text matches a known source returned by the API.
+   */
+  function linkifyCitations(text, sources) {
+    if (!sources || !sources.length) return text;
+
+    // Build a map: normalised label → href
+    const urlMap = {};
+    for (const s of sources) {
+      const label = typeof s === 'string' ? s : (s.riskandsafetydoc || s.file || '');
+      const href  = typeof s === 'string' ? null
+                  : (s.source_url || (s.file ? `/docs/${encodeURIComponent(s.file)}` : null));
+      if (label && href) {
+        urlMap[label.toLowerCase().trim()] = href;
+      }
+    }
+
+    if (!Object.keys(urlMap).length) return text;
+
+    // Match (citation text) — parenthesised phrases of 2–60 chars
+    return text.replace(/\(([a-zA-Z][a-zA-Z0-9 _\-]{1,58})\)/g, (match, inner) => {
+      const href = urlMap[inner.toLowerCase().trim()];
+      return href ? `[${inner}](${href})` : match;
+    });
   }
 
   // ── Config ─────────────────────────────────────────────
@@ -36,7 +62,7 @@
   const QUICK_REPLIES = [
     { label: '� Emergency procedures', text: 'What should I do if I witness an emergency on campus?' },
     { label: '📝 Incident reporting', text: 'How do I report a workplace incident to Risk and Safety Services?' },
-    { label: '👷 Safety training', text: 'What training courses are required for TRU staff?' },
+    { label: '👷 Safety training', text: 'What is WHMIS training and how do I complete it at TRU?' },
     { label: '🚨 Safety alerts', text: 'How can I stay informed about campus safety alerts?' },
     { label: '💼 Workplace ergonomics', text: 'What are best practices for desk safety and ergonomics?' },
   ];
@@ -309,14 +335,30 @@
     let fullText = '';
     let firstToken = true;
     let currentInteractionId = null;
+    let currentSources = [];
+    let streamingDone = false;
 
     // Typewriter queue — tokens arrive from SSE, characters are animated one by one
     const twQueue = [];
     let twRunning = false;
     const TW_DELAY = 12; // ms per character
 
+    function applyLinks() {
+      const linked = linkifyCitations(fullText, currentSources);
+      bubbleEl.innerHTML = renderMarkdown(linked);
+      bubbleEl.querySelectorAll('a').forEach(a => {
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener noreferrer');
+      });
+    }
+
     function twFlush() {
-      if (!twQueue.length) { twRunning = false; return; }
+      if (!twQueue.length) {
+        twRunning = false;
+        // Final re-render with clickable citation links once streaming is complete
+        if (streamingDone && currentSources.length) applyLinks();
+        return;
+      }
       const char = twQueue.shift();
       if (firstToken) {
         bubbleEl.innerHTML = '';
@@ -380,6 +422,7 @@
           try { event = JSON.parse(raw); } catch { continue; }
 
           if (event.type === 'sources') {
+            currentSources = event.sources || [];
             renderSources(sourcesEl, event.sources);
           } else if (event.type === 'token') {
             twEnqueue(event.token);
@@ -395,6 +438,10 @@
           }
         }
       }
+
+      streamingDone = true;
+      // If typewriter already finished before this flag was set, apply links now
+      if (!twRunning && fullText && currentSources.length) applyLinks();
 
       if (firstToken && receivedText === '') {
         bubbleEl.innerHTML = renderMarkdown('No response received from the Risk & Safety documents.');

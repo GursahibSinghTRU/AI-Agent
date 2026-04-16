@@ -1,9 +1,9 @@
 """
-agent.py — The Risk & Safety Agent: RAG tool calling + LLM streaming.
+agent.py — The Risk & Safety Agent: pre-retrieval RAG + LLM streaming.
 
-Uses Ollama's native tool calling to let the LLM decide when to search
-the Oracle vector knowledge base. Weather links are pre-resolved by
-the server and injected into the user message via [WEATHER_LINK] tags.
+Context is retrieved from the Oracle vector store BEFORE the LLM call and
+injected directly into the user message. This is more reliable than tool
+calling with local models, which can silently produce empty responses.
 """
 
 import json
@@ -22,10 +22,61 @@ from app.rag_core import (
 
 log = logging.getLogger("agent")
 
+# Words that — when they make up the entire message — indicate a conversational
+# acknowledgment with no safety topic. Retrieval is skipped for these.
+_CONVERSATIONAL_WORDS = {
+    "hello", "hi", "hey", "thanks", "thank", "you", "ok", "okay",
+    "yes", "no", "sure", "great", "cool", "bye", "goodbye", "perfect",
+    "got", "it", "sounds", "good", "makes", "sense", "alright", "nice",
+    "awesome", "wonderful", "excellent", "noted", "understood", "appreciate",
+    "cheers", "lol", "haha", "wow", "interesting", "i", "see", "that",
+}
+
+
+def _should_skip_retrieval(question: str) -> bool:
+    """Return True for greetings and purely conversational acknowledgments."""
+    q = question.strip().lower().rstrip("!.,?")
+    if len(q) < 6:
+        return True
+    # Skip if every word in the message is a known conversational word
+    words = set(q.split())
+    return words.issubset(_CONVERSATIONAL_WORDS)
+
+
+def _enrich_query(question: str, chat_history: Optional[List[Dict[str, str]]]) -> str:
+    """
+    For short follow-up messages, build a richer search query by combining
+    the current message with recent user turns. This ensures that follow-ups
+    like "I'm a beginner going to Sun Peaks" inherit the skiing topic from
+    earlier in the conversation instead of retrieving hiking/unrelated docs.
+    """
+    if not chat_history or len(question.split()) > 15:
+        return question
+
+    # Collect up to the last 3 user messages (excluding current)
+    prior_user_msgs = []
+    for msg in reversed(chat_history):
+        if msg.get("role") == "user":
+            content = msg.get("content", "").strip()
+            if content and content != question:
+                prior_user_msgs.append(content)
+            if len(prior_user_msgs) >= 3:
+                break
+
+    if not prior_user_msgs:
+        return question
+
+    # Build context string from prior user turns (most recent last)
+    prior_user_msgs.reverse()
+    context_str = " ".join(msg[:100] for msg in prior_user_msgs)
+    return f"{context_str} {question}"
+
 
 def _build_messages(
     question: str,
     chat_history: Optional[List[Dict[str, str]]],
+    context: Optional[str] = None,
+    sources: Optional[List[Dict]] = None,
 ) -> List[Dict[str, str]]:
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
 
@@ -33,7 +84,23 @@ def _build_messages(
         for msg in chat_history[-10:]:
             messages.append({"role": msg.get("role", "user"), "content": msg.get("content", "")})
 
-    messages.append({"role": "user", "content": question})
+    if context and sources:
+        source_names = ", ".join(
+            s.get("riskandsafetydoc") or s.get("file") or ""
+            for s in sources if s
+        )
+        user_content = (
+            f"{question}\n\n"
+            f"[RETRIEVED CONTEXT]\n"
+            f"Available sources (ONLY these may be cited): {source_names}\n\n"
+            f"{context}"
+        )
+    elif context:
+        user_content = f"{question}\n\n[RETRIEVED CONTEXT]\n{context}"
+    else:
+        user_content = question
+
+    messages.append({"role": "user", "content": user_content})
     return messages
 
 
@@ -41,39 +108,13 @@ def _build_messages(
 
 class RiskandSafetyAgent:
     """
-    RAG agent that retrieves from Oracle vector DB and generates
-    answers via a local Ollama model. Supports streaming tool calls.
+    RAG agent: retrieves context from Oracle vector DB, injects it into the
+    prompt, then streams a response from a local Ollama model.
+    No tool calling — context injection is more reliable with local models.
     """
 
     def __init__(self):
-        log.info("Risk & Safety Agent initialising (Oracle vector store)...")
-        self.tools = [
-            {
-                "type": "function",
-                "function": {
-                    "name": "search_knowledge_base",
-                    "description": (
-                        "Search the TRU Risk & Safety vector knowledge base for information "
-                        "relevant to a query. Call this for any question about safety "
-                        "procedures, guidelines, incidents, training, or Risk & Safety topics."
-                    ),
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "query": {
-                                "type": "string",
-                                "description": (
-                                    "The specific query to search for "
-                                    "(e.g. 'chemical spill procedure', 'PPE requirements')"
-                                ),
-                            }
-                        },
-                        "required": ["query"],
-                    },
-                },
-            }
-        ]
-        log.info("Risk & Safety Agent ready.")
+        log.info("Risk & Safety Agent initialising (Oracle vector store, direct injection)...")
 
     # ── Core retrieval ──────────────────────────────────────────────
 
@@ -127,124 +168,92 @@ class RiskandSafetyAgent:
           {"type": "done",    "timing": {...}, "prompt_tokens": N, "completion_tokens": N}
         """
         t_start = time.perf_counter()
-        messages = _build_messages(question, chat_history)
+        retrieve_ms = 0.0
+        context = None
+        sources_to_emit = []
 
+        # ── Step 1: retrieve context (skip for greetings) ─────────
+        if not _should_skip_retrieval(question):
+            search_query = _enrich_query(question, chat_history)
+            if search_query != question:
+                log.info("Enriched query: %r → %r", question, search_query)
+            context, sources, _, retrieve_ms = self._retrieve(search_query)
+            if sources:
+                sources_to_emit = sources
+                yield {"type": "sources", "sources": sources_to_emit}
+            log.info(
+                "Retrieved %d sources in %.0fms for query %r",
+                len(sources_to_emit), retrieve_ms, search_query,
+            )
+        else:
+            log.info("Skipping retrieval for conversational message: %r", question)
+
+        # ── Step 2: build messages with injected context ──────────
+        messages = _build_messages(question, chat_history, context=context, sources=sources_to_emit)
+
+        # ── Step 3: stream the answer ─────────────────────────────
         try:
             with httpx.Client(timeout=120.0) as client:
-                # ── Step 1: ask model whether to call a tool ──────────
-                log.info("Sending initial request with tools...")
+                log.info("Streaming answer from %s...", settings.CHAT_MODEL)
                 response = client.post(
                     f"{settings.OLLAMA_BASE_URL}/api/chat",
                     json={
                         "model": settings.CHAT_MODEL,
                         "messages": messages,
-                        "tools": self.tools,
-                        "stream": False,
-                        "temperature": settings.TEMPERATURE,
+                        "stream": True,
+                        "options": {
+                            "temperature": settings.TEMPERATURE,
+                            "num_predict": settings.NUM_PREDICT,
+                        },
                         "think": False,
                     },
                 )
                 response.raise_for_status()
-                data = response.json()
-                reply = data["message"]
-                messages.append(reply)
 
-                retrieve_ms = 0.0
-                sources_to_emit = []
+                t_llm_start = time.perf_counter()
+                collected: List[str] = []
+                prompt_tokens = 0
+                completion_tokens = 0
 
-                # ── Step 2: execute tool calls if any ─────────────────
-                if reply.get("tool_calls"):
-                    log.info("Model called %d tool(s).", len(reply["tool_calls"]))
+                for line in response.iter_lines():
+                    if not line:
+                        continue
+                    chunk = json.loads(line)
+                    msg = chunk.get("message") or {}
+                    content = msg.get("content") or ""
+                    if content:
+                        collected.append(content)
+                        yield {"type": "token", "token": content}
+                    if chunk.get("done"):
+                        prompt_tokens = chunk.get("prompt_eval_count", 0) or 0
+                        completion_tokens = chunk.get("eval_count", 0) or 0
 
-                    for tool_call in reply["tool_calls"]:
-                        fn_name = tool_call["function"]["name"]
-                        args = tool_call["function"]["arguments"]
+                llm_ms = (time.perf_counter() - t_llm_start) * 1000
+                full_text = "".join(collected)
+                log.info(
+                    "Streaming complete — completion_tokens=%d, llm_ms=%.0f",
+                    completion_tokens, llm_ms,
+                )
 
-                        if fn_name == "search_knowledge_base":
-                            search_query = args.get("query", question)
-                            log.info("Executing search_knowledge_base: %r", search_query)
+                if not full_text.strip():
+                    log.warning("Model produced empty response for query %r", question)
 
-                            context, sources, _, r_ms = self._retrieve(search_query)
-                            retrieve_ms += r_ms
-
-                            if context:
-                                tool_result = f"Documents retrieved:\n{context}"
-                                sources_to_emit.extend(sources)
-                            else:
-                                tool_result = "No documents found matching the query."
-
-                            messages.append({
-                                "role": "tool",
-                                "content": tool_result,
-                                "name": fn_name,
-                            })
-
-                    if sources_to_emit:
-                        yield {"type": "sources", "sources": sources_to_emit[:6]}
-
-                    # ── Step 3: stream the final answer ───────────────
-                    log.info("Streaming follow-up answer...")
-                    follow = client.post(
-                        f"{settings.OLLAMA_BASE_URL}/api/chat",
-                        json={
-                            "model": settings.CHAT_MODEL,
-                            "messages": messages,
-                            "stream": True,
-                            "temperature": settings.TEMPERATURE,
-                            "think": False,
-                        },
-                    )
-                    follow.raise_for_status()
-
-                    t_llm_start = time.perf_counter()
-                    collected: List[str] = []
-                    prompt_tokens = 0
-                    completion_tokens = 0
-
-                    for line in follow.iter_lines():
-                        if not line:
-                            continue
-                        chunk = json.loads(line)
-                        if "message" in chunk and chunk["message"].get("content"):
-                            token = chunk["message"]["content"]
-                            collected.append(token)
-                            yield {"type": "token", "token": token}
-                        if chunk.get("done"):
-                            prompt_tokens = chunk.get("prompt_eval_count", 0) or 0
-                            completion_tokens = chunk.get("eval_count", 0) or 0
-
-                    llm_ms = (time.perf_counter() - t_llm_start) * 1000
-                    full_text = "".join(collected)
-                    if "Not found in the provided documents." in full_text:
-                        yield {"type": "clear_sources"}
-
-                    yield {
-                        "type": "done",
-                        "timing": self._timing(retrieve_ms, llm_ms, t_start),
-                        "prompt_tokens": prompt_tokens,
-                        "completion_tokens": completion_tokens,
-                    }
-
-                else:
-                    # ── Direct answer (conversational, no tool needed) ─
-                    log.info("Model answered directly (no tool call).")
-                    t_llm_start = time.perf_counter()
-                    token = reply.get("content", "")
-                    if token:
-                        yield {"type": "token", "token": token}
-
-                    llm_ms = (time.perf_counter() - t_llm_start) * 1000
-                    yield {
-                        "type": "done",
-                        "timing": self._timing(0, llm_ms, t_start),
-                        "prompt_tokens": 0,
-                        "completion_tokens": 0,
-                    }
+                yield {
+                    "type": "done",
+                    "timing": self._timing(retrieve_ms, llm_ms, t_start),
+                    "prompt_tokens": prompt_tokens,
+                    "completion_tokens": completion_tokens,
+                }
 
         except Exception as e:
-            log.error("Agent error: %s", e)
+            log.error("Agent error: %s", e, exc_info=True)
             yield {"type": "token", "token": f"Error communicating with agent: {str(e)}"}
-            yield {"type": "done", "timing": self._timing(0, 0, t_start), "prompt_tokens": 0, "completion_tokens": 0}
+            yield {
+                "type": "done",
+                "timing": self._timing(retrieve_ms, 0, t_start),
+                "prompt_tokens": 0,
+                "completion_tokens": 0,
+            }
 
     @staticmethod
     def _timing(retrieve_ms: float, llm_ms: float, t_start: float) -> Dict:
